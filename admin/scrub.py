@@ -37,6 +37,15 @@ def scrub_bytes(name, data, names):
     return data
 
 
+CORE_XML = (b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
+            b'<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" '
+            b'xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" '
+            b'xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'
+            b'<dc:creator>HCG</dc:creator><cp:lastModifiedBy>HCG</cp:lastModifiedBy></cp:coreProperties>')
+# 원본 덱 첫 장 미리보기 그림 · 사용자 속성 — 다른 고객 표지가 보일 수 있어 아예 뺌
+DROP = re.compile(r"^docProps/(thumbnail\.[a-z]+|custom\.xml)$", re.I)
+
+
 def scrub_file(path, names):
     path = Path(path)
     zin = zipfile.ZipFile(path)
@@ -44,10 +53,21 @@ def scrub_file(path, names):
     os.close(fd)
     tmp = Path(tmpn)
     changed = False
+    dropped = {n for n in zin.namelist() if DROP.match(n)}
     with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
         for it in zin.infolist():
+            if it.filename in dropped:
+                changed = True
+                continue
             data = zin.read(it.filename)
-            new = scrub_bytes(it.filename, data, names)
+            if it.filename == "docProps/core.xml":
+                new = CORE_XML  # 접두어와 상관없이 통째로 새로
+            elif it.filename == "_rels/.rels" and dropped:
+                new = re.sub(rb'<Relationship\b[^>]*Target="/?docProps/(thumbnail\.[a-zA-Z]+|custom\.xml)"[^>]*/>', b"", data)
+            elif it.filename == "[Content_Types].xml" and dropped:
+                new = re.sub(rb'<Override\b[^>]*PartName="/docProps/(thumbnail\.[a-zA-Z]+|custom\.xml)"[^>]*/>', b"", data)
+            else:
+                new = scrub_bytes(it.filename, data, names)
             changed |= new != data
             zout.writestr(it, new)
     zin.close()
