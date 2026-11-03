@@ -1,0 +1,19 @@
+# 「HCG 장표」 작업창 + 창고 API (Cloudflare Pages). deploy.mjs 가 database_id · vars 를 채움
+name = "hcg-slides"
+pages_build_output_dir = "public"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hcg-slides"
+database_id = "0b72d4db-b10c-47f5-8d64-f800eb7d1f82"
+
+[[r2_buckets]]
+binding = "STORE"
+bucket_name = "hcg-slides"
+
+[vars]
+ACCESS_TEAM = "little-wood-9beb"
+ACCESS_AUD = "8081b823a7cb2711ccc6f5d5371e98121e19a1cae1ce925bb6341816399fdd11"
+ALLOWED_DOMAINS = "e-hcg.com"
+DEV_OPEN = "0"

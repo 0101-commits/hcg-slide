@@ -1,0 +1,12 @@
+{
+  "addin_id": "9e4b5937-139c-4222-a3c4-5fa9c74b578b",
+  "version": "1.1.0.0",
+  "pages_project": "hcg-slides",
+  "pages_url": "https://hcg-slides.pages.dev",
+  "access_team": "little-wood-9beb",
+  "d1_name": "hcg-slides",
+  "r2_bucket": "hcg-slides",
+  "allowed_email_domains": [
+    "e-hcg.com"
+  ]
+}

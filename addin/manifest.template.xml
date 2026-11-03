@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 「HCG 장표」 추가 기능 설명 파일. pack.py 가 중괄호 칸을 config.json 값으로 채움 -->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+  <Id>{{ADDIN_ID}}</Id>
+  <Version>{{VERSION}}</Version>
+  <ProviderName>HCG</ProviderName>
+  <DefaultLocale>ko-KR</DefaultLocale>
+  <DisplayName DefaultValue="HCG 장표"/>
+  <Description DefaultValue="지난 제안서의 표준 장표를 찾아 그대로 넣고, 고객명을 바꿉니다."/>
+  <IconUrl DefaultValue="{{URL}}/icons/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="{{URL}}/icons/icon-64.png"/>
+  <SupportUrl DefaultValue="{{URL}}/help"/>
+  <AppDomains>
+    <AppDomain>{{URL}}</AppDomain>
+{{ACCESS_DOMAIN}}
+  </AppDomains>
+  <Hosts>
+    <Host Name="Presentation"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="PowerPointApi" MinVersion="1.5"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="{{URL}}/pane/"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Presentation">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="Help.Url"/>
+          </GetStarted>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="HCG.Group">
+                <Label resid="Group.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16"/>
+                  <bt:Image size="32" resid="Icon.32"/>
+                  <bt:Image size="80" resid="Icon.80"/>
+                </Icon>
+                <Control xsi:type="Button" id="HCG.OpenPane">
+                  <Label resid="Button.Label"/>
+                  <Supertip>
+                    <Title resid="Button.Label"/>
+                    <Description resid="Button.Tip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16"/>
+                    <bt:Image size="32" resid="Icon.32"/>
+                    <bt:Image size="80" resid="Icon.80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>HCGSlides</TaskpaneId>
+                    <SourceLocation resid="Pane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="{{URL}}/icons/icon-16.png"/>
+        <bt:Image id="Icon.32" DefaultValue="{{URL}}/icons/icon-32.png"/>
+        <bt:Image id="Icon.80" DefaultValue="{{URL}}/icons/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="Pane.Url" DefaultValue="{{URL}}/pane/"/>
+        <bt:Url id="Help.Url" DefaultValue="{{URL}}/help"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="Group.Label" DefaultValue="HCG"/>
+        <bt:String id="Button.Label" DefaultValue="HCG 장표"/>
+        <bt:String id="GetStarted.Title" DefaultValue="HCG 장표가 설치됨"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="Button.Tip" DefaultValue="지난 제안서의 표준 장표를 찾아 지금 파일에 그대로 넣습니다."/>
+        <bt:String id="GetStarted.Description" DefaultValue="홈 리본의 「HCG 장표」 단추를 누르면 오른쪽에 장표 창고가 열립니다."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

@@ -1,0 +1,11 @@
+{
+  "name": "hcg-slides-pane",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev --port 8788"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}

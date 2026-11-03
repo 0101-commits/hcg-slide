@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCG 장표</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="pane.css?v=3">
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+<script src="../vendor/jszip.min.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark">HCG</span><b>HCG 장표</b></div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="store" aria-selected="true">창고</button>
+    <button role="tab" data-tab="parts">부품·아이콘</button>
+    <button role="tab" data-tab="slots">칸</button>
+    <button role="tab" data-tab="check">점검</button>
+  </nav>
+</header>
+
+<main>
+  <!-- 창고 -->
+  <section id="tab-store" class="tab">
+    <div id="list-view">
+      <div class="client-bar">
+        <label for="newClient">새 고객명</label>
+        <input id="newClient" placeholder="예: 한빛소재 — 넣을 때 이전 고객명을 이 이름으로" autocomplete="off">
+      </div>
+      <div class="search">
+        <input id="q" type="search" placeholder="찾기 — 예: PS vs TI, 추진 일정" autocomplete="off">
+      </div>
+      <div class="chips" id="mods"></div>
+      <div class="filters">
+        <select id="fp" aria-label="목적"><option value="">목적 ▾</option></select>
+        <select id="fs" aria-label="구조"><option value="">구조 ▾</option></select>
+        <select id="fi" aria-label="업종"><option value="">업종 ▾</option></select>
+        <label class="tog"><input type="checkbox" id="fbest" checked> 「상」·★만</label>
+        <label class="tog"><input type="checkbox" id="frecent"> 최근 3년</label>
+      </div>
+      <div id="std-wrap">
+        <h3 class="sec">자주 쓰는 표준 장표 <span class="muted" id="total"></span></h3>
+        <div class="grid" id="std"></div>
+      </div>
+      <h3 class="sec" id="res-title">찾은 장표</h3>
+      <div class="grid" id="results"></div>
+      <button class="more" id="more" type="button" hidden>더 보기</button>
+      <p class="empty" id="empty" hidden>맞는 장표가 없음. 낱말을 줄이거나 거름을 풀어 보세요.</p>
+    </div>
+
+    <div id="insert-view" hidden>
+      <button class="back" id="back">‹ 목록</button>
+      <h2 id="ins-title"></h2>
+      <p class="src" id="ins-src"></p>
+      <img id="ins-img" class="preview" alt="">
+      <div class="tags" id="ins-tags"></div>
+
+      <h4>넣는 방식</h4>
+      <label class="opt"><input type="radio" name="fmt" value="KeepSourceFormatting" checked>
+        <span><b>원본 서식 그대로</b><small>지난 장표 모양 그대로</small></span></label>
+      <label class="opt"><input type="radio" name="fmt" value="UseDestinationTheme">
+        <span><b>지금 파일 테마에 맞춤</b><small>지금 파일의 색 · 글꼴로 바뀜</small></span></label>
+
+      <h4>바꿀 말 <span class="muted" id="rep-count"></span></h4>
+      <div id="reps"></div>
+      <button class="link" id="add-rep">+ 바꿀 말 더하기</button>
+
+      <h4 id="num-h">확인할 숫자</h4>
+      <ul class="nums" id="nums"></ul>
+
+      <div class="actions">
+        <button class="ghost" id="cancel">취소</button>
+        <button class="primary" id="do-insert">넣기</button>
+      </div>
+      <p class="hint" id="ins-hint"></p>
+    </div>
+  </section>
+
+  <section id="tab-parts" class="tab" hidden>
+    <div class="later">
+      <b>부품 12개 · HCG 아이콘 414개</b>
+      <p>간트 · 옵션 비교표 · 조직도 같은 HCG 부품과 아이콘은 3단계에서 들어옵니다.</p>
+      <p>지금은 창고에서 비슷한 구조를 찾아 넣으세요 — 위 「구조 ▾」에서 「간트」 「옵션 비교표」 「계층·조직도」.</p>
+    </div>
+  </section>
+  <section id="tab-slots" class="tab" hidden>
+    <div class="later">
+      <b>칸 지도 · 칸 수 바꾸기</b>
+      <p>장표 위에 칸 번호와 글자 수 한도를 보여 주는 기능은 3단계에서 들어옵니다.</p>
+      <p>지금은 Claude 작업창에서 HCG 스킬 <code>hcg-restructure</code>(구조 바꾸기)를 부르세요 — 「5번 장, 칸은 그대로 두고 한빛소재로 글만」.</p>
+    </div>
+  </section>
+  <section id="tab-check" class="tab" hidden>
+    <div class="later">
+      <b>점검 28항목</b>
+      <p>이전 고객명 · 자리표시자 · 회사 수치 · 일정 주수를 한 번에 찾는 점검 탭은 4단계에서 들어옵니다.</p>
+      <p>지금은 Claude 작업창에서 HCG 스킬 <code>hcg-check</code>(점검)를 부르세요. 창고에서 넣은 장에는 출처 표시가 붙어 있어 점검이 따라갑니다.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><span id="who"></span><span id="ver">2단계 · 창고 v1</span></footer>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="pane.js?v=4"></script>
+</body>
+</html>

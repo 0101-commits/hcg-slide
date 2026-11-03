@@ -1,0 +1,19 @@
+# 장표 · 자료(고객 제안서) — 저장소에 올리지 않음
+store/
+dist/
+*.pptx
+*.ppt
+
+# 열쇠 · 배포 상태
+.secrets/
+.deploy.json
+*.env
+
+# 도구가 만드는 것
+node_modules/
+.wrangler/
+__pycache__/
+*.pyc
+skills/_test/
+.omc/
+skills/*.zip
