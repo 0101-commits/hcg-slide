@@ -1,0 +1,302 @@
+[
+ {
+  "code": "T1",
+  "name": "표(일반)",
+  "struct": "일반 표",
+  "count": 99,
+  "variants": [
+   {
+    "id": "s02752",
+    "title": "[Back-up] HCG 고유의 역량 모델",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02782",
+    "title": "II. 추진방안 1. 역량 필요점 도출 Best Practice",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02203",
+    "title": "직군분리 운영방안 수립",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "L2",
+  "name": "3~4단 기둥",
+  "struct": "3~4단 기둥",
+  "count": 12,
+  "variants": [
+   {
+    "id": "s02239",
+    "title": "상시 성과관리 도입 필요성 및 사례",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02241",
+    "title": "평가방식의 최신 Trend",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02251",
+    "title": "1. 평가제도 지향점 정립 벤치마킹",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "F1",
+  "name": "가로 단계",
+  "struct": "가로 단계",
+  "count": 116,
+  "variants": [
+   {
+    "id": "s02516",
+    "title": "Overall Approach",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02557",
+    "title": "Overall Approach",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02595",
+    "title": "Overall Approach",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   }
+  ]
+ },
+ {
+  "code": "L1",
+  "name": "좌우 2단",
+  "struct": "좌우 2단",
+  "count": 93,
+  "variants": [
+   {
+    "id": "s02172",
+    "title": "직무분류 원칙 및 기준 설정",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02181",
+    "title": "수직적 직무 레벨링",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02182",
+    "title": "[참고] 수평적×수직적 직무체계 사례 삼성전자",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "L5",
+  "name": "좌우 비교(전→후)",
+  "struct": "좌우 비교",
+  "count": 29,
+  "variants": [
+   {
+    "id": "s02175",
+    "title": "Type B) 수평적 직무정비 + 수직적 레벨링",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02200",
+    "title": "핵심/비핵심 직무 재분류에 따른 아웃소싱 체계 재검토",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02218",
+    "title": "삼성 직급/호칭체계 개선사례 │ HR Transformation 관점",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "C2",
+  "name": "옵션 비교표",
+  "struct": "옵션 비교표",
+  "count": 16,
+  "variants": [
+   {
+    "id": "s02220",
+    "title": "직급체계 개선 대안",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02180",
+    "title": "직무체계 Benchmarking",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02221",
+    "title": "호칭체계 개선 대안",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "F5",
+  "name": "간트",
+  "struct": "간트",
+  "count": 1,
+  "variants": [
+   {
+    "id": "s02590",
+    "title": "기업문화 개선방안 수립 이행계획 수립",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "H1",
+  "name": "조직도",
+  "struct": "계층·조직도",
+  "count": 6,
+  "variants": [
+   {
+    "id": "s02412",
+    "title": "연봉인상 Scheme 결정",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02502",
+    "title": "HR Fact 분석",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02524",
+    "title": "조직진단 실행 Process",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "H2",
+  "name": "로직 트리",
+  "struct": "로직 트리",
+  "count": 70,
+  "variants": [
+   {
+    "id": "s02173",
+    "title": "직무분류 방법론",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02177",
+    "title": "직무분류체계 수립",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02197",
+    "title": "직무별 특성 및 가치분석 Type A)",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "H6",
+  "name": "중심-방사",
+  "struct": "중심-방사",
+  "count": 40,
+  "variants": [
+   {
+    "id": "s08913",
+    "title": "6. 분자구조",
+    "doc": "@제안서 표준 템플릿_Consulting.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s02192",
+    "title": "Step 4. 직무역량모델링 직무역량의 구분 및 적용범위",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02305",
+    "title": "KPI 활용의 의미",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ },
+ {
+  "code": "H5",
+  "name": "프레임워크 블록",
+  "struct": "프레임워크 블록",
+  "count": 36,
+  "variants": [
+   {
+    "id": "s08899",
+    "title": "1. 면분할 응용",
+    "doc": "@제안서 표준 템플릿_Consulting.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s08900",
+    "title": "1. 면분할 응용",
+    "doc": "@제안서 표준 템플릿_Consulting.pptx",
+    "grade": "상"
+   },
+   {
+    "id": "s08901",
+    "title": "1. 면분할 응용",
+    "doc": "@제안서 표준 템플릿_Consulting.pptx",
+    "grade": "상"
+   }
+  ]
+ },
+ {
+  "code": "D1",
+  "name": "차트 + 시사점",
+  "struct": "차트+시사점",
+  "count": 24,
+  "variants": [
+   {
+    "id": "s02394",
+    "title": "[Back-up] Closed Pay Survey",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02400",
+    "title": "연봉제 전환 필요성",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   },
+   {
+    "id": "s02402",
+    "title": "Pay Band 관리",
+    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
+    "grade": "중"
+   }
+  ]
+ }
+]

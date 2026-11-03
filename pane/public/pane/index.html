@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HCG 장표</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="pane.css?v=3">
+<link rel="stylesheet" href="pane.css?v=4">
 <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 <script src="../vendor/jszip.min.js"></script>
 </head>
@@ -78,18 +78,44 @@
   </section>
 
   <section id="tab-parts" class="tab" hidden>
-    <div class="later">
-      <b>부품 12개 · HCG 아이콘 414개</b>
-      <p>간트 · 옵션 비교표 · 조직도 같은 HCG 부품과 아이콘은 3단계에서 들어옵니다.</p>
-      <p>지금은 창고에서 비슷한 구조를 찾아 넣으세요 — 위 「구조 ▾」에서 「간트」 「옵션 비교표」 「계층·조직도」.</p>
+    <h3 class="sec">HCG 부품 12 <span class="muted">맞는 지난 장표가 없을 때</span></h3>
+    <div class="grid" id="parts"></div>
+    <div id="part-view" hidden>
+      <button class="back" id="part-back">‹ 부품</button>
+      <h2 id="part-title"></h2>
+      <p class="src" id="part-src"></p>
+      <div class="grid one" id="part-vars"></div>
+      <label class="opt"><input type="radio" name="pfmt" value="UseDestinationTheme" checked>
+        <span><b>지금 파일 테마에 맞춤</b><small>지금 파일의 색 · 글꼴로</small></span></label>
+      <label class="opt"><input type="radio" name="pfmt" value="KeepSourceFormatting">
+        <span><b>원본 서식 그대로</b><small>템플릿 모양 그대로</small></span></label>
+      <p class="hint">넣은 뒤 칸 수는 「칸」 탭에서, 간트 기간은 Claude(hcg-restructure)에게.</p>
     </div>
+    <h3 class="sec">HCG 아이콘 <span class="muted" id="icon-count"></span></h3>
+    <div class="search"><input id="iq" type="search" placeholder="아이콘 찾기 — 예: 보상, 평가, 조직" autocomplete="off"></div>
+    <div class="icons" id="icons"></div>
+    <button class="more" id="icon-more" type="button" hidden>더 보기</button>
+    <p class="hint">누르면 지금 장에 넣음(고른 도형이 있으면 그 자리 가까이). 색은 PowerPoint 「그래픽 서식」에서 바꿈.</p>
   </section>
   <section id="tab-slots" class="tab" hidden>
-    <div class="later">
-      <b>칸 지도 · 칸 수 바꾸기</b>
-      <p>장표 위에 칸 번호와 글자 수 한도를 보여 주는 기능은 3단계에서 들어옵니다.</p>
-      <p>지금은 Claude 작업창에서 HCG 스킬 <code>hcg-restructure</code>(구조 바꾸기)를 부르세요 — 「5번 장, 칸은 그대로 두고 한빛소재로 글만」.</p>
+    <div class="slot-head">
+      <div><b id="slot-title">고른 장 없음</b><small id="slot-sum"></small></div>
+      <button class="ghost sm" id="slot-read" type="button">다시 읽기</button>
     </div>
+    <div class="slot-tools" id="slot-cols" hidden>
+      <span>열 수</span>
+      <button class="ghost sm" id="col-minus" type="button">−</button>
+      <b id="col-n">0</b>
+      <button class="ghost sm" id="col-plus" type="button">+</button>
+      <label class="tog"><input type="checkbox" id="keep-orig" checked> 원래 장 남기기</label>
+    </div>
+    <div class="slot-tools" id="slot-tables" hidden></div>
+    <div class="slot-tools">
+      <label class="tog"><input type="checkbox" id="show-nums"> 칸 번호 보기</label>
+      <span class="muted" id="slot-warn"></span>
+    </div>
+    <ol class="slots" id="slots"></ol>
+    <p class="hint">글을 다시 쓰려면 칸의 「Claude에게」를 누르고 Claude 작업창에 붙여넣기(Ctrl+V). 글자 수는 폭 가중(한글 1 · 영문 소문자 0.55)이고 넘침 · 겹침은 어림값.</p>
   </section>
   <section id="tab-check" class="tab" hidden>
     <div class="later">
@@ -100,8 +126,10 @@
   </section>
 </main>
 
-<footer class="foot"><span id="who"></span><span id="ver">2단계 · 창고 v1</span></footer>
+<footer class="foot"><span id="who"></span><span id="ver">3단계 · 칸 · 부품 · 아이콘</span></footer>
 <div class="toast" id="toast" role="status" hidden></div>
-<script src="pane.js?v=4"></script>
+<script src="slotops.js?v=1"></script>
+<script src="pane.js?v=5"></script>
+<script src="tools.js?v=1"></script>
 </body>
 </html>

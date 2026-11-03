@@ -394,6 +394,7 @@
       b.onclick = () => {
         document.querySelectorAll(".tabs button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
         document.querySelectorAll(".tab").forEach((t) => (t.hidden = t.id !== "tab-" + b.dataset.tab));
+        document.dispatchEvent(new CustomEvent("hcg-tab", { detail: b.dataset.tab }));
       };
     });
     $("#q").addEventListener("input", searchSoon);
@@ -408,6 +409,8 @@
 
   async function start(inOffice) {
     state.inOffice = inOffice;
+    // tools.js(부품 · 아이콘 · 칸 탭)가 같이 쓰는 것
+    window.HCGPane = { api, toast, toBase64, esc, inOffice: () => state.inOffice, getClient };
     wire();
     loadClient();
     if (inOffice) {

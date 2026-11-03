@@ -6,6 +6,8 @@
     "dev": "wrangler pages dev --port 8788"
   },
   "devDependencies": {
+    "@xmldom/xmldom": "^0.9.12",
+    "jszip": "^3.10.2",
     "wrangler": "4.149.0"
   }
 }
