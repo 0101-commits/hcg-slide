@@ -12,9 +12,20 @@ APP_XML = (b'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n'
 NAME_RX = re.compile(rb'(<a:theme\b[^>]*\bname=")([^"]*)(")|(<p:cSld\b[^>]*\bname=")([^"]*)(")')
 
 
+CORE_TAGS = re.compile(rb"(<(dc:title|dc:subject|cp:keywords|dc:description|cp:category|dc:creator|cp:lastModifiedBy|cp:contentStatus)\b[^>]*>)(.*?)(</\2>)", re.S)
+THEME_NAME = re.compile(rb'(\bname=")([^"]*)(")')
+
+
 def scrub_bytes(name, data, names):
     if name == "docProps/app.xml":
         return APP_XML
+    if name == "docProps/core.xml":  # 제목 · 주제 · 작성자 등 — 원본 제안서 정보
+        return CORE_TAGS.sub(lambda m: m.group(1) + (b"HCG" if m.group(2) in (b"dc:creator", b"cp:lastModifiedBy") else b"") + m.group(4), data)
+    if name.startswith("ppt/theme/") and name.endswith(".xml"):  # 테마 · 색 · 글꼴 묶음 이름
+        def fixn(m):
+            v = m.group(2).decode("utf-8", "ignore")
+            return m.group(1) + (b"HCG" if any(n in v for n in names) else m.group(2)) + m.group(3)
+        data = THEME_NAME.sub(fixn, data)
     if name.startswith(("ppt/theme/", "ppt/slideMasters/", "ppt/slideLayouts/")) and name.endswith(".xml"):
         def fix(m):
             pre, val, post = (m.group(1), m.group(2), m.group(3)) if m.group(1) else (m.group(4), m.group(5), m.group(6))

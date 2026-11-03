@@ -123,3 +123,17 @@ code { background: #fff; border: 1px solid var(--line); border-radius: 4px; padd
 .slots .ask { margin-left: auto; border: 0; background: none; color: var(--navy); font-size: 11px; cursor: pointer; padding: 0; }
 
 [hidden] { display: none !important; }
+.tier2 { color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 0 3px; font-size: 10px; }
+.chk-sum { display: flex; gap: 6px; margin: 8px 0; }
+.lv { border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+.lv.fix { background: #fbe9e6; color: #8f2d1d; }
+.lv.confirm { background: var(--warn-bg); color: var(--warn); }
+.lv.ref { background: var(--chip); color: var(--ink-2); }
+.fd { border: 1px solid var(--line); border-left-width: 3px; border-radius: 8px; padding: 6px 8px; margin-bottom: 6px; }
+.fd.fix { border-left-color: #b4462b; }
+.fd.confirm { border-left-color: var(--warn); }
+.fd .r1 { display: flex; justify-content: space-between; gap: 6px; font-size: 12px; }
+.fd .where { color: var(--muted); font-size: 11px; white-space: nowrap; }
+.fd .tx { font-size: 12px; margin: 3px 0; overflow-wrap: anywhere; }
+.fd .how { font-size: 11px; color: var(--muted); }
+.fd .bt { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 3px; }

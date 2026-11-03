@@ -75,7 +75,7 @@
       `<span class="do">${esc(it.action)}</span> · ${esc(it.p_name || it.mod)}`;
     b.innerHTML = `<img loading="lazy" alt="" src="/api/thumb/${it.id}.jpg">
       <div class="t">${it.star ? '<span class="star">★</span> ' : ""}${esc(it.kind_name || it.title || "(제목 없음)")}</div>
-      <div class="m">${meta}${it.year ? " · " + esc(it.year) : ""}</div>`;
+      <div class="m">${meta}${it.year ? " · " + esc(it.year) : ""}${it.tier === 2 ? ' · <span class="tier2">재사용 중</span>' : ""}</div>`;
     b.title = `${it.title}\n${it.doc} ${it.page}쪽`;
     b.onclick = () => openInsert(it.id);
     return b;
@@ -189,6 +189,7 @@
     window.scrollTo(0, 0);
     $("#ins-title").textContent = (m.star ? "★ " : "") + (m.kind_name || m.title || "(제목 없음)");
     $("#ins-src").textContent = `원본 · ${m.doc} ${m.page}쪽${m.client ? " · " + m.client : ""}${m.industry ? " · " + m.industry : ""}${m.year ? " · " + m.year : ""}`;
+    $("#ins-img").onerror = () => { $("#ins-img").onerror = null; $("#ins-img").src = `/api/thumb/${id}.jpg`; };
     $("#ins-img").src = `/api/img/${id}.jpg`;
     $("#ins-tags").innerHTML = [m.mod, m.p_name, m.s_name, m.grade ? `재사용 ${m.grade}` : "", m.action].filter(Boolean).map((t) => `<span>${esc(t)}</span>`).join("");
     const text = `${m.title} ${m.text} ${m.note || ""}`;

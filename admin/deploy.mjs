@@ -90,7 +90,7 @@ async function data() {
   if (process.env.SKIP_D1 !== "1") {  // SKIP_D1=1 이면 R2 만
     await wr(["d1", "execute", cfg.d1_name, "--remote", "--yes", "--file", "schema.sql"]);
     // 판이 바뀌며 더한 칸(2단계 업종) — 이미 있으면 건너뜀
-    for (const m of ["migrate_2.sql"]) {
+    for (const m of ["migrate_2.sql", "migrate_3.sql"]) {
       if ((state.migrations || []).includes(m)) continue;
       try { await wr(["d1", "execute", cfg.d1_name, "--remote", "--yes", "--file", m], { quiet: true }); }
       catch (e) { if (!/duplicate column/i.test(String(e))) throw e; }
@@ -102,11 +102,14 @@ async function data() {
   // R2 — API 로 바로 올림(4개 동시, 한도에 걸리면 쉬었다 다시). 크기 · 고친 시각이 같으면 건너뜀
   state.r2 = state.r2 || {};
   const jobs = [];
+  // 「중」(tier 2) 장표는 큰 미리보기(img)를 올리지 않음 — 작업창이 작은 그림(thumb)으로 대신 보여 줌(올리는 수 ⅓ 줄임)
+  const tier = Object.fromEntries((existsSync(join(OUT, "meta.json")) ? JSON.parse(readFileSync(join(OUT, "meta.json"), "utf8")) : []).map((m) => [m.id, m.tier]));
   for (const id of readdirSync(join(OUT, "pptx")).filter((f) => f.endsWith(".pptx")).map((f) => f.slice(0, -5))) {
     jobs.push([`pptx/${id}.pptx`, join(OUT, "pptx", `${id}.pptx`), "application/vnd.openxmlformats-officedocument.presentationml.presentation"]);
-    jobs.push([`img/${id}.jpg`, join(OUT, "img", `${id}.jpg`), "image/jpeg"]);
+    if (tier[id] !== 2) jobs.push([`img/${id}.jpg`, join(OUT, "img", `${id}.jpg`), "image/jpeg"]);
     jobs.push([`thumb/${id}.jpg`, join(OUT, "thumb", `${id}.jpg`), "image/jpeg"]);
   }
+  if (existsSync(join(OUT, "facets.json"))) jobs.unshift(["meta/facets.json", join(OUT, "facets.json"), "application/json"]);
   let done = 0, skip = 0, fail = 0;
   const base = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/r2/buckets/${cfg.r2_bucket}/objects/`;
   const pool = Array.from({ length: 4 }, async () => {

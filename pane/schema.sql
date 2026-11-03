@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS slides (
   action TEXT,                -- 넣은 뒤 할 일(그대로 · 고객명만 · 칸 글 · 숫자 · 차트 · 막대 · 주차)
   client TEXT, year TEXT,     -- 원본 고객 · 연도
   industry TEXT,              -- 고객 업종(2단계)
+  tier INTEGER,               -- 1 = 재사용 「상」 · 별표 · 표준, 2 = 「중」(5단계)
   doc TEXT, page INTEGER,     -- 원본 파일 이름 · 쪽
   bytes INTEGER,
   added TEXT DEFAULT (date('now')),

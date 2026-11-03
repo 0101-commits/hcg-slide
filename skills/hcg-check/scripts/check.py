@@ -68,8 +68,8 @@ class Ctx:
         self.today = datetime.date.today()
         self.kinds = [self.kind(s, i) for i, s in enumerate(self.slides)]
 
-    def add(self, item, level, slide, where, msg, suggest=''):
-        self.f.append({'item': item, 'level': level, 'slide': slide, 'where': where, 'msg': msg, 'suggest': suggest})
+    def add(self, item, level, slide, where, msg, suggest='', **extra):
+        self.f.append(dict({'item': item, 'level': level, 'slide': slide, 'where': where, 'msg': msg, 'suggest': suggest}, **extra))
 
     def kind(self, s, i):
         lay, t = s['layout'], s['title']
@@ -98,6 +98,9 @@ def ctx_snip(text, m, n=18):
 
 # --------------------------------------------------------------- 자동 16
 
+FOLD_NAMES = 5   # 한 장표에 사전 고객명이 이 수 이상이면 장표당 한 건(확인할 것)으로 묶음
+
+
 def c1_old_names(c):
     if not c.a.old_names:
         c.status[1] = '입력 없음(--old-names)'
@@ -111,6 +114,7 @@ def c1_old_names(c):
     names = [n for n in names if not (keep and (n in keep or keep in n))]
     for s in c.slides:
         cases = re.search(r'\[참고\]|Back-?up|사례|주요\s*고객|Clients?|고객사|레퍼런스|실적', s['title'] + s['message'], re.I)
+        hits = []   # (칸, 사전 이름, 앞뒤 글)
         for nm, tx in list(texts_of(s, True)) + [('그림 설명', p['descr']) for p in s['pictures'] if p['descr']]:
             low = tx.lower()
             for n in names:
@@ -122,11 +126,22 @@ def c1_old_names(c):
                 if hit:
                     m = re.search(re.escape(nl), low)
                     snip = tx[max(0, m.start() - 12):m.end() + 12].replace('\n', ' ') if m else ''
-                    if cases:
-                        c.add(1, CONFIRM, s['no'], nm, '이전 고객명 「%s」 — 사례·고객 목록 장표라 의도된 것일 수 있음: …%s…' % (n, snip),
-                              '사례면 A사처럼 익명 표기, 새 고객 장표라면 현 고객명으로')
-                    else:
-                        c.add(1, FIX, s['no'], nm, '이전 고객명 「%s」 잔존: …%s…' % (n, snip), '현 고객명으로 바꿈')
+                    hits.append((nm, n, snip))
+        distinct = []
+        for nm, n, snip in hits:
+            if n not in distinct:
+                distinct.append(n)
+        if len(distinct) >= FOLD_NAMES:
+            # 사전 이름이 많은 장표는 주요 고객사·실적·인력 목록일 가능성이 커서 장표당 한 건으로 묶음
+            c.add(1, CONFIRM, s['no'], '', '고객명 %d개(실적 목록일 수 있음): %s%s' % (len(distinct), ', '.join(distinct[:6]), '…' if len(distinct) > 6 else ''),
+                  '실적 목록이면 그대로, 이전 제안의 잔재면 바꿈', names=distinct)
+            continue
+        for nm, n, snip in hits:
+            if cases:
+                c.add(1, CONFIRM, s['no'], nm, '이전 고객명 「%s」 — 사례·고객 목록 장표라 의도된 것일 수 있음: …%s…' % (n, snip),
+                      '사례면 A사처럼 익명 표기, 새 고객 장표라면 현 고객명으로')
+            else:
+                c.add(1, FIX, s['no'], nm, '이전 고객명 「%s」 잔존: …%s…' % (n, snip), '현 고객명으로 바꿈')
     cp = c.d['core']
     for k, v in list(cp.items()):
         for n in names:
@@ -170,8 +185,27 @@ def c2_placeholders(c):
     c.status[2] = '실행'
 
 
+MONTH_TOK = re.compile(r'(20\d\d)\s*(?:[.\-]\s*(\d{1,2})|년\s*(\d{1,2})\s*월?)')
+
+
+def _month_near(t, m):
+    """수치 문구가 든 줄에 붙은 기준월(예: 2026.01 · 2025년 1월 · (2025.01 기준)) → 'YYYY.MM' 또는 None"""
+    a = t.rfind('\n', 0, m.start()) + 1
+    b = t.find('\n', m.end())
+    for mm in MONTH_TOK.finditer(t[a:(len(t) if b < 0 else b)]):
+        mo = int(mm.group(2) or mm.group(3))
+        if 1 <= mo <= 12:
+            return '%s.%02d' % (mm.group(1), mo)
+    return None
+
+
 def _figs(c):
     """장표별 (고객 수, HR 인력, 서비스 연수, 기준월) 값 찾기"""
+    return [x[:4] for x in _figs_ex(c)]
+
+
+def _figs_ex(c):
+    """_figs + (읽은 그대로의 글자, 붙은 기준월)"""
     out = []
     pc = [r'고객(?:사|기업)?(?:\s*수)?[^\d\n]{0,8}?(\d[\d,]{2,5})\s*(?:여\s*)?(?:개\s*사|개|사|곳|社)',
           r'(\d[\d,]{2,5})\s*(?:여\s*)?(?:개\s*사|개|사|곳|社)\s*(?:의\s*)?(?:고객|이상의 고객|고객사)']
@@ -184,20 +218,20 @@ def _figs(c):
         for kind, pats in (('고객수', pc), ('HR인력', pp), ('서비스연수', py)):
             for p in pats:
                 for m in re.finditer(p, t):
-                    out.append((s['no'], kind, int(m.group(1).replace(',', '')), ctx_snip(t, m)))
+                    out.append((s['no'], kind, int(m.group(1).replace(',', '')), ctx_snip(t, m), m.group(1), _month_near(t, m)))
         for m in re.finditer(pm, t):
-            out.append((s['no'], '기준월', '%s.%02d' % (m.group(1), int(m.group(2))), ctx_snip(t, m)))
+            out.append((s['no'], '기준월', '%s.%02d' % (m.group(1), int(m.group(2))), ctx_snip(t, m), m.group(0), None))
     return out
 
 
 def c3_company_figures(c):
-    found = _figs(c)
+    found = _figs_ex(c)
     byk = defaultdict(set)
-    for no, k, v, snip in found:
+    for no, k, v, snip, raw, mon in found:
         byk[k].add(v)
     for k in ('고객수', 'HR인력', '서비스연수'):
         if len(byk[k]) > 1:
-            where = '; '.join('장표 %d: %s' % (no, v) for no, kk, v, sn in found if kk == k)
+            where = '; '.join('장표 %d: %s' % (no, v) for no, kk, v, sn, raw, mon in found if kk == k)
             c.add(3, FIX, None, k, '%s 값이 장표마다 다름 (%s)' % (k, where), '한 값으로 통일(수치 표 기준)')
     if c.figures:
         ok = {'고객수': set(), 'HR인력': set()}
@@ -207,11 +241,16 @@ def c3_company_figures(c):
                 ok['고객수'].add(r['고객수'])
                 ok['HR인력'].add(r['HR인력'])
                 months.add(r['기준월'])
-        for no, k, v, snip in found:
+        for no, k, v, snip, raw, mon in found:
             if k in ok and ok[k] and v not in ok[k]:
                 old = [r['기준월'] for r in c.figures['기준'] if r.get({'고객수': '고객수', 'HR인력': 'HR인력'}[k]) == v]
-                c.add(3, FIX, no, k, '%s %s 가 수치 표와 다름(…%s…)%s' % (k, v, snip, (' · 옛 기준 ' + ','.join(old)) if old else ''),
-                      '수치 표 값(%s)으로 갱신, 기준월 함께 표기 — ※표는 관리자 확인 필요' % '/'.join(str(x) for x in sorted(ok[k])))
+                oldtxt = (' · 옛 기준 ' + ','.join(old)) if old else ''
+                sug = '수치 표 값(%s)으로 갱신, 기준월 함께 표기 — ※표는 관리자 확인 필요' % '/'.join(str(x) for x in sorted(ok[k]))
+                if mon:
+                    # 기준월이 붙은 수치: 공식 기준월과 다르면 옛 기준 값이라 고칠 것
+                    c.add(3, FIX, no, k, '%s %s 가 기준월 %s 로 표기돼 공식 기준월(%s)과 다름(…%s…)%s' % (k, v, mon, ', '.join(sorted(months)), snip, oldtxt), sug)
+                else:
+                    c.add(3, CONFIRM, no, k, '%s %s 가 수치 표와 다름 — 기준월 표기가 없어 옛 제안의 당시 값일 수 있음(…%s…)%s' % (k, v, snip, oldtxt), sug)
             if k == '기준월' and months and v not in months:
                 c.add(3, CONFIRM, no, '기준월', '기준월 %s 가 수치 표(%s)와 다름' % (v, ', '.join(sorted(months))), '기준월 갱신')
         c.status[3] = '실행(수치 표 대조)' + (' · 표는 관리자 확인 필요' if c.figures.get('관리자_확인_필요') else '')
@@ -355,11 +394,28 @@ TAIL_DA = re.compile(r'(?:다|한다|이다|된다|있다)\s*\.?$')
 TAIL_POLITE = re.compile(r'(?:습니다|입니다|합니다|드립니다|세요|해요|예요|이에요)\s*\.?$')
 
 
+GREET_TAIL = re.compile(r'(?:감사합니다|감사드립니다|드립니다|안녕하십니까|안녕하세요)\s*[.!]?$')
+GREET_SLIDE = re.compile(r'인사말|Greeting|Thank\s*you|감사합니다|감사의\s*말', re.I)
+
+
+def _in_quote(s):
+    """줄 끝이 따옴표 안이면 True(인용문)"""
+    inq = False
+    for ch in s:
+        if ch in '“「『‘':
+            inq = True
+        elif ch in '”」』’':
+            inq = False
+        elif ch == '"':
+            inq = not inq
+    return inq
+
+
 def c17_endings(c):
     cnt = Counter()
     ex = defaultdict(list)
     for s, k in zip(c.slides, c.kinds):
-        if k != 'body':
+        if k != 'body' or GREET_SLIDE.search(s['title'] + ' ' + s['message']):
             continue
         cand = [s['message']] if s['message'] else []
         for it in s['items']:
@@ -368,6 +424,8 @@ def c17_endings(c):
         for ln in cand:
             ln = ln.strip()
             if TAIL_POLITE.search(ln):
+                if GREET_TAIL.search(ln) or _in_quote(ln):
+                    continue   # 인사말·인용문은 뺌
                 cnt['습니다체'] += 1
                 ex['습니다체'].append((s['no'], ln))
             elif TAIL_NOUN.search(ln):
@@ -378,10 +436,14 @@ def c17_endings(c):
                 cnt['~다체'] += 1
                 ex['~다체'].append((s['no'], ln))
     main = cnt.most_common(1)[0][0] if cnt else None
-    if len(cnt) > 1 and cnt.get('~함체', 0) >= 0.5 * sum(cnt.values()):
-        for k in ('습니다체', '~다체'):
-            for no, ln in ex[k][:5]:
-                c.add(17, FIX, no, '종결 어미', '「~함」체 문서에 %s 문장: …%s' % (k, ln[-24:]), '「~함」으로 통일')
+    total = sum(cnt.values())
+    # 목표 체는 「~함」: 습니다체 문장을 확인할 것으로, 문서 전체가 습니다체면 한 건으로 묶음
+    if total >= 8 and cnt['습니다체'] >= 0.7 * total:
+        c.add(17, CONFIRM, None, '종결 어미', '전체가 습니다체 — ~함 체로 바꿀지 (습니다체 %d문장 / 판정 %d문장)' % (cnt['습니다체'], total),
+              '「~함」체로 일괄 변환할지 사람이 정함')
+    else:
+        for no, ln in ex['습니다체']:
+            c.add(17, CONFIRM, no, '종결 어미', '습니다체 문장(목표 「~함」체): …%s' % ln[-24:], '「~함」으로 통일(인사말·인용이면 그대로)')
     if ex['하겠음']:
         c.add(17, CONFIRM, ex['하겠음'][0][0], '종결 어미', '「~하겠음」 %d곳 (장표 %s)' % (len(ex['하겠음']), sorted({n for n, _ in ex['하겠음']})[:8]), '「~함」·「~할 것임」 중 하나로 통일')
     c.status[17] = '실행(주 어미: %s)' % (main or '판정할 문장 없음')

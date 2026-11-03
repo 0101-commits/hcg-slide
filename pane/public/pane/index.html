@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HCG 장표</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="pane.css?v=4">
+<link rel="stylesheet" href="pane.css?v=6">
 <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 <script src="../vendor/jszip.min.js"></script>
 </head>
@@ -118,18 +118,26 @@
     <p class="hint">글을 다시 쓰려면 칸의 「Claude에게」를 누르고 Claude 작업창에 붙여넣기(Ctrl+V). 글자 수는 폭 가중(한글 1 · 영문 소문자 0.55)이고 넘침 · 겹침은 어림값.</p>
   </section>
   <section id="tab-check" class="tab" hidden>
-    <div class="later">
-      <b>점검 28항목</b>
-      <p>이전 고객명 · 자리표시자 · 회사 수치 · 일정 주수를 한 번에 찾는 점검 탭은 4단계에서 들어옵니다.</p>
-      <p>지금은 Claude 작업창에서 HCG 스킬 <code>hcg-check</code>(점검)를 부르세요. 창고에서 넣은 장에는 출처 표시가 붙어 있어 점검이 따라갑니다.</p>
+    <div class="slot-head">
+      <div><b>점검 28항목</b><small>규칙으로 찾는 것은 여기서, 문장 판단은 Claude(hcg-check)에게</small></div>
+      <button class="primary sm" id="chk-run" type="button">점검하기</button>
     </div>
+    <div class="slot-tools">
+      <label class="tog"><input type="checkbox" id="chk-public"> 공공 · 입찰형(무기명) 규정도</label>
+    </div>
+    <div class="chk-sum" id="chk-sum"></div>
+    <button class="more" id="chk-all" type="button" hidden>모두 바꾸기</button>
+    <div id="chk-list"></div>
+    <p class="hint">새 고객명(창고 탭 맨 위)이 있으면 그 이름은 이전 고객명에서 뺌. 창고에서 넣은 장은 원래 고객명을 따로 기억해 둠. 회사 수치 기준 = 2026.04(958사 · 219명).</p>
   </section>
 </main>
 
-<footer class="foot"><span id="who"></span><span id="ver">3단계 · 칸 · 부품 · 아이콘</span></footer>
+<footer class="foot"><span id="who"></span><span id="ver">판 1.2 · 창고 · 부품 · 칸 · 점검</span></footer>
 <div class="toast" id="toast" role="status" hidden></div>
 <script src="slotops.js?v=1"></script>
-<script src="pane.js?v=5"></script>
-<script src="tools.js?v=1"></script>
+<script src="pane.js?v=7"></script>
+<script src="checkops.js?v=2"></script>
+<script src="tools.js?v=2"></script>
+<script src="check.js?v=2"></script>
 </body>
 </html>

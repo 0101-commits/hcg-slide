@@ -3,7 +3,7 @@
 #       ..\..\.venv\Scripts\python -X utf8 store_build.py --all             (973장 전부, 2단계)
 # 결과: app/store/out/{pptx,img,thumb}/<id>.* + meta.json + d1_seed.sql
 # 원본(OneDrive 02 Proposal · 08 Reference)은 읽기만 한다.
-import argparse, collections, copy, json, os, re, sys, time
+import argparse, collections, copy, hashlib, json, os, re, sys, time
 from pathlib import Path
 
 from PIL import Image
@@ -102,9 +102,10 @@ def known_names():
         c, _ = client_year(nm + "/x")
         if c:
             names.add(c)
-    dm = WORK / "retag" / "docs_map.json"
-    if dm.exists():
-        names |= {v[0] for k, v in json.load(open(dm, encoding="utf-8")).items() if not k.startswith("_") and v[0]}
+    for nm in ("docs_map.json", "docs_map_2.json"):
+        dm = WORK / "retag" / nm
+        if dm.exists():
+            names |= {v[0] for k, v in json.load(open(dm, encoding="utf-8")).items() if not k.startswith("_") and v[0]}
     return sorted({n for n in names if len(n) >= 2}, key=len, reverse=True)
 
 
@@ -118,9 +119,10 @@ def load_retag():
                 codes = [x.strip() for x in c[1].split("/") if x.strip() in MOD_LABEL]
                 if codes:
                     rt[c[0]] = codes
-    f = WORK / "retag" / "docs_map.json"
-    if f.exists():
-        dm = {k: v for k, v in json.load(open(f, encoding="utf-8")).items() if not k.startswith("_")}
+    for name in ("docs_map.json", "docs_map_2.json"):
+        f = WORK / "retag" / name
+        if f.exists():
+            dm.update({k: v for k, v in json.load(open(f, encoding="utf-8")).items() if not k.startswith("_")})
     return rt, dm
 
 
@@ -304,6 +306,8 @@ def main():
     ap.add_argument("--limit", type=int, default=50)
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--force", action="store_true", help="이미 만든 장도 다시")
+    ap.add_argument("--grades", default="상", help="재사용 등급(쉼표). 5단계 = 상,중")
+    ap.add_argument("--shard", default="", help="i/n — 문서를 n 갈래로 나눠 i 번째만 자름(동시에 여러 개 돌릴 때). 목록은 안 씀")
     a = ap.parse_args()
     limit = 0 if a.all else a.limit
 
@@ -315,10 +319,14 @@ def main():
     idx, conv, refs = load_index()
     tags = [json.loads(l) for l in open(WORK / "ref" / "review" / "tags_all.jsonl", encoding="utf-8")]
     slides = {json.loads(l)["k"]: json.loads(l) for l in open(WORK / "ref" / "review" / "slides_all.jsonl", encoding="utf-8")}
+    grades = set(a.grades.split(",")) | ({"中"} if "중" in a.grades else set())
+    price = re.compile(r"가격제안|견적|04 가격")
     cand = []
     for r in tags:
-        if r["rep"] != r["k"] or not (r["re"] == "상" or r["star"]):
+        if r["rep"] != r["k"] or not (r["re"] in grades or r["star"]):
             continue
+        if r["p"] == "P26" or price.search(r["name"]):
+            continue  # 가격 · 견적 장표는 창고에 넣지 않음
         s = slides.get(r["k"], {})
         r["_text0"] = (r.get("title") or "") + " " + s.get("text", "")
         r["_mods"] = RETAG.get(f"s{r['k']:05d}") or mods_of(r["_text0"], r["p"])
@@ -355,17 +363,26 @@ def main():
     if (OUT / "meta.json").exists():
         old = {m["id"]: m for m in json.load(open(OUT / "meta.json", encoding="utf-8"))}
     t0 = time.time()
+    shard = tuple(int(x) for x in a.shard.split("/")) if a.shard else None
     for n, r in enumerate(sel, 1):
         sid = f"s{r['k']:05d}"
+        if shard and int(hashlib.md5(r["doc"].encode()).hexdigest(), 16) % shard[1] != shard[0]:
+            continue
         kind = r.get("_kind", "")
         pp = OUT / "pptx" / f"{sid}.pptx"
         try:
-            if a.force or not pp.exists() or sid not in old:
+            if a.force or not pp.exists():
                 slide = cut_slide(r["_src"], r["i"], pp)
                 text, note = slide_text(slide)
                 scrub.scrub_file(pp, NAMES)
-            else:
+            elif sid in old:
                 text, note = old[sid]["text"], old[sid].get("note", "")
+            else:  # 다른 갈래가 이미 자른 장 — 파일에서 글만 읽음
+                text, note = slide_text(Presentation(str(pp)).slides[0])
+            if shard:
+                if n % 200 == 0:
+                    print(f"[{a.shard}] {n}/{len(sel)} · {time.time() - t0:.0f}s", flush=True)
+                continue
             # 확인: 다시 열어 장 1개인지
             chk = Presentation(str(pp))
             assert len(chk.slides) == 1, f"장 수 {len(chk.slides)}"
@@ -391,6 +408,7 @@ def main():
                 "p": r["p"], "p_name": PURPOSE.get(r["p"], ""), "s": r["s"], "s_name": STRUCT.get(r["s"], r["s"]),
                 "grade": r["re"], "star": bool(r["star"]), "kind": kind, "kind_name": STD[kind][0] if kind else "",
                 "action": action_of(r["p"], r["s"], kind), "client": client, "olds": olds[:8], "year": year, "industry": industry,
+                "tier": 1 if (r["re"] == "상" or r["star"] or kind) else 2,
                 "doc": re.split(r"[\\/]", r["name"])[-1], "src": r["src"], "page": r["i"],
                 "bytes": pp.stat().st_size,
             })
@@ -400,10 +418,15 @@ def main():
             print(f"[{n}/{len(sel)}] {sid} 실패 {e!r}", flush=True)
             if pp.exists():
                 pp.unlink()
+    if shard:
+        print(f"갈래 {a.shard} 끝 · 실패 {len(fails)} · {time.time() - t0:.0f}s")
+        for x in fails:
+            print("  실패", *x)
+        return
     json.dump(meta, open(OUT / "meta.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     with open(OUT / "d1_seed.sql", "w", encoding="utf-8") as f:
         f.write("DELETE FROM slides;\n")
-        cols = ["id", "k", "title", "text", "olds", "mods", "mod", "p", "p_name", "s", "s_name", "grade", "star", "kind", "kind_name", "action", "client", "industry", "year", "doc", "page", "bytes"]
+        cols = ["id", "k", "title", "text", "olds", "mods", "mod", "p", "p_name", "s", "s_name", "grade", "star", "kind", "kind_name", "action", "client", "industry", "year", "doc", "page", "bytes", "tier"]
         for m in meta:
             vals = []
             for c in cols:
@@ -414,7 +437,20 @@ def main():
                     v = int(v)
                 vals.append(str(v) if isinstance(v, int) else "'" + str(v).replace("'", "''") + "'")
             f.write(f"INSERT INTO slides ({','.join(cols)}) VALUES ({','.join(vals)});\n")
-    print("끝", len(meta), "장 · 실패", len(fails), f"· {time.time() - t0:.0f}s")
+    fc = {"total": len(meta), "mods": collections.Counter(), "purposes": collections.Counter(), "structs": collections.Counter(), "industries": collections.Counter()}
+    for m in meta:
+        for x in m["mods"]:
+            fc["mods"][x] += 1
+        fc["purposes"][(m["p"], m["p_name"])] += 1
+        fc["structs"][(m["s"], m["s_name"])] += 1
+        fc["industries"][m["industry"]] += 1
+    facets = {"total": len(meta), "mods": dict(fc["mods"]),
+              "purposes": [{"p": k[0], "p_name": k[1], "n": n} for k, n in fc["purposes"].most_common()],
+              "structs": [{"s": k[0], "s_name": k[1], "n": n} for k, n in fc["structs"].most_common()],
+              "industries": [{"industry": k, "n": n} for k, n in fc["industries"].most_common()],
+              "tiers": dict(collections.Counter(m["tier"] for m in meta))}
+    json.dump(facets, open(OUT / "facets.json", "w", encoding="utf-8"), ensure_ascii=False)
+    print("끝", len(meta), "장 · 실패", len(fails), f"· {time.time() - t0:.0f}s", "· 단계", facets["tiers"])
     for x in fails:
         print("  실패", *x)
 

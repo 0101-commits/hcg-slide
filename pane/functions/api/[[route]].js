@@ -2,7 +2,7 @@
 // 바인딩: DB(D1 검색 목록) · STORE(R2 한 장 PPTX · 그림)
 // 환경 값: ACCESS_TEAM(예: hcg) · ACCESS_AUD(Access 앱 AUD) · ALLOWED_DOMAINS(예: e-hcg.com) · DEV_OPEN("1"이면 로그인 검사 생략 — 설정 전 시험용)
 
-const COLS = "id,k,title,mods,mod,p,p_name,s,s_name,grade,star,kind,kind_name,action,client,industry,year,doc,page,bytes";
+const COLS = "id,k,title,mods,mod,p,p_name,s,s_name,grade,star,kind,kind_name,action,client,industry,year,doc,page,bytes,tier";
 let jwksCache = null;
 
 function json(data, status = 200, extra = {}) {
@@ -72,7 +72,7 @@ async function search(url, env) {
   if (p) { where.push("p = ?"); args.push(p); }
   if (s) { where.push("s = ?"); args.push(s); }
   if (ind) { where.push("industry = ?"); args.push(ind); }
-  if (best) where.push("(grade = '상' OR star = 1 OR kind <> '')");
+  if (best) where.push("tier = 1");  // 재사용 「상」 · 별표 · 표준(색인으로 빨리)
   if (since) { where.push("year >= ?"); args.push(String(since)); }
   for (const term of q.split(/\s+/).filter(Boolean).slice(0, 6)) {
     where.push("(title LIKE ? OR text LIKE ? OR doc LIKE ? OR kind_name LIKE ? OR p_name LIKE ? OR s_name LIKE ? OR client LIKE ? OR industry LIKE ?)");
@@ -89,6 +89,9 @@ async function search(url, env) {
 }
 
 async function facets(env) {
+  // 관리자가 올린 거름 개수(store/out/facets.json → R2 meta/facets.json)가 있으면 그것을 씀 — D1 을 덜 읽음
+  const cached = await env.STORE.get("meta/facets.json");
+  if (cached) return await cached.json();
   const [ps, ss, inds, total] = await Promise.all([
     env.DB.prepare("SELECT p, p_name, COUNT(*) n FROM slides GROUP BY p, p_name ORDER BY n DESC").all(),
     env.DB.prepare("SELECT s, s_name, COUNT(*) n FROM slides GROUP BY s, s_name ORDER BY n DESC").all(),
