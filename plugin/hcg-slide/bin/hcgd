@@ -1,0 +1,4 @@
+#!/bin/sh
+# HCG 장표 Draft 단계 실행(Git Bash 용) — 플러그인 안 내장 Python 으로 scripts/hcgd.py 를 부름
+here="$(cd "$(dirname "$0")" && pwd)"
+exec "$here/../python/python.exe" -X utf8 "$here/../scripts/hcgd.py" "$@"
