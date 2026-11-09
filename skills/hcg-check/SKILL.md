@@ -26,7 +26,7 @@ description: HCG 제안서 점검 28항목(이전 고객명·자리표시자·�
 사용자가 PPTX 를 올림 → 코드 실행 공간에서 `scripts/check.py` 를 돌려 `report.md` 를 만들고, 반자동 후보를 읽어 판단을 덧붙여 돌려준다. 점검만 하고 파일은 고치지 않는다(고쳐 달라고 하면 `hcg-restructure` 로 새 파일을 만든다). 필요한 것: python-pptx(없으면 `pip install python-pptx`).
 
 ### 2. Claude for PowerPoint
-파일 시스템·파이썬 없음 → 스크립트 대신 같은 항목을 지침으로 점검한다. `read_slide_text`·`list_slide_shapes` 로 장 글·도형·레이아웃을 읽고, `references/items.md` 의 「찾는 법」 칼럼대로 직접 찾는다. 사전은 `references/client_names.txt`·`company_figures.json` 을 읽어 쓴다. 고칠 것은 사용자가 요청하면 `edit_slide_text` 로 칸 글만 바꾸고 `verify_slide_visual` 로 넘침을 확인한다. 보고서는 대화에 표로 적는다(형식은 `references/input_schemas.md` 끝).
+파일 시스템·파이썬 없음 → 스크립트 대신 같은 항목을 지침으로 점검한다. 먼저 `references/hcg_marks.md` 의 코드로 「HCG 장표」 작업창이 남긴 표시(새 고객명 `HCG_CLIENT`, 넣은 장의 원본 고객명 `HCG_OLD` 등)를 읽는다. `read_slide_text`·`list_slide_shapes` 로 장 글·도형·레이아웃을 읽고, `references/items.md` 의 「찾는 법」 칼럼대로 직접 찾는다. 사전은 `references/client_names.txt`·`company_figures.json` 을 읽어 쓴다. 고칠 것은 사용자가 요청하면 `edit_slide_text` 로 칸 글만 바꾸고 `verify_slide_visual` 로 넘침을 확인한다. 보고서는 대화에 표로 적는다(형식은 `references/input_schemas.md` 끝).
 
 ### 3. Claude Code(CLI)
 PC 의 파이썬 + python-pptx 로 `scripts/` 를 직접 돌린다. 폴더째 일괄 점검 가능(파일마다 `check.py` 를 돌려 보고서를 모으고 요약표를 만든다). 원본 제안서 폴더(`OneDrive … 02 Proposal` 등)는 읽기만 하고, 보고서는 다른 폴더에 쓴다. 실행 파이썬은 환경에 맞게(한글 출력이 깨지면 `python -X utf8`).
@@ -63,6 +63,7 @@ PC 의 파이썬 + python-pptx 로 `scripts/` 를 직접 돌린다. 폴더째 �
 | `references/input_schemas.md` | rules·terms·requests·meeting 파일을 만들 때, 옵션 목록 |
 | `references/client_names.txt` | 이전 고객명 사전(1번). 관리자가 `admin/make_client_names.py` 로 갱신 |
 | `references/company_figures.json` | 회사 수치 표(3번). 공식 값 = 2026.04 기준 958사 · 219명 |
+| `references/hcg_marks.md` | 「HCG 장표」 작업창이 파일에 남긴 표시(새 고객명 · 넣은 장 출처 · 원본 고객명 · 칸 번호 상자)를 읽을 때. PowerPoint 에서 점검을 시작할 때 한 번 |
 
 ## 지킬 것
 

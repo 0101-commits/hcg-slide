@@ -17,3 +17,11 @@ __pycache__/
 skills/_test/
 .omc/
 skills/*.zip
+
+# 사용설명서 캡처 · PDF — 창고 장표 그림이 들어 있음(장표처럼 저장소에 안 올림)
+docs/img/
+docs/*.pdf
+.kapi/
+
+# 플러그인에 넣어 다니는 Python 실행기(53MB) — 임베디드 Python 3.10 + python-pptx · lxml · Pillow · XlsxWriter · pypdf 7.0.0 · olefile 0.47
+plugin/hcg-slide/python/

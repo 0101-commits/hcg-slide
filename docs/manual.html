@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCG 장표 사용설명서</title>
+<style>
+:root {
+  color-scheme: light;
+  --navy: #1f3a68; --navy-2: #2d4f8a; --accent: #c8553d; --ink: #1d2230; --muted: #5d6573;
+  --line: #dfe3ea; --bg-2: #f4f6f9; --ok: #2e7d4f; --warn-bg: #fdf3e6;
+}
+@page { size: A4; margin: 14mm 14mm 16mm; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: var(--ink); font-family: "Pretendard", "Malgun Gothic", "맑은 고딕", sans-serif;
+  font-size: 10.5pt; line-height: 1.62; word-break: keep-all; overflow-wrap: break-word; }
+.page { max-width: 182mm; margin: 0 auto; padding: 0 0 8mm; }
+h1 { font-size: 22pt; color: var(--navy); margin: 0 0 2mm; letter-spacing: -0.02em; }
+.lead { color: var(--muted); margin: 0 0 6mm; font-size: 11pt; }
+h2 { font-size: 14.5pt; color: var(--navy); margin: 9mm 0 3mm; padding-bottom: 1.5mm; border-bottom: 2px solid var(--navy); break-after: avoid; }
+h2 .no { display: inline-block; min-width: 8mm; color: var(--accent); }
+h3 { font-size: 11.5pt; margin: 5mm 0 2mm; break-after: avoid; }
+p { margin: 0 0 2.5mm; }
+ol, ul { margin: 0 0 3mm; padding-left: 5.5mm; }
+li { margin: 1mm 0; }
+b, strong { font-weight: 700; }
+.k { display: inline-block; padding: 0 1.6mm; border: 1px solid var(--line); border-radius: 1.2mm; background: var(--bg-2); font-size: 9.5pt; white-space: nowrap; }
+.muted { color: var(--muted); }
+.box { background: var(--bg-2); border-radius: 2mm; padding: 3mm 4mm; margin: 3mm 0; break-inside: avoid; }
+.warn { background: var(--warn-bg); border-left: 3px solid var(--accent); border-radius: 0 2mm 2mm 0; padding: 2.5mm 4mm; margin: 3mm 0; break-inside: avoid; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.5mm; margin: 3mm 0 4mm; }
+.tile { border: 1px solid var(--line); border-radius: 2mm; padding: 3mm; break-inside: avoid; }
+.tile b { display: block; color: var(--navy); font-size: 11pt; margin-bottom: 1mm; }
+.tile span { font-size: 9.5pt; color: var(--muted); line-height: 1.5; display: block; }
+.flow { display: flex; align-items: stretch; gap: 0; margin: 3mm 0 4mm; break-inside: avoid; }
+.flow .st { flex: 1; border: 1px solid var(--navy-2); border-radius: 2mm; padding: 2.5mm 2.5mm 2mm; background: #fff; position: relative; }
+.flow .st i { font-style: normal; display: inline-block; width: 5mm; height: 5mm; line-height: 5mm; border-radius: 50%; background: var(--navy); color: #fff; text-align: center; font-size: 8.5pt; font-weight: 700; margin-right: 1mm; }
+.flow .st b { font-size: 10pt; }
+.flow .st span { display: block; font-size: 9pt; color: var(--muted); line-height: 1.45; margin-top: 1mm; }
+.flow .ar { width: 5mm; display: flex; align-items: center; justify-content: center; color: var(--navy-2); font-size: 12pt; }
+.fig { display: grid; grid-template-columns: 62mm 1fr; gap: 6mm; align-items: start; margin: 3mm 0 5mm; break-inside: avoid; }
+.fig img { width: 62mm; border: 1px solid var(--line); border-radius: 2mm; display: block; }
+.fig figcaption { font-size: 9pt; color: var(--muted); margin-top: 1.5mm; }
+.fig .txt h3:first-child { margin-top: 0; }
+table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 9.8pt; break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 1.8mm 2.4mm; text-align: left; vertical-align: top; }
+th { background: var(--bg-2); font-weight: 700; white-space: nowrap; }
+.mark-blank { font-family: Consolas, monospace; color: var(--accent); font-weight: 700; }
+.chip-demo { display: inline-block; background: rgba(21,37,69,.84); color: #fff; border-radius: 3mm; padding: 0 2mm; font-size: 8.5pt; font-weight: 600; }
+.foot { margin-top: 8mm; padding-top: 3mm; border-top: 1px solid var(--line); color: var(--muted); font-size: 9pt; }
+.pb { break-before: page; }
+@media screen { body { background: #eef1f5; } .page { background: #fff; padding: 14mm; margin: 8mm auto; box-shadow: 0 1px 4px rgba(0,0,0,.08); } }
+@media screen and (max-width: 720px) { .fig { grid-template-columns: 1fr; } .grid4 { grid-template-columns: 1fr 1fr; } .flow { flex-direction: column; } .flow .ar { width: auto; height: 5mm; transform: rotate(90deg); } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>HCG 장표 사용설명서</h1>
+<p class="lead">PowerPoint 안에서 지난 제안서 장표를 찾아 넣고, 모양만 가져오고, 점검까지 하는 도구 · 판 1.3 (2026.11)</p>
+
+<div class="grid4">
+  <div class="tile"><b>창고</b><span>지난 제안서 장표 7,185장. 같은 이름 장표는 한 묶음으로 보고, 고객명을 바꿔 넣음</span></div>
+  <div class="tile"><b>부품 · 아이콘</b><span>구조 25가지의 모양만(글은 <span class="mark-blank">///</span>) · HCG 아이콘 413개</span></div>
+  <div class="tile"><b>칸</b><span>고른 장의 칸 지도 · 글자 수 한도 · 열 수 바꾸기</span></div>
+  <div class="tile"><b>점검</b><span>이전 고객명 · 자리표시자 · 회사 수치 등 28항목을 찾아 그 장으로</span></div>
+</div>
+<p>글을 새로 쓰거나 고치는 일은 PowerPoint의 <b>Claude</b> 작업창에서 HCG 스킬 3개(초안 · 구조 바꾸기 · 점검)로 합니다. HCG 장표 작업창의 <span class="k">Claude에게 ›</span> 단추가 요청 문장을 복사해 주므로 Claude 작업창에 붙여넣기만 하면 됩니다.</p>
+
+<h2><span class="no">1</span>처음 한 번 설치(5분)</h2>
+<div class="flow">
+  <div class="st"><i>1</i><b>압축 풀기</b><span>받은 「HCG장표_설치.zip」을 아무 폴더에나 풂</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>2</i><b>설치.bat</b><span>두 번 클릭 → 「설치 끝」 창이 뜨면 됨. 관리자 권한 필요 없음</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>3</i><b>추가 기능 넣기</b><span>PowerPoint를 다시 켜고 공유 폴더에서 「HCG 장표」 추가</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>4</i><b>로그인</b><span>홈 리본 「HCG 장표」 단추 → 회사 메일로 받은 숫자 입력</span></div>
+</div>
+<ol>
+  <li><b>설치.bat</b>를 두 번 클릭합니다. 처음에 Windows가 「알 수 없는 게시자」 경고 창을 띄우면 <span class="k">추가 정보</span> → <span class="k">실행</span>을 누릅니다.</li>
+  <li>PowerPoint를 <b>모두 닫고</b> 다시 켭니다.</li>
+  <li><span class="k">홈</span> → <span class="k">추가 기능</span> → 맨 아래 <span class="k">추가 기능 더 보기</span> → 위쪽 <span class="k">공유 폴더</span> → <b>HCG 장표</b> → <span class="k">추가</span>. 이것은 처음 한 번만 합니다. 그다음부터는 켤 때마다 홈 리본 오른쪽에 <b>HCG 장표</b> 단추가 있습니다.</li>
+  <li>단추를 누르면 오른쪽에 작업창이 열립니다. 처음 한 번 회사 메일(@e-hcg.com)을 넣고, 메일로 온 숫자를 넣어 로그인합니다.</li>
+  <li><b>Claude 스킬 올리기</b>(한 번, 새 판을 받으면 다시): Claude 앱(데스크톱 · 웹) → <span class="k">설정</span> → <span class="k">기능</span> → <span class="k">스킬</span> → <span class="k">스킬 올리기</span>에서 압축을 푼 폴더의 「Claude앱_스킬」 안 zip 3개를 하나씩 올리고 켭니다. 앱에 올린 스킬은 PowerPoint의 Claude 작업창에서도 보입니다.</li>
+</ol>
+<div class="warn">「설치 끝」 창이 <b>개발자 추가 기능 방식</b>이라고 하면 이 PC는 공유 폴더 방식을 쓸 수 없습니다. 그때는 PowerPoint를 켤 때마다 <span class="k">홈</span> → <span class="k">추가 기능</span> → 「개발자 추가 기능」의 <b>HCG 장표</b>를 누릅니다. PowerPoint에 공식 <b>Claude</b> 단추가 없으면 <span class="k">추가 기능</span>에서 「Claude」를 찾아 추가하고 회사 Claude 계정으로 로그인합니다.</div>
+
+<h2 class="pb"><span class="no">2</span>창고 — 지난 장표 찾아 넣기</h2>
+<div class="flow">
+  <div class="st"><i>1</i><b>새 고객명</b><span>이번 고객 이름을 한 번 적음(파일마다 기억)</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>2</i><b>찾기 · 거르기</b><span>낱말 · HR 모듈 · 목적 · 구조 · 업종</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>3</i><b>묶음 → 모양</b><span>같은 이름 장표 묶음에서 모양을 고름</span></div>
+  <div class="ar">›</div>
+  <div class="st"><i>4</i><b>넣기</b><span>고객명이 바뀐 채 고른 장 뒤에 들어감</span></div>
+</div>
+
+<figure class="fig">
+  <div><img src="img/01_store.png" alt="창고 첫 화면 — 새 고객명, 찾기, HR 모듈 거름, 자주 쓰는 표준 장표 카드"><figcaption>창고 첫 화면</figcaption></div>
+  <div class="txt">
+    <h3>장표 이름과 묶음</h3>
+    <p>장표 이름은 장 맨 위 <b>어깨끈</b>(작은 빨간 제목, 예: 「프로젝트 수행 방안 › Overall Approach」)의 마지막 칸입니다. 고객마다 이름이 조금 달라도(예: 「AJ네트웍스의 가설적 이슈」) 고객명을 떼고 <b>같은 이름끼리 한 묶음</b>으로 보여 줍니다.</p>
+    <table>
+      <tr><th>카드에 보이는 것</th><th>뜻</th></tr>
+      <tr><td>겹친 카드 · <span class="chip-demo">95장</span></td><td>같은 이름 장표가 여러 장인 묶음. 누르면 모양 목록</td></tr>
+      <tr><td>모양 N가지</td><td>묶음 안에서 서로 다른 모양 수(상자 수 · 글만 다른 장은 한 모양)</td></tr>
+      <tr><td>제안서 N곳</td><td>이 장표를 쓴 고객(제안서) 수 — 많을수록 자주 쓰는 장표</td></tr>
+      <tr><td>★</td><td>잘 만든 장표로 골라 둔 것(별표)</td></tr>
+      <tr><td>재사용 중</td><td>「상」보다 한 단계 아래 등급. 「「상」·★만」을 끄면 보임</td></tr>
+    </table>
+    <p><b>자주 쓰는 표준 장표</b>는 고객 4곳 이상에 나온 묶음입니다(추진 일정 · 프로젝트 목적 및 범위 · 수행조직 · Why HCG · Overall Approach 등). 처음엔 6개만 보이고 <span class="k">표준 장표 더 보기</span>로 나머지를 엽니다.</p>
+  </div>
+</figure>
+
+<h3>찾기 · 거르기</h3>
+<table>
+  <tr><th>칸</th><th>쓰는 법</th></tr>
+  <tr><td>찾기</td><td>「추진 일정」 「가설적 이슈」 「PS vs TI」처럼 적습니다. 장표 이름에 그 말이 있는 묶음이 먼저 나옵니다. 낱말은 띄어 여러 개 적을 수 있습니다.</td></tr>
+  <tr><td>HR 모듈</td><td>평가 · 보상 · 직급 · 직무 · 조직 · 육성 · 조직문화 · 인력 · 시스템 · 채용 · 노사 · 공통. 숫자는 장 수</td></tr>
+  <tr><td>목적 · 구조 · 업종</td><td>목적(예: 목적 · 범위 · 전체 접근), 구조(예: 가로 단계 · 간트), 고객 업종으로 좁힘</td></tr>
+  <tr><td>「상」·★만</td><td>켜 두면 잘 만든 장표만(기본). 끄면 「재사용 중」 장표까지</td></tr>
+  <tr><td>최근 3년</td><td>최근 3년 제안서 장표만</td></tr>
+</table>
+
+<figure class="fig">
+  <div><img src="img/02_family.png" alt="Overall Approach 묶음의 모양 목록 — 같은 모양 장 수 표시"><figcaption>묶음을 누른 화면 — 많이 쓴 모양부터</figcaption></div>
+  <div class="txt">
+    <h3>모양 고르기</h3>
+    <p>묶음을 누르면 그 이름 장표의 <b>모양 목록</b>이 많이 쓴 모양부터 나옵니다. <span class="chip-demo">같은 모양 6장</span>은 거의 같은 장표가 6장 있다는 뜻이고, 그중 가장 최근 · 잘 만든 장을 보여 줍니다.</p>
+    <p>카드 아래에는 원래 어깨끈 전체와 원본 고객 · 연도가 나옵니다. 마음에 드는 모양을 누르면 넣기 화면으로 갑니다. <span class="k">‹ 모양 목록</span>으로 돌아올 수 있습니다.</p>
+  </div>
+</figure>
+
+<figure class="fig">
+  <div><img src="img/05_replace.png" alt="넣기 화면 — 넣는 방식, 바꿀 말 AJ네트웍스에서 한빛소재로, 확인할 숫자"><figcaption>넣기 화면(아래쪽) — 바꿀 말이 미리 채워짐</figcaption></div>
+  <div class="txt">
+    <h3>넣기</h3>
+    <ol>
+      <li><b>넣는 방식</b> — <b>원본 서식 그대로</b>: 지난 장표 모양 그대로. <b>지금 파일 테마에 맞춤</b>: 지금 파일의 색 · 글꼴로 바뀜.</li>
+      <li><b>바꿀 말</b> — 원본 고객명이 새 고객명으로 바뀌도록 미리 채워져 있습니다. 「장표 글에서 4곳」처럼 몇 군데 바뀌는지 보입니다. 연도 등 다른 말도 <span class="k">+ 바꿀 말 더하기</span>로 더합니다. 실적 · 투입 인력 장표에 적힌 다른 고객 이름은 실적 목록이므로 그대로 둡니다.</li>
+      <li><b>확인할 숫자</b> — 지난 고객의 값입니다. 새 고객 값으로 바꾸거나 「(가정)」으로 표시하세요.</li>
+      <li>PowerPoint 왼쪽에서 장 하나를 고른 뒤 <span class="k">N번 장 뒤에 넣기</span>를 누릅니다. 아무 장도 고르지 않으면 맨 뒤에 들어갑니다. 넣은 장에는 출처가 기록됩니다.</li>
+      <li>넣은 뒤 뜨는 <span class="k">Claude에게 ›</span>를 누르면 「지난 고객의 이름 · 숫자 · 기간 · 사례가 남은 곳을 찾아 고칠 안」을 부탁하는 문장이 복사됩니다. Claude 작업창에 붙여넣기(Ctrl+V)만 하면 됩니다.</li>
+    </ol>
+    <p class="muted">PowerPoint 밖(브라우저)에서 열면 단추가 「PPTX 받기」로 바뀌고 고친 장표를 파일로 받습니다.</p>
+  </div>
+</figure>
+
+<h2 class="pb"><span class="no">3</span>부품 · 아이콘 — 모양만 가져오기</h2>
+<p>맞는 지난 장표가 없을 때 씁니다. 부품은 지난 장표와 HCG 템플릿에서 <b>도형과 구조만</b> 가져온 것입니다. 글이 들어갈 자리는 모두 <span class="mark-blank">///</span>로, 그림 · 로고 자리는 회색 「그림」 상자로 바뀌어 있어 지난 고객의 내용이 따라오지 않습니다.</p>
+<figure class="fig">
+  <div><img src="img/07_part.png" alt="3~4단 기둥 부품 — 글 자리가 /// 로 된 모양"><figcaption>부품 「3~4단 기둥」의 모양 목록</figcaption></div>
+  <div class="txt">
+    <h3>부품 25가지</h3>
+    <table>
+      <tr><th>나누기</th><th>부품</th></tr>
+      <tr><td>배치</td><td>좌우 2단 · 3~4단 기둥 · 카드 격자 · 위 요약 + 아래 상세 · 좌우 비교(전→후) · 줄 구조</td></tr>
+      <tr><td>흐름</td><td>가로 단계 · 세로 단계 · 순환 · 로드맵 · 타임라인 · 간트</td></tr>
+      <tr><td>구조</td><td>조직도 · 로직 트리 · 피라미드 · 하우스 · 프레임워크 블록 · 중심-방사 · 벤 · 동심원</td></tr>
+      <tr><td>비교 · 숫자 · 표</td><td>2×2 매트릭스 · 옵션 비교표 · 평가표 · 차트 + 시사점 · 숫자 카드 · 표(일반) · 역할표</td></tr>
+    </table>
+    <ol>
+      <li>부품을 누르면 모양이 최대 10가지 나옵니다(「HCG 템플릿」 또는 「지난 제안서에서 뽑은 모양 · N곳에서 씀」).</li>
+      <li>넣는 방식을 고르고 <span class="k">이 모양 넣기</span>를 누르면 새 장으로 들어갑니다.</li>
+      <li>뜨는 <span class="k">Claude에게 ›</span>를 눌러 붙여넣으면 Claude가 <span class="mark-blank">///</span> 자리마다 이번 제안 내용을 채우고, 그림 상자에 맞는 아이콘 · 그림을 제안합니다. 칸 수는 「칸」 탭에서 바꿉니다.</li>
+    </ol>
+  </div>
+</figure>
+<figure class="fig">
+  <div><img src="img/08_icons.png" alt="아이콘 찾기 — 보상으로 찾은 아이콘 목록"><figcaption>아이콘 찾기</figcaption></div>
+  <div class="txt">
+    <h3>HCG 아이콘 413개</h3>
+    <p>부품 · 아이콘 탭 아래쪽에서 「보상」 「평가」 「조직」처럼 찾습니다. 아이콘을 누르면 지금 장에 들어갑니다(도형을 고르고 누르면 그 가까이). 색은 PowerPoint의 <span class="k">그래픽 서식</span>에서 바꿉니다.</p>
+  </div>
+</figure>
+
+<h2><span class="no">4</span>칸 — 고른 장의 칸 다루기</h2>
+<p>PowerPoint에서 장을 하나 고르고 「칸」 탭을 열면 그 장의 <b>칸 지도</b>가 나옵니다.</p>
+<ul>
+  <li><b>칸마다 글자 수 한도</b>와 넘침 · 겹침 어림이 보입니다(한글 1, 영문 소문자 0.55로 셈).</li>
+  <li><b>열 수</b> <span class="k">−</span> <span class="k">+</span> — 가로로 늘어선 칸(단계 · 기둥)을 줄이거나 늘린 새 장을 만듭니다. 「원래 장 남기기」를 켜 두면 원래 장은 그대로 둡니다. 열을 늘리면 글이 빽빽해질 수 있어 안내가 뜹니다.</li>
+  <li><b>표 행 지우기</b> — 표가 있으면 행을 골라 지웁니다.</li>
+  <li><b>칸 번호 보기</b> — 장 위에 칸 번호를 잠깐 붙여, Claude에게 「3번 칸을 줄여 줘」처럼 말할 수 있게 합니다. 끄면 번호가 사라집니다.</li>
+  <li>칸의 <span class="k">Claude에게</span>를 누르면 그 칸의 글자 수 한도에 맞춰 다시 써 달라는 문장이 복사됩니다.</li>
+</ul>
+
+<h2><span class="no">5</span>점검 — 내기 전에 한 번</h2>
+<ol>
+  <li><span class="k">점검하기</span>를 누르면 지금 파일 전체에서 이전 고객명 · 자리표시자 · 작업 메모 · 옛 회사 수치 · 일정 주수 불일치 등 <b>28항목</b> 가운데 규칙으로 찾을 수 있는 것을 찾아 목록으로 보여 줍니다.</li>
+  <li>항목을 누르면 <b>그 장 · 그 칸</b>으로 갑니다. 이전 고객명과 옛 회사 수치는 <span class="k">모두 바꾸기</span>로 한 번에 고칩니다.</li>
+  <li>공공기관 · 입찰 제안이면 <b>「공공 · 입찰형(무기명) 규정도」</b>를 켭니다. 무기명 위반(회사 이름 등) · 수행 실적 기간 같은 공공 규정도 찾습니다. 그림으로 된 로고와 차트 안 글은 찾지 못하니 눈으로 한 번 더 봅니다.</li>
+  <li>문장 판단이 필요한 나머지는 <span class="k">남은 것 Claude에게 ›</span>로 넘깁니다.</li>
+</ol>
+<div class="box">맨 위 「새 고객명」에 적은 이름은 이전 고객명에서 뺍니다. 창고에서 넣은 장은 원래 고객명을 따로 기억해 두어 바꾸지 못한 곳을 찾아 줍니다. 회사 수치 기준은 2026.04(고객 958사 · 인원 219명)입니다.</div>
+
+<h2><span class="no">6</span>Claude와 함께 쓰기</h2>
+<table>
+  <tr><th>스킬</th><th>이럴 때</th><th>이렇게 부탁</th></tr>
+  <tr><td><b>hcg-draft</b><br>초안</td><td>요청서(RFP) · 회의 메모로 제안서 뼈대를 잡을 때</td><td>「/hcg-draft 이 요청서로 목차와 장별 주장 문장, 창고에서 쓸 장표 후보를 뽑아 줘」</td></tr>
+  <tr><td><b>hcg-restructure</b><br>구조 바꾸기</td><td>넣은 장표 · 부품의 글을 새 고객에 맞게, 칸은 그대로 둘 때</td><td>「/hcg-restructure 5번 장 글을 한빛소재에 맞게, 칸 · 서식은 그대로」</td></tr>
+  <tr><td><b>hcg-check</b><br>점검</td><td>내기 전 전체 점검 보고서가 필요할 때</td><td>「/hcg-check 이 파일 점검해 줘」</td></tr>
+</table>
+<p>HCG 장표 작업창의 <span class="k">Claude에게 ›</span> 단추는 위 같은 문장을 알맞게 만들어 복사해 줍니다. PowerPoint 홈 리본의 <b>Claude</b> 단추로 작업창을 열고 붙여넣기(Ctrl+V) → 보내기.</p>
+
+<h2><span class="no">7</span>안 될 때</h2>
+<table>
+  <tr><th>이럴 때</th><th>이렇게</th></tr>
+  <tr><td>「HCG 장표」 단추가 안 보임</td><td><span class="k">홈</span> → <span class="k">추가 기능</span> → <span class="k">추가 기능 더 보기</span> → <span class="k">공유 폴더</span>에서 「HCG 장표」를 추가했는지 확인. 목록에 없으면 PowerPoint를 모두 닫고 설치.bat를 다시 실행</td></tr>
+  <tr><td>「로그인이 필요함」</td><td>작업창의 <span class="k">다시 로그인</span>을 누르고 회사 메일로 받은 숫자를 넣음</td></tr>
+  <tr><td>장표가 이상하게 들어감</td><td>Ctrl+Z로 되돌리고 넣는 방식(원본 서식 그대로 ↔ 지금 파일 테마에 맞춤)을 바꿔 봄</td></tr>
+  <tr><td>Claude 작업창에 HCG 스킬이 안 보임</td><td>Claude 앱 → 설정 → 기능 → 스킬에서 3개가 켜져 있는지 확인. 새 판을 받았으면 zip 3개를 다시 올림</td></tr>
+  <tr><td>찾는 장표가 안 나옴</td><td>「「상」·★만」을 끄고, 낱말을 줄여 봄(예: 「보상 시뮬레이션」 → 「Simulation」)</td></tr>
+</table>
+<p><b>지우기</b> — 압축을 푼 폴더의 <b>제거.bat</b>를 두 번 클릭합니다. 그 밖의 문제는 화면을 찍어 관리자에게 보내 주세요.</p>
+
+<p class="foot">HCG 장표 판 1.3 · 창고 7,185장(같은 이름 묶음 3,867 · 자주 쓰는 표준 묶음 209) · 부품 25가지(모양 236) · 아이콘 413개</p>
+</div>
+</body>
+</html>

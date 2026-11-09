@@ -114,6 +114,17 @@
     all.hidden = !pairs.size;
     all.textContent = `모두 바꾸기 (${pairs.size}가지)`;
     all.onclick = () => replaceAll([...pairs.values()]);
+    // 규칙으로 못 고치는 것(고칠 것 중 글 바꾸기가 아닌 것 + 확인할 것)을 한 번에 Claude 에게
+    const left = f.filter((x) => (x.level === "fix" && !textFix(x)) || x.level === "confirm");
+    const ask = $("#chk-ask");
+    ask.hidden = !left.length;
+    ask.textContent = `남은 ${left.length}건 Claude에게 ›`;
+    ask.onclick = () => {
+      const lines = left.slice(0, 30).map((x) => `- ${x.slide ? x.slide + "번 장" : "전체"}${x.shape ? " · " + x.shape : ""} · ${x.name}: 「${(x.text || "").slice(0, 40)}」`);
+      const nc = H().getClient();
+      const msg = `/hcg-check 「HCG 장표」 점검에서 규칙으로 못 고친 ${left.length}건임${nc ? `(새 고객 「${nc}」)` : ""}. 문맥을 보고 장마다 고칠 안을 표로 내 줘. 고치는 것은 내가 고르면 할 것.\n` + lines.join("\n") + (left.length > 30 ? `\n… 외 ${left.length - 30}건` : "");
+      H().askClaude(msg);
+    };
   }
 
   function item(x) {
@@ -178,7 +189,8 @@
           const frames = [];
           for (const s of shapes.items) {
             if (s.type === "Group") { await walk(s.group.shapes); continue; }
-            if (s.type === "Table" || s.type === "Image" || s.type === "Line") continue;
+            // 글 상자가 있는 도형만(차트 · SmartArt · 개체는 글 상자를 읽으면 오류가 나 장 전체 바꾸기가 실패함)
+            if (!["GeometricShape", "TextBox", "Placeholder", "Freeform", "Callout"].includes(s.type)) continue;
             const tr = s.textFrame.textRange;
             tr.load("text");
             frames.push(tr);

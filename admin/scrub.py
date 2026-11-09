@@ -75,6 +75,9 @@ def scrub_file(path, names):
         shutil.move(str(tmp), str(path))
     else:
         tmp.unlink()
+    # 잘려 나간 장이 viewProps 연결로 숨어 남으면 PowerPoint 가 못 엶 + 다른 장 내용이 남음 → 닿지 않는 부품 정리(11-04)
+    import orphans
+    changed |= bool(orphans.clean_file(path))
     return changed
 
 

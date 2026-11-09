@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HCG 장표</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="pane.css?v=6">
+<link rel="stylesheet" href="pane.css?v=9">
 <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 <script src="../vendor/jszip.min.js"></script>
 </head>
@@ -13,10 +13,10 @@
 <header class="top">
   <div class="brand"><span class="mark">HCG</span><b>HCG 장표</b></div>
   <nav class="tabs" role="tablist">
-    <button role="tab" data-tab="store" aria-selected="true">창고</button>
-    <button role="tab" data-tab="parts">부품·아이콘</button>
-    <button role="tab" data-tab="slots">칸</button>
-    <button role="tab" data-tab="check">점검</button>
+    <button role="tab" data-tab="store" aria-selected="true">Library</button>
+    <button role="tab" data-tab="parts">Component</button>
+    <button role="tab" data-tab="slots">Revision</button>
+    <button role="tab" data-tab="check">Check</button>
   </nav>
 </header>
 
@@ -25,11 +25,15 @@
   <section id="tab-store" class="tab">
     <div id="list-view">
       <div class="client-bar">
-        <label for="newClient">새 고객명</label>
-        <input id="newClient" placeholder="예: 한빛소재 — 넣을 때 이전 고객명을 이 이름으로" autocomplete="off">
+        <label for="newClient">고객사명</label>
+        <input id="newClient" placeholder="예: 한빛소재 — 삽입할 때 이전 고객명을 이 이름으로" autocomplete="off">
+      </div>
+      <div class="plan-bar">
+        <button type="button" class="link" id="plan-open">Dummy 제안서 ›</button>
+        <span id="plan-banner" hidden><b id="plan-banner-n"></b> <button type="button" class="link" id="plan-open2">Library로 채우기 ›</button></span>
       </div>
       <div class="search">
-        <input id="q" type="search" placeholder="찾기 — 예: PS vs TI, 추진 일정" autocomplete="off">
+        <input id="q" type="search" placeholder="찾기 — 예: 추진 일정, 가설적 이슈, Overall Approach" autocomplete="off">
       </div>
       <div class="chips" id="mods"></div>
       <div class="filters">
@@ -39,14 +43,45 @@
         <label class="tog"><input type="checkbox" id="fbest" checked> 「상」·★만</label>
         <label class="tog"><input type="checkbox" id="frecent"> 최근 3년</label>
       </div>
+      <div class="chips" id="chaps"></div>
       <div id="std-wrap">
-        <h3 class="sec">자주 쓰는 표준 장표 <span class="muted" id="total"></span></h3>
-        <div class="grid" id="std"></div>
+        <h3 class="sec" id="std-title">유형 <span class="muted" id="std-n"></span> <span class="muted" id="total"></span></h3>
+        <p class="hint sm" id="std-hint">제안서 안에서 하는 역할로 묶은 장표 — 누르면 Layout별로 봄</p>
+        <div id="std"></div>
+        <button class="more" id="std-more" type="button" hidden>유형 더 보기</button>
       </div>
-      <h3 class="sec" id="res-title">찾은 장표</h3>
+      <h3 class="sec" id="res-title" hidden>그 밖의 장표</h3>
       <div class="grid" id="results"></div>
       <button class="more" id="more" type="button" hidden>더 보기</button>
       <p class="empty" id="empty" hidden>맞는 장표가 없음. 낱말을 줄이거나 거름을 풀어 보세요.</p>
+    </div>
+
+    <div id="fam-view" hidden>
+      <button class="back" id="fam-back">‹ 목록</button>
+      <h2 id="fam-title"></h2>
+      <p class="src" id="fam-src"></p>
+      <div class="chips" id="fam-mods"></div>
+      <div class="grid" id="fam-vars"></div>
+      <button class="more" id="fam-more" type="button" hidden>Layout 더 보기</button>
+    </div>
+
+    <div id="plan-view" hidden>
+      <button class="back" id="plan-back">‹ 목록</button>
+      <h2>Dummy 제안서</h2>
+      <p class="src" id="plan-sum"></p>
+      <div class="plan-tools">
+        <select id="plan-ind" aria-label="업종 우선"><option value="">업종 상관없이</option></select>
+        <label class="tog"><input type="checkbox" id="plan-keep"> Dummy 장 남기기</label>
+      </div>
+      <div id="plan-list"></div>
+      <button class="primary" id="plan-fill" type="button" hidden>모두 Library로 채우기</button>
+      <h4>계획 붙여넣기 <span class="muted">Claude 작업창이 장을 직접 못 만들었을 때</span></h4>
+      <ol class="hint">
+        <li><button type="button" class="link" id="plan-copy">Claude에게 보낼 요청 문장 복사 ›</button> → Claude 작업창에 붙여넣고 고객사 · 회의 내용 · 스콥을 채워 보냄</li>
+        <li>Claude 답의 HCG_PLAN 블록을 아래에 붙여넣고 「Dummy 장 만들기」</li>
+      </ol>
+      <textarea id="plan-paste" rows="5" placeholder='HCG_PLAN {"client": "한빛소재", "slides": [ … ]}'></textarea>
+      <button class="ghost" id="plan-make" type="button">Dummy 장 만들기</button>
     </div>
 
     <div id="insert-view" hidden>
@@ -56,88 +91,89 @@
       <img id="ins-img" class="preview" alt="">
       <div class="tags" id="ins-tags"></div>
 
-      <h4>넣는 방식</h4>
+      <h4>삽입 서식</h4>
       <label class="opt"><input type="radio" name="fmt" value="KeepSourceFormatting" checked>
         <span><b>원본 서식 그대로</b><small>지난 장표 모양 그대로</small></span></label>
       <label class="opt"><input type="radio" name="fmt" value="UseDestinationTheme">
         <span><b>지금 파일 테마에 맞춤</b><small>지금 파일의 색 · 글꼴로 바뀜</small></span></label>
 
-      <h4>바꿀 말 <span class="muted" id="rep-count"></span></h4>
+      <h4>교체 표현 <span class="muted" id="rep-count"></span></h4>
       <div id="reps"></div>
-      <button class="link" id="add-rep">+ 바꿀 말 더하기</button>
+      <button class="link" id="add-rep">+ 교체 표현 더하기</button>
 
-      <h4 id="num-h">확인할 숫자</h4>
+      <h4 id="num-h">수치 확인</h4>
       <ul class="nums" id="nums"></ul>
 
       <div class="actions">
         <button class="ghost" id="cancel">취소</button>
-        <button class="primary" id="do-insert">넣기</button>
+        <button class="primary" id="do-insert">삽입</button>
       </div>
       <p class="hint" id="ins-hint"></p>
     </div>
   </section>
 
   <section id="tab-parts" class="tab" hidden>
-    <h3 class="sec">HCG 부품 12 <span class="muted">맞는 지난 장표가 없을 때</span></h3>
-    <div class="grid" id="parts"></div>
-    <div id="part-view" hidden>
-      <button class="back" id="part-back">‹ 부품</button>
-      <h2 id="part-title"></h2>
-      <p class="src" id="part-src"></p>
-      <div class="grid one" id="part-vars"></div>
-      <label class="opt"><input type="radio" name="pfmt" value="UseDestinationTheme" checked>
-        <span><b>지금 파일 테마에 맞춤</b><small>지금 파일의 색 · 글꼴로</small></span></label>
-      <label class="opt"><input type="radio" name="pfmt" value="KeepSourceFormatting">
-        <span><b>원본 서식 그대로</b><small>템플릿 모양 그대로</small></span></label>
-      <p class="hint">넣은 뒤 칸 수는 「칸」 탭에서, 간트 기간은 Claude(hcg-restructure)에게.</p>
+    <div class="seg" role="tablist"><button type="button" id="seg-comp" aria-pressed="true">Component</button><button type="button" id="seg-item" aria-pressed="false">Item</button></div>
+    <div id="comp-pane">
+      <h3 class="sec"><span id="parts-n">Component</span> <span class="muted">맞는 지난 장표가 없을 때 — 도형 · 구조만(글은 ///)</span></h3>
+      <div class="grid" id="parts"></div>
+      <div id="part-view" hidden>
+        <button class="back" id="part-back">‹ Component</button>
+        <h2 id="part-title"></h2>
+        <p class="src" id="part-src"></p>
+        <div class="grid one" id="part-vars"></div>
+        <label class="opt"><input type="radio" name="pfmt" value="UseDestinationTheme" checked>
+          <span><b>지금 파일 테마에 맞춤</b><small>지금 파일의 색 · 글꼴로</small></span></label>
+        <label class="opt"><input type="radio" name="pfmt" value="KeepSourceFormatting">
+          <span><b>원본 서식 그대로</b><small>지난 장표 모양 그대로</small></span></label>
+        <p class="hint">삽입한 뒤 단 구성 · 문장 길이는 Revision 탭에서.</p>
+      </div>
     </div>
-    <h3 class="sec">HCG 아이콘 <span class="muted" id="icon-count"></span></h3>
-    <div class="search"><input id="iq" type="search" placeholder="아이콘 찾기 — 예: 보상, 평가, 조직" autocomplete="off"></div>
-    <div class="icons" id="icons"></div>
-    <button class="more" id="icon-more" type="button" hidden>더 보기</button>
-    <p class="hint">누르면 지금 장에 넣음(고른 도형이 있으면 그 자리 가까이). 색은 PowerPoint 「그래픽 서식」에서 바꿈.</p>
+    <div id="item-pane" hidden>
+      <h3 class="sec">Item <span class="muted" id="item-n"></span></h3>
+      <p class="hint sm">도형 하나 · 작은 묶음 하나를 지금 장에 그대로 끼워 넣음(고른 도형이 있으면 그 오른쪽, 없으면 가운데)</p>
+      <div class="chips" id="item-kinds"></div>
+      <div class="items" id="items"></div>
+      <button class="ghost sm" id="item-undo" type="button" hidden>방금 끼워 넣기 되돌리기</button>
+      <h3 class="sec">Icon <span class="muted" id="icon-count"></span></h3>
+      <div class="search"><input id="iq" type="search" placeholder="Icon 찾기 — 예: 보상, 평가, 조직" autocomplete="off"></div>
+      <div class="icons" id="icons"></div>
+      <button class="more" id="icon-more" type="button" hidden>더 보기</button>
+      <p class="hint">Icon 은 누르면 지금 장에 들어감. 색은 PowerPoint 「그래픽 서식」에서 바꿈.</p>
+    </div>
   </section>
   <section id="tab-slots" class="tab" hidden>
     <div class="slot-head">
       <div><b id="slot-title">고른 장 없음</b><small id="slot-sum"></small></div>
       <button class="ghost sm" id="slot-read" type="button">다시 읽기</button>
     </div>
-    <div class="slot-tools" id="slot-cols" hidden>
-      <span>열 수</span>
-      <button class="ghost sm" id="col-minus" type="button">−</button>
-      <b id="col-n">0</b>
-      <button class="ghost sm" id="col-plus" type="button">+</button>
-      <label class="tog"><input type="checkbox" id="keep-orig" checked> 원래 장 남기기</label>
-    </div>
-    <div class="slot-tools" id="slot-tables" hidden></div>
-    <div class="slot-tools">
-      <label class="tog"><input type="checkbox" id="show-nums"> 칸 번호 보기</label>
-      <span class="muted" id="slot-warn"></span>
-    </div>
-    <ol class="slots" id="slots"></ol>
-    <p class="hint">글을 다시 쓰려면 칸의 「Claude에게」를 누르고 Claude 작업창에 붙여넣기(Ctrl+V). 글자 수는 폭 가중(한글 1 · 영문 소문자 0.55)이고 넘침 · 겹침은 어림값.</p>
+    <p class="hint sm">장을 고르면 Revision 기준 6가지를 차례로 봄. 단추 아래에 누르면 무엇이 바뀌는지 적혀 있음</p>
+    <div id="rev-steps"></div>
+    <ol class="slots" id="slots" hidden></ol>
   </section>
   <section id="tab-check" class="tab" hidden>
     <div class="slot-head">
-      <div><b>점검 28항목</b><small>규칙으로 찾는 것은 여기서, 문장 판단은 Claude(hcg-check)에게</small></div>
-      <button class="primary sm" id="chk-run" type="button">점검하기</button>
+      <div><b>Check 28항목</b><small>규칙으로 찾는 것은 여기서, 문장 판단은 Claude(hcg-check)에게</small></div>
+      <button class="primary sm" id="chk-run" type="button">Check 실행</button>
     </div>
     <div class="slot-tools">
       <label class="tog"><input type="checkbox" id="chk-public"> 공공 · 입찰형(무기명) 규정도</label>
     </div>
     <div class="chk-sum" id="chk-sum"></div>
     <button class="more" id="chk-all" type="button" hidden>모두 바꾸기</button>
+    <button class="more" id="chk-ask" type="button" hidden>남은 것 Claude에게 ›</button>
     <div id="chk-list"></div>
-    <p class="hint">새 고객명(창고 탭 맨 위)이 있으면 그 이름은 이전 고객명에서 뺌. 창고에서 넣은 장은 원래 고객명을 따로 기억해 둠. 회사 수치 기준 = 2026.04(958사 · 219명).</p>
+    <p class="hint">고객사명(Library 탭 맨 위)이 있으면 그 이름은 이전 고객명에서 뺌. Library에서 삽입한 장은 원래 고객명을 따로 기억해 둠. 회사 수치 기준 = 2026.04(958사 · 219명).</p>
   </section>
 </main>
 
-<footer class="foot"><span id="who"></span><span id="ver">판 1.2 · 창고 · 부품 · 칸 · 점검</span></footer>
+<footer class="foot"><span id="who"></span><span id="ver">판 2.0 · Library · Component · Revision · Check</span></footer>
 <div class="toast" id="toast" role="status" hidden></div>
 <script src="slotops.js?v=1"></script>
-<script src="pane.js?v=7"></script>
+<script src="pane.js?v=11"></script>
 <script src="checkops.js?v=2"></script>
-<script src="tools.js?v=2"></script>
-<script src="check.js?v=2"></script>
+<script src="tools.js?v=7"></script>
+<script src="check.js?v=5"></script>
+<script src="plan.js?v=2"></script>
 </body>
 </html>

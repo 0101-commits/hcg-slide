@@ -1,27 +1,129 @@
 [
  {
-  "code": "T1",
-  "name": "표(일반)",
-  "struct": "일반 표",
-  "count": 99,
+  "code": "L1",
+  "name": "좌우 2단",
+  "struct": "좌우 2단",
+  "count": 789,
   "variants": [
    {
-    "id": "s02752",
-    "title": "[Back-up] HCG 고유의 역량 모델",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02172",
+    "title": "좌우 2단 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02782",
-    "title": "II. 추진방안 1. 역량 필요점 도출 Best Practice",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02181",
+    "title": "좌우 2단 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02203",
-    "title": "직군분리 운영방안 수립",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02239",
+    "title": "좌우 2단 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02241",
+    "title": "좌우 2단 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02251",
+    "title": "좌우 2단 5",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02447",
+    "title": "좌우 2단 6",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02200",
+    "title": "좌우 2단 7",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02194",
+    "title": "좌우 2단 8",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02336",
+    "title": "좌우 2단 9",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02590",
+    "title": "좌우 2단 10",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02412",
+    "title": "좌우 2단 11",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02192",
+    "title": "좌우 2단 12",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02305",
+    "title": "좌우 2단 13",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02350",
+    "title": "좌우 2단 14",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02713",
+    "title": "좌우 2단 15",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02203",
+    "title": "좌우 2단 16",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02362",
+    "title": "좌우 2단 17",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p06144",
+    "title": "좌우 2단 18",
+    "origin": "지난 제안서",
+    "uses": 27
+   },
+   {
+    "id": "p23318",
+    "title": "좌우 2단 19",
+    "origin": "지난 제안서",
+    "uses": 26
+   },
+   {
+    "id": "p23251",
+    "title": "좌우 2단 20",
+    "origin": "지난 제안서",
+    "uses": 19
    }
   ]
  },
@@ -29,77 +131,317 @@
   "code": "L2",
   "name": "3~4단 기둥",
   "struct": "3~4단 기둥",
-  "count": 12,
+  "count": 847,
   "variants": [
    {
-    "id": "s02239",
-    "title": "상시 성과관리 도입 필요성 및 사례",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02220",
+    "title": "3~4단 기둥 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02241",
-    "title": "평가방식의 최신 Trend",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02221",
+    "title": "3~4단 기둥 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02251",
-    "title": "1. 평가제도 지향점 정립 벤치마킹",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02207",
+    "title": "3~4단 기둥 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02076",
+    "title": "3~4단 기둥 4",
+    "origin": "지난 제안서",
+    "uses": 28
+   },
+   {
+    "id": "p03006",
+    "title": "3~4단 기둥 5",
+    "origin": "지난 제안서",
+    "uses": 13
+   },
+   {
+    "id": "p09465",
+    "title": "3~4단 기둥 6",
+    "origin": "지난 제안서",
+    "uses": 10
+   },
+   {
+    "id": "p04075",
+    "title": "3~4단 기둥 7",
+    "origin": "지난 제안서",
+    "uses": 8
+   },
+   {
+    "id": "p01285",
+    "title": "3~4단 기둥 8",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p07411",
+    "title": "3~4단 기둥 9",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p04696",
+    "title": "3~4단 기둥 10",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p00185",
+    "title": "3~4단 기둥 11",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00961",
+    "title": "3~4단 기둥 12",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p17675",
+    "title": "3~4단 기둥 13",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00939",
+    "title": "3~4단 기둥 14",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p02993",
+    "title": "3~4단 기둥 15",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p06112",
+    "title": "3~4단 기둥 16",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p07375",
+    "title": "3~4단 기둥 17",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p09466",
+    "title": "3~4단 기둥 18",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p03253",
+    "title": "3~4단 기둥 19",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p20965",
+    "title": "3~4단 기둥 20",
+    "origin": "지난 제안서",
+    "uses": 2
    }
   ]
  },
  {
-  "code": "F1",
-  "name": "가로 단계",
-  "struct": "가로 단계",
-  "count": 116,
+  "code": "L3",
+  "name": "카드 격자",
+  "struct": "카드 격자",
+  "count": 138,
   "variants": [
    {
-    "id": "s02516",
-    "title": "Overall Approach",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02346",
+    "title": "카드 격자 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02557",
-    "title": "Overall Approach",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02353",
+    "title": "카드 격자 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02595",
-    "title": "Overall Approach",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02291",
+    "title": "카드 격자 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p13480",
+    "title": "카드 격자 4",
+    "origin": "지난 제안서",
+    "uses": 8
+   },
+   {
+    "id": "p15551",
+    "title": "카드 격자 5",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p00215",
+    "title": "카드 격자 6",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01604",
+    "title": "카드 격자 7",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00214",
+    "title": "카드 격자 8",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00192",
+    "title": "카드 격자 9",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p04076",
+    "title": "카드 격자 10",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p01117",
+    "title": "카드 격자 11",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00198",
+    "title": "카드 격자 12",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p00186",
+    "title": "카드 격자 13",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p00199",
+    "title": "카드 격자 14",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09953",
+    "title": "카드 격자 15",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p16254",
+    "title": "카드 격자 16",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06245",
+    "title": "카드 격자 17",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
  {
-  "code": "L1",
-  "name": "좌우 2단",
-  "struct": "좌우 2단",
-  "count": 93,
+  "code": "L4",
+  "name": "위 요약 + 아래 상세",
+  "struct": "위 요약+아래 상세",
+  "count": 103,
   "variants": [
    {
-    "id": "s02172",
-    "title": "직무분류 원칙 및 기준 설정",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02175",
+    "title": "위 요약 + 아래 상세 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02181",
-    "title": "수직적 직무 레벨링",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p21906",
+    "title": "위 요약 + 아래 상세 2",
+    "origin": "지난 제안서",
+    "uses": 9
    },
    {
-    "id": "s02182",
-    "title": "[참고] 수평적×수직적 직무체계 사례 삼성전자",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p10085",
+    "title": "위 요약 + 아래 상세 3",
+    "origin": "지난 제안서",
+    "uses": 8
+   },
+   {
+    "id": "p20958",
+    "title": "위 요약 + 아래 상세 4",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p00612",
+    "title": "위 요약 + 아래 상세 5",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01805",
+    "title": "위 요약 + 아래 상세 6",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p07208",
+    "title": "위 요약 + 아래 상세 7",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p23330",
+    "title": "위 요약 + 아래 상세 8",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p05894",
+    "title": "위 요약 + 아래 상세 9",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p01622",
+    "title": "위 요약 + 아래 상세 10",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p01919",
+    "title": "위 요약 + 아래 상세 11",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00584",
+    "title": "위 요약 + 아래 상세 12",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -107,51 +449,611 @@
   "code": "L5",
   "name": "좌우 비교(전→후)",
   "struct": "좌우 비교",
-  "count": 29,
+  "count": 328,
   "variants": [
    {
-    "id": "s02175",
-    "title": "Type B) 수평적 직무정비 + 수직적 레벨링",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02185",
+    "title": "좌우 비교(전→후) 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02200",
-    "title": "핵심/비핵심 직무 재분류에 따른 아웃소싱 체계 재검토",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02356",
+    "title": "좌우 비교(전→후) 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02218",
-    "title": "삼성 직급/호칭체계 개선사례 │ HR Transformation 관점",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02218",
+    "title": "좌우 비교(전→후) 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02234",
+    "title": "좌우 비교(전→후) 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02400",
+    "title": "좌우 비교(전→후) 5",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02638",
+    "title": "좌우 비교(전→후) 6",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p06106",
+    "title": "좌우 비교(전→후) 7",
+    "origin": "지난 제안서",
+    "uses": 15
+   },
+   {
+    "id": "p05908",
+    "title": "좌우 비교(전→후) 8",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p03781",
+    "title": "좌우 비교(전→후) 9",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p09429",
+    "title": "좌우 비교(전→후) 10",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p03770",
+    "title": "좌우 비교(전→후) 11",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01618",
+    "title": "좌우 비교(전→후) 12",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00156",
+    "title": "좌우 비교(전→후) 13",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p21002",
+    "title": "좌우 비교(전→후) 14",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p13298",
+    "title": "좌우 비교(전→후) 15",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p01204",
+    "title": "좌우 비교(전→후) 16",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00154",
+    "title": "좌우 비교(전→후) 17",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p15741",
+    "title": "좌우 비교(전→후) 18",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p01107",
+    "title": "좌우 비교(전→후) 19",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p02078",
+    "title": "좌우 비교(전→후) 20",
+    "origin": "지난 제안서",
+    "uses": 3
    }
   ]
  },
  {
-  "code": "C2",
-  "name": "옵션 비교표",
-  "struct": "옵션 비교표",
-  "count": 16,
+  "code": "L6",
+  "name": "줄 구조",
+  "struct": "줄 구조",
+  "count": 97,
   "variants": [
    {
-    "id": "s02220",
-    "title": "직급체계 개선 대안",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "상"
+    "id": "p02339",
+    "title": "줄 구조 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02180",
-    "title": "직무체계 Benchmarking",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02228",
+    "title": "줄 구조 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02221",
-    "title": "호칭체계 개선 대안",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02751",
+    "title": "줄 구조 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02173",
+    "title": "줄 구조 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02177",
+    "title": "줄 구조 5",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02288",
+    "title": "줄 구조 6",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p06141",
+    "title": "줄 구조 7",
+    "origin": "지난 제안서",
+    "uses": 13
+   },
+   {
+    "id": "p23338",
+    "title": "줄 구조 8",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p03560",
+    "title": "줄 구조 9",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p23331",
+    "title": "줄 구조 10",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p01752",
+    "title": "줄 구조 11",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p23337",
+    "title": "줄 구조 12",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p23332",
+    "title": "줄 구조 13",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01603",
+    "title": "줄 구조 14",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01764",
+    "title": "줄 구조 15",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01796",
+    "title": "줄 구조 16",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01794",
+    "title": "줄 구조 17",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p12331",
+    "title": "줄 구조 18",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p20964",
+    "title": "줄 구조 19",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01768",
+    "title": "줄 구조 20",
+    "origin": "지난 제안서",
+    "uses": 4
+   }
+  ]
+ },
+ {
+  "code": "F1",
+  "name": "가로 단계",
+  "struct": "가로 단계",
+  "count": 1008,
+  "variants": [
+   {
+    "id": "p02516",
+    "title": "가로 단계 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02557",
+    "title": "가로 단계 2",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02595",
+    "title": "가로 단계 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02178",
+    "title": "가로 단계 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02299",
+    "title": "가로 단계 5",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02174",
+    "title": "가로 단계 6",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p05317",
+    "title": "가로 단계 7",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p05304",
+    "title": "가로 단계 8",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p01464",
+    "title": "가로 단계 9",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p04350",
+    "title": "가로 단계 10",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p01543",
+    "title": "가로 단계 11",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p01748",
+    "title": "가로 단계 12",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p02879",
+    "title": "가로 단계 13",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p23328",
+    "title": "가로 단계 14",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p23346",
+    "title": "가로 단계 15",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p02126",
+    "title": "가로 단계 16",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01187",
+    "title": "가로 단계 17",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p08159",
+    "title": "가로 단계 18",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p02728",
+    "title": "가로 단계 19",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p21766",
+    "title": "가로 단계 20",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "F2",
+  "name": "세로 단계",
+  "struct": "세로 단계",
+  "count": 54,
+  "variants": [
+   {
+    "id": "p02097",
+    "title": "세로 단계 1",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01814",
+    "title": "세로 단계 2",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p21878",
+    "title": "세로 단계 3",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p06133",
+    "title": "세로 단계 4",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p00575",
+    "title": "세로 단계 5",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03463",
+    "title": "세로 단계 6",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06496",
+    "title": "세로 단계 7",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "F3",
+  "name": "순환",
+  "struct": "순환",
+  "count": 76,
+  "variants": [
+   {
+    "id": "p08907",
+    "title": "순환 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p01432",
+    "title": "순환 2",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p08944",
+    "title": "순환 3",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p04629",
+    "title": "순환 4",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p15751",
+    "title": "순환 5",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p04682",
+    "title": "순환 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p08943",
+    "title": "순환 7",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p02701",
+    "title": "순환 8",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p04913",
+    "title": "순환 9",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p03075",
+    "title": "순환 10",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p05812",
+    "title": "순환 11",
+    "origin": "지난 제안서",
+    "uses": 2
+   }
+  ]
+ },
+ {
+  "code": "F4",
+  "name": "로드맵 · 타임라인",
+  "struct": "로드맵·타임라인",
+  "count": 62,
+  "variants": [
+   {
+    "id": "p07360",
+    "title": "로드맵 · 타임라인 1",
+    "origin": "지난 제안서",
+    "uses": 19
+   },
+   {
+    "id": "p01236",
+    "title": "로드맵 · 타임라인 2",
+    "origin": "지난 제안서",
+    "uses": 11
+   },
+   {
+    "id": "p03152",
+    "title": "로드맵 · 타임라인 3",
+    "origin": "지난 제안서",
+    "uses": 7
+   },
+   {
+    "id": "p22907",
+    "title": "로드맵 · 타임라인 4",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p06200",
+    "title": "로드맵 · 타임라인 5",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09795",
+    "title": "로드맵 · 타임라인 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p04427",
+    "title": "로드맵 · 타임라인 7",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03323",
+    "title": "로드맵 · 타임라인 8",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00263",
+    "title": "로드맵 · 타임라인 9",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03727",
+    "title": "로드맵 · 타임라인 10",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p09696",
+    "title": "로드맵 · 타임라인 11",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p23290",
+    "title": "로드맵 · 타임라인 12",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03022",
+    "title": "로드맵 · 타임라인 13",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03038",
+    "title": "로드맵 · 타임라인 14",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01861",
+    "title": "로드맵 · 타임라인 15",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06072",
+    "title": "로드맵 · 타임라인 16",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -159,13 +1061,127 @@
   "code": "F5",
   "name": "간트",
   "struct": "간트",
-  "count": 1,
+  "count": 147,
   "variants": [
    {
-    "id": "s02590",
-    "title": "기업문화 개선방안 수립 이행계획 수립",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p08795",
+    "title": "간트 1",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00712",
+    "title": "간트 2",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p01361",
+    "title": "간트 3",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p06138",
+    "title": "간트 4",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p03734",
+    "title": "간트 5",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p04089",
+    "title": "간트 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p08443",
+    "title": "간트 7",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p20577",
+    "title": "간트 8",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p05272",
+    "title": "간트 9",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p03447",
+    "title": "간트 10",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00106",
+    "title": "간트 11",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00543",
+    "title": "간트 12",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01232",
+    "title": "간트 13",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01472",
+    "title": "간트 14",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01939",
+    "title": "간트 15",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p02009",
+    "title": "간트 16",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p02163",
+    "title": "간트 17",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03258",
+    "title": "간트 18",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03361",
+    "title": "간트 19",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03462",
+    "title": "간트 20",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -173,25 +1189,55 @@
   "code": "H1",
   "name": "조직도",
   "struct": "계층·조직도",
-  "count": 6,
+  "count": 343,
   "variants": [
    {
-    "id": "s02412",
-    "title": "연봉인상 Scheme 결정",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p09349",
+    "title": "조직도 1",
+    "origin": "지난 제안서",
+    "uses": 8
    },
    {
-    "id": "s02502",
-    "title": "HR Fact 분석",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p13222",
+    "title": "조직도 2",
+    "origin": "지난 제안서",
+    "uses": 6
    },
    {
-    "id": "s02524",
-    "title": "조직진단 실행 Process",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p05268",
+    "title": "조직도 3",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p01816",
+    "title": "조직도 4",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p06916",
+    "title": "조직도 5",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p03466",
+    "title": "조직도 6",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p21061",
+    "title": "조직도 7",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p01413",
+    "title": "조직도 8",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -199,51 +1245,167 @@
   "code": "H2",
   "name": "로직 트리",
   "struct": "로직 트리",
-  "count": 70,
+  "count": 319,
   "variants": [
    {
-    "id": "s02173",
-    "title": "직무분류 방법론",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02197",
+    "title": "로직 트리 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02177",
-    "title": "직무분류체계 수립",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02198",
+    "title": "로직 트리 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02197",
-    "title": "직무별 특성 및 가치분석 Type A)",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02201",
+    "title": "로직 트리 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p21872",
+    "title": "로직 트리 4",
+    "origin": "지난 제안서",
+    "uses": 8
+   },
+   {
+    "id": "p01810",
+    "title": "로직 트리 5",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p08246",
+    "title": "로직 트리 6",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p00111",
+    "title": "로직 트리 7",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p00956",
+    "title": "로직 트리 8",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p10229",
+    "title": "로직 트리 9",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01445",
+    "title": "로직 트리 10",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p17928",
+    "title": "로직 트리 11",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p12571",
+    "title": "로직 트리 12",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p12573",
+    "title": "로직 트리 13",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p02120",
+    "title": "로직 트리 14",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09732",
+    "title": "로직 트리 15",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
  {
-  "code": "H6",
-  "name": "중심-방사",
-  "struct": "중심-방사",
-  "count": 40,
+  "code": "H3",
+  "name": "피라미드",
+  "struct": "피라미드",
+  "count": 77,
   "variants": [
    {
-    "id": "s08913",
-    "title": "6. 분자구조",
-    "doc": "@제안서 표준 템플릿_Consulting.pptx",
-    "grade": "상"
+    "id": "p08902",
+    "title": "피라미드 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02192",
-    "title": "Step 4. 직무역량모델링 직무역량의 구분 및 적용범위",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02274",
+    "title": "피라미드 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02305",
-    "title": "KPI 활용의 의미",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p05371",
+    "title": "피라미드 3",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p08194",
+    "title": "피라미드 4",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p08651",
+    "title": "피라미드 5",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06481",
+    "title": "피라미드 6",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "H4",
+  "name": "하우스",
+  "struct": "하우스",
+  "count": 14,
+  "variants": [
+   {
+    "id": "p02298",
+    "title": "하우스 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p01389",
+    "title": "하우스 2",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06370",
+    "title": "하우스 3",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -251,25 +1413,473 @@
   "code": "H5",
   "name": "프레임워크 블록",
   "struct": "프레임워크 블록",
-  "count": 36,
+  "count": 442,
   "variants": [
    {
-    "id": "s08899",
-    "title": "1. 면분할 응용",
-    "doc": "@제안서 표준 템플릿_Consulting.pptx",
-    "grade": "상"
+    "id": "p02530",
+    "title": "프레임워크 블록 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s08900",
-    "title": "1. 면분할 응용",
-    "doc": "@제안서 표준 템플릿_Consulting.pptx",
-    "grade": "상"
+    "id": "p02502",
+    "title": "프레임워크 블록 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s08901",
-    "title": "1. 면분할 응용",
-    "doc": "@제안서 표준 템플릿_Consulting.pptx",
-    "grade": "상"
+    "id": "p02524",
+    "title": "프레임워크 블록 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p08900",
+    "title": "프레임워크 블록 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02295",
+    "title": "프레임워크 블록 5",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p00197",
+    "title": "프레임워크 블록 6",
+    "origin": "지난 제안서",
+    "uses": 9
+   },
+   {
+    "id": "p00684",
+    "title": "프레임워크 블록 7",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p01795",
+    "title": "프레임워크 블록 8",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p12112",
+    "title": "프레임워크 블록 9",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p16220",
+    "title": "프레임워크 블록 10",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p20997",
+    "title": "프레임워크 블록 11",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00030",
+    "title": "프레임워크 블록 12",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p13394",
+    "title": "프레임워크 블록 13",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p08268",
+    "title": "프레임워크 블록 14",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09781",
+    "title": "프레임워크 블록 15",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p23291",
+    "title": "프레임워크 블록 16",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00758",
+    "title": "프레임워크 블록 17",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00320",
+    "title": "프레임워크 블록 18",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p07210",
+    "title": "프레임워크 블록 19",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "H6",
+  "name": "중심-방사",
+  "struct": "중심-방사",
+  "count": 467,
+  "variants": [
+   {
+    "id": "p08898",
+    "title": "중심-방사 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p08913",
+    "title": "중심-방사 2",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02306",
+    "title": "중심-방사 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p15019",
+    "title": "중심-방사 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p01594",
+    "title": "중심-방사 5",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p05328",
+    "title": "중심-방사 6",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00225",
+    "title": "중심-방사 7",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p05818",
+    "title": "중심-방사 8",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00918",
+    "title": "중심-방사 9",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p04534",
+    "title": "중심-방사 10",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09923",
+    "title": "중심-방사 11",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p21702",
+    "title": "중심-방사 12",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p10519",
+    "title": "중심-방사 13",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p03525",
+    "title": "중심-방사 14",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p02806",
+    "title": "중심-방사 15",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p11535",
+    "title": "중심-방사 16",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p22231",
+    "title": "중심-방사 17",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p21106",
+    "title": "중심-방사 18",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "H7",
+  "name": "벤 · 동심원",
+  "struct": "벤·동심원",
+  "count": 35,
+  "variants": [
+   {
+    "id": "p08899",
+    "title": "벤 · 동심원 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p21680",
+    "title": "벤 · 동심원 2",
+    "origin": "지난 제안서",
+    "uses": 8
+   },
+   {
+    "id": "p03282",
+    "title": "벤 · 동심원 3",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p12261",
+    "title": "벤 · 동심원 4",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00361",
+    "title": "벤 · 동심원 5",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p03795",
+    "title": "벤 · 동심원 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p07356",
+    "title": "벤 · 동심원 7",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p15724",
+    "title": "벤 · 동심원 8",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p03306",
+    "title": "벤 · 동심원 9",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p04229",
+    "title": "벤 · 동심원 10",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p06461",
+    "title": "벤 · 동심원 11",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p23220",
+    "title": "벤 · 동심원 12",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p21753",
+    "title": "벤 · 동심원 13",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "C1",
+  "name": "2×2 매트릭스",
+  "struct": "2×2 매트릭스",
+  "count": 48,
+  "variants": [
+   {
+    "id": "p02287",
+    "title": "2×2 매트릭스 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02410",
+    "title": "2×2 매트릭스 2",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p04356",
+    "title": "2×2 매트릭스 3",
+    "origin": "지난 제안서",
+    "uses": 9
+   },
+   {
+    "id": "p03236",
+    "title": "2×2 매트릭스 4",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p09582",
+    "title": "2×2 매트릭스 5",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p07179",
+    "title": "2×2 매트릭스 6",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p07197",
+    "title": "2×2 매트릭스 7",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p00447",
+    "title": "2×2 매트릭스 8",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p08752",
+    "title": "2×2 매트릭스 9",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p21882",
+    "title": "2×2 매트릭스 10",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00488",
+    "title": "2×2 매트릭스 11",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "C2",
+  "name": "옵션 비교표",
+  "struct": "옵션 비교표",
+  "count": 160,
+  "variants": [
+   {
+    "id": "p11537",
+    "title": "옵션 비교표 1",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p04066",
+    "title": "옵션 비교표 2",
+    "origin": "지난 제안서",
+    "uses": 2
+   }
+  ]
+ },
+ {
+  "code": "C3",
+  "name": "평가표",
+  "struct": "평가표",
+  "count": 27,
+  "variants": [
+   {
+    "id": "p02180",
+    "title": "평가표 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02352",
+    "title": "평가표 2",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02441",
+    "title": "평가표 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02818",
+    "title": "평가표 4",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p06030",
+    "title": "평가표 5",
+    "origin": "지난 제안서",
+    "uses": 11
+   },
+   {
+    "id": "p05383",
+    "title": "평가표 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p07198",
+    "title": "평가표 7",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09583",
+    "title": "평가표 8",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  },
@@ -277,25 +1887,215 @@
   "code": "D1",
   "name": "차트 + 시사점",
   "struct": "차트+시사점",
-  "count": 24,
+  "count": 313,
   "variants": [
    {
-    "id": "s02394",
-    "title": "[Back-up] Closed Pay Survey",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02394",
+    "title": "차트 + 시사점 1",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02400",
-    "title": "연봉제 전환 필요성",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02402",
+    "title": "차트 + 시사점 2",
+    "origin": "템플릿",
+    "uses": 0
    },
    {
-    "id": "s02402",
-    "title": "Pay Band 관리",
-    "doc": "@제안서 Ghost Pack Manual_HCG.pptx",
-    "grade": "중"
+    "id": "p02403",
+    "title": "차트 + 시사점 3",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p23539",
+    "title": "차트 + 시사점 4",
+    "origin": "지난 제안서",
+    "uses": 11
+   },
+   {
+    "id": "p03004",
+    "title": "차트 + 시사점 5",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p20979",
+    "title": "차트 + 시사점 6",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p07202",
+    "title": "차트 + 시사점 7",
+    "origin": "지난 제안서",
+    "uses": 2
+   },
+   {
+    "id": "p09648",
+    "title": "차트 + 시사점 8",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p20236",
+    "title": "차트 + 시사점 9",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p00328",
+    "title": "차트 + 시사점 10",
+    "origin": "지난 제안서",
+    "uses": 1
+   }
+  ]
+ },
+ {
+  "code": "T1",
+  "name": "표(일반)",
+  "struct": "일반 표",
+  "count": 843,
+  "variants": [
+   {
+    "id": "p02182",
+    "title": "표(일반) 1",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p02285",
+    "title": "표(일반) 2",
+    "origin": "템플릿",
+    "uses": 0
+   },
+   {
+    "id": "p03018",
+    "title": "표(일반) 3",
+    "origin": "지난 제안서",
+    "uses": 9
+   },
+   {
+    "id": "p03319",
+    "title": "표(일반) 4",
+    "origin": "지난 제안서",
+    "uses": 9
+   },
+   {
+    "id": "p15720",
+    "title": "표(일반) 5",
+    "origin": "지난 제안서",
+    "uses": 6
+   },
+   {
+    "id": "p00389",
+    "title": "표(일반) 6",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01791",
+    "title": "표(일반) 7",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p01774",
+    "title": "표(일반) 8",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p21746",
+    "title": "표(일반) 9",
+    "origin": "지난 제안서",
+    "uses": 5
+   },
+   {
+    "id": "p03320",
+    "title": "표(일반) 10",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01276",
+    "title": "표(일반) 11",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p08155",
+    "title": "표(일반) 12",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p12326",
+    "title": "표(일반) 13",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p00438",
+    "title": "표(일반) 14",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p01806",
+    "title": "표(일반) 15",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p21770",
+    "title": "표(일반) 16",
+    "origin": "지난 제안서",
+    "uses": 4
+   },
+   {
+    "id": "p10578",
+    "title": "표(일반) 17",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p02150",
+    "title": "표(일반) 18",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p02551",
+    "title": "표(일반) 19",
+    "origin": "지난 제안서",
+    "uses": 3
+   },
+   {
+    "id": "p23288",
+    "title": "표(일반) 20",
+    "origin": "지난 제안서",
+    "uses": 3
+   }
+  ]
+ },
+ {
+  "code": "T3",
+  "name": "역할표",
+  "struct": "역할표",
+  "count": 64,
+  "variants": [
+   {
+    "id": "p00538",
+    "title": "역할표 1",
+    "origin": "지난 제안서",
+    "uses": 1
+   },
+   {
+    "id": "p10365",
+    "title": "역할표 2",
+    "origin": "지난 제안서",
+    "uses": 1
    }
   ]
  }

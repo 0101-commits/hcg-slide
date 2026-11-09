@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCG 장표 사용설명서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root { color-scheme: light; --s: 1; --navy:#1F3A68; --blue:#2F5597; --lb:#DEEBF7; --lb2:#BDD7EE; --gray:#666666; --lg:#F2F2F2; --red:#C00000; --ink:#1a1a1a; }
+* { box-sizing: border-box; }
+html { background: #E6E9EF; }
+body { margin: 0; padding: 20px 0 60px; background: #E6E9EF; color: var(--ink);
+  font-family: "Pretendard Variable", Pretendard, "Malgun Gothic", "맑은 고딕", sans-serif;
+  font-size: 16px; line-height: 1.45; word-break: keep-all; overflow-wrap: break-word; counter-reset: pg; }
+.frame { width: calc(1280px * var(--s)); height: calc(720px * var(--s)); margin: 0 auto 26px; position: relative; overflow: hidden; background: #fff; box-shadow: 0 2px 14px rgba(20,30,60,.18); }
+.slide { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; background: #fff; transform: scale(var(--s)); transform-origin: 0 0; counter-increment: pg; overflow: hidden; }
+.abs { position: absolute; }
+
+/* chrome */
+.lab { position: absolute; left: 56px; top: 26px; font-size: 17px; font-weight: 700; color: var(--red); letter-spacing: -.01em; }
+.tag { position: absolute; right: 56px; top: 27px; font-size: 14px; color: var(--gray); font-weight: 600; }
+.msg { position: absolute; left: 56px; top: 54px; width: 1160px; font-size: 27px; font-weight: 800; line-height: 1.32; letter-spacing: -.02em; color: #111; }
+.rule { position: absolute; left: 56px; right: 56px; top: 138px; height: 1.5px; background: #444; }
+.ft { position: absolute; right: 56px; bottom: 22px; display: flex; align-items: baseline; gap: 14px; }
+.ft b { color: var(--red); font-size: 19px; font-weight: 900; letter-spacing: -.04em; }
+.ft i { font-style: normal; font-size: 13px; color: var(--gray); }
+.ft i::before { content: counter(pg); }
+
+/* chevrons */
+.steps { position: absolute; display: grid; gap: 8px; }
+.chev { position: relative; height: 66px; background: var(--blue); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 34px 0 18px; line-height: 1.2;
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 50%, calc(100% - 28px) 100%, 0 100%); }
+.chev.n { background: var(--navy); }
+.chev .nb { position: absolute; left: 0; top: 0; width: 24px; height: 24px; background: #000; color: #fff; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.col .sub { margin: 4px 6px 0; }
+ul.b { list-style: none; padding: 0; margin: 14px 4px 0; }
+ul.b li { position: relative; padding-left: 17px; margin: 0 0 9px; font-size: 16px; font-weight: 700; line-height: 1.42; }
+ul.b li::before { content: "▪"; position: absolute; left: 0; top: 0; color: #000; }
+ul.b li.s { font-weight: 400; font-size: 15px; padding-left: 30px; color: #333; margin-top: -3px; }
+ul.b li.s::before { content: "-"; left: 15px; }
+.crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin: 2px 0 12px; }
+.crumb .chip { margin: 0; padding: 2px 8px; font-size: 14px; }
+ul.b li.p { font-weight: 500; font-size: 15.5px; color: #222; margin-top: 0; }
+
+/* boxes */
+.bx { position: absolute; border: 1.5px solid var(--blue); border-radius: 12px; overflow: hidden; background: var(--lb); display: flex; flex-direction: column; }
+.bx > h4 { margin: 0; background: var(--navy); color: #fff; font-size: 19px; font-weight: 800; padding: 9px 16px; letter-spacing: -.01em; }
+.bx > div { padding: 13px 16px; font-size: 16px; line-height: 1.5; flex: 1; }
+.bx.w { background: #fff; }
+.bx p { margin: 0 0 7px; }
+.chip { display: inline-block; background: #fff; border: 1px solid var(--lb2); border-radius: 14px; padding: 2px 11px; margin: 3px 4px 3px 0; font-size: 15px; font-weight: 600; color: var(--navy); }
+.bx.w .chip { background: var(--lb); }
+.k { display: inline-block; background: var(--lg); border: 1px solid #CBD2DC; border-radius: 5px; padding: 0 7px; font-size: .92em; font-weight: 700; color: var(--navy); white-space: nowrap; }
+.blank { color: var(--red); font-weight: 900; letter-spacing: .05em; }
+
+.co { position: absolute; background: var(--lg); border: 1px solid #E3C9C9; border-radius: 8px; padding: 12px 18px; font-size: 16px; line-height: 1.5; }
+.co b { color: var(--navy); }
+
+/* number circles and explanation boxes */
+.cn { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: #fff; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #fff; line-height: 1; }
+.cn.g { background: var(--navy); }
+.stack { position: absolute; display: flex; flex-direction: column; gap: 8px; }
+.ex { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--lb2); background: #F5F9FD; border-radius: 8px; padding: 9px 14px 9px 12px; flex: 1; }
+.ex .cn { margin-top: 1px; }
+.ex b { display: block; color: var(--navy); font-size: 16.5px; font-weight: 800; line-height: 1.3; margin-bottom: 1px; }
+.ex p { margin: 0; font-size: 14.5px; line-height: 1.45; color: #2b2b2b; }
+
+/* screenshots */
+.shot { position: absolute; border: 1px solid #C9D1DE; border-radius: 9px; box-shadow: 0 3px 12px rgba(20,30,60,.16); background: #fff; }
+.shot img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.hl { position: absolute; border: 2.5px solid var(--red); border-radius: 7px; }
+.hl .cn { position: absolute; left: -31px; top: 50%; margin-top: -13px; }
+.cap { position: absolute; font-size: 13px; color: var(--gray); text-align: center; }
+
+/* tables */
+table.tb { position: absolute; border-collapse: collapse; font-size: 15.5px; line-height: 1.45; }
+.tb th { background: var(--navy); color: #fff; font-weight: 700; text-align: left; padding: 9px 14px; border: 1px solid var(--navy); font-size: 16px; }
+.tb td { border: 1px solid #BFC9D9; padding: 8px 14px; vertical-align: middle; }
+.tb tr:nth-child(even) td { background: #F6F9FC; }
+.tb td:first-child { font-weight: 800; color: var(--navy); white-space: nowrap; }
+.tb .cn { display: inline-flex; width: 22px; height: 22px; font-size: 13px; margin-right: 7px; vertical-align: middle; }
+
+/* big gray arrow */
+.garrow { position: absolute; background: #C9C9C9; clip-path: polygon(0 22%, 55% 22%, 55% 0, 100% 50%, 55% 100%, 55% 78%, 0 78%); }
+.num { font-size: 40px; font-weight: 900; color: var(--blue); letter-spacing: -.03em; line-height: 1.05; }
+.num small { font-size: 17px; font-weight: 700; color: var(--navy); margin-left: 3px; }
+
+/* viewer chrome */
+.nav { position: fixed; right: 18px; bottom: 16px; z-index: 9; background: rgba(31,58,104,.92); color: #fff; font-size: 14px; font-weight: 700; padding: 7px 14px; border-radius: 20px; display: flex; gap: 12px; align-items: center; user-select: none; }
+.nav button { background: none; border: 0; color: #fff; font: inherit; font-size: 17px; cursor: pointer; padding: 0 4px; }
+.nav button:focus-visible { outline: 2px solid #fff; border-radius: 4px; }
+
+@page { size: 297mm 167mm; margin: 0; }
+@media print {
+  :root { --s: .8768 !important; }
+  html, body { background: #fff !important; padding: 0 !important; }
+  .frame { width: 297mm; height: 166.9mm; margin: 0; box-shadow: none; break-after: page; page-break-after: always; }
+  .frame:last-of-type { break-after: auto; page-break-after: auto; }
+  .nav { display: none; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1 개요 -->
+<section class="frame"><div class="slide">
+  <div class="lab">개요 › 도구 한눈에</div><div class="tag">HCG 장표 사용설명서</div>
+  <div class="msg">HCG 장표는 PowerPoint 안에서 지난 제안서 장표를 찾아 넣고, 모양을 가져오고, 내기 전 점검까지 하는 도구임</div>
+  <div class="rule"></div>
+
+  <div class="steps" style="left:56px;top:162px;width:1168px;grid-template-columns:repeat(4,1fr);gap:14px">
+    <div class="col">
+      <div class="chev"><span class="nb">1</span>창고</div>
+      <ul class="b"><li>지난 제안서 장표 7,185장</li><li>같은 이름 장표는 한 묶음으로 보여 줌</li><li>고객명을 바꾼 채로 넣음</li></ul>
+    </div>
+    <div class="col">
+      <div class="chev"><span class="nb">2</span>부품 · 아이콘</div>
+      <ul class="b"><li>구조 25가지의 모양만 가져옴</li><li>글 자리는 <span class="blank">///</span>로 비어 있음</li><li>HCG 아이콘 413개</li></ul>
+    </div>
+    <div class="col">
+      <div class="chev"><span class="nb">3</span>칸</div>
+      <ul class="b"><li>고른 장의 칸 지도</li><li>칸마다 글자 수 한도 확인</li><li>열 수 바꾸기</li></ul>
+    </div>
+    <div class="col">
+      <div class="chev"><span class="nb">4</span>점검</div>
+      <ul class="b"><li>이전 고객명 · 자리표시자 · 회사 수치 등 28항목</li><li>찾은 곳으로 바로 이동</li></ul>
+    </div>
+  </div>
+
+  <div class="garrow" style="left:610px;top:400px;width:60px;height:56px;transform:rotate(90deg)"></div>
+
+  <div class="bx" style="left:56px;top:480px;width:1168px;height:170px;font-size:18px">
+    <h4>Claude 작업창 — 글을 쓰고 고치는 일</h4>
+    <div style="display:flex;gap:26px;align-items:center;font-size:18px">
+      <div style="flex:1.25">
+        <p style="margin:0">글을 새로 쓰거나 고치는 일은 PowerPoint의 <b>Claude</b> 작업창에서 <b>HCG 스킬 3개</b>로 함.</p>
+        <p style="margin:6px 0 0">HCG 장표 작업창의 <span class="k">Claude에게 ›</span> 단추가 요청 문장을 복사해 주므로 붙여넣기만 하면 됨.</p>
+      </div>
+      <div style="flex:1;display:flex;gap:10px">
+        <span class="chip" style="font-size:17px;padding:8px 16px;border-radius:10px;flex:1;text-align:center;margin:0">초안</span>
+        <span class="chip" style="font-size:17px;padding:8px 16px;border-radius:10px;flex:1;text-align:center;margin:0">구조 바꾸기</span>
+        <span class="chip" style="font-size:17px;padding:8px 16px;border-radius:10px;flex:1;text-align:center;margin:0">점검</span>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 2 설치 -->
+<section class="frame"><div class="slide">
+  <div class="lab">설치 › 처음 한 번</div><div class="tag">1. 설치</div>
+  <div class="msg">설치는 압축 풀기, 설치.bat 실행, 추가 기능 넣기, 로그인의 4단계로 5분이면 끝남</div>
+  <div class="rule"></div>
+  <div class="steps" style="left:56px;top:164px;width:1168px;grid-template-columns:repeat(4,1fr);gap:12px">
+    <div class="col"><div class="chev"><span class="nb">1</span>압축 풀기</div>
+      <ul class="b"><li>받은 「HCG장표_설치.zip」</li><li class="s">아무 폴더에나 풂</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">2</span>설치.bat 실행</div>
+      <ul class="b"><li>두 번 클릭</li><li class="s">「설치 끝」 창이 뜨면 완료</li><li class="s">관리자 권한 필요 없음</li><li>「알 수 없는 게시자」 경고가 뜨면</li><li class="s"><span class="k">추가 정보</span> → <span class="k">실행</span></li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">3</span>추가 기능 넣기</div>
+      <ul class="b"><li>PowerPoint를 모두 닫고 다시 켬</li><li><span class="k">홈</span> → <span class="k">추가 기능</span>에서 공유 폴더의 「HCG 장표」 추가</li><li class="s">처음 한 번만 함</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">4</span>로그인</div>
+      <ul class="b"><li>홈 리본의 「HCG 장표」 단추를 누르면 오른쪽에 작업창이 열림</li><li>회사 메일(@e-hcg.com)을 넣음</li><li>메일로 받은 숫자를 넣음</li></ul></div>
+  </div>
+  <div class="co" style="left:56px;top:520px;width:1168px;height:96px;display:flex;align-items:center">
+    <div><b>설치가 끝난 뒤에는</b> PowerPoint를 켤 때마다 홈 리본 오른쪽에 <b>HCG 장표</b> 단추가 보임. 로그인은 처음 한 번만 하며, 「로그인이 필요함」이 뜨면 작업창의 <span class="k">다시 로그인</span>을 누름.</div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 3 설치 2 -->
+<section class="frame"><div class="slide">
+  <div class="lab">설치 › 공유 폴더와 Claude 스킬</div><div class="tag">1. 설치</div>
+  <div class="msg">추가 기능은 공유 폴더에서 한 번 추가하고, Claude 스킬 3개는 Claude 앱에 한 번 올림</div>
+  <div class="rule"></div>
+
+  <div class="bx" style="left:56px;top:160px;width:572px;height:290px">
+    <h4>A. 공유 폴더에서 HCG 장표 추가</h4>
+    <div>
+      <div class="crumb">
+        <span class="chip">홈</span><b style="color:var(--blue)">›</b>
+        <span class="chip">추가 기능</span><b style="color:var(--blue)">›</b>
+        <span class="chip">추가 기능 더 보기</span><b style="color:var(--blue)">›</b>
+        <span class="chip">공유 폴더</span><b style="color:var(--blue)">›</b>
+        <span class="chip">HCG 장표</span><b style="color:var(--blue)">›</b>
+        <span class="chip" style="background:var(--navy);color:#fff">추가</span>
+      </div>
+      <ul class="b" style="margin-top:6px">
+        <li>처음 한 번만 함</li>
+        <li>그다음부터는 켤 때마다 홈 리본 오른쪽에 <b>HCG 장표</b> 단추가 있음</li>
+        <li>목록에 안 보이면 PowerPoint를 모두 닫고 설치.bat를 다시 실행</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bx" style="left:652px;top:160px;width:572px;height:290px">
+    <h4>B. Claude 스킬 올리기 (한 번, 새 판을 받으면 다시)</h4>
+    <div>
+      <div class="crumb">
+        <span class="chip">Claude 앱</span><b style="color:var(--blue)">›</b>
+        <span class="chip">설정</span><b style="color:var(--blue)">›</b>
+        <span class="chip">기능</span><b style="color:var(--blue)">›</b>
+        <span class="chip">스킬</span><b style="color:var(--blue)">›</b>
+        <span class="chip" style="background:var(--navy);color:#fff">스킬 올리기</span>
+      </div>
+      <ul class="b" style="margin-top:6px">
+        <li>압축을 푼 폴더의 「Claude앱_스킬」 안 zip 3개를 하나씩 올리고 켬</li>
+        <li>앱에 올린 스킬은 PowerPoint의 Claude 작업창에서도 보임</li>
+        <li>Claude 앱은 데스크톱 · 웹 모두 가능</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="garrow" style="left:600px;top:290px;width:0;height:0"></div>
+
+  <div class="co" style="left:56px;top:470px;width:572px;height:150px">
+    <b>「개발자 추가 기능 방식」이라고 나오면</b><br>이 PC는 공유 폴더 방식을 쓸 수 없음. PowerPoint를 켤 때마다 <span class="k">홈</span> → <span class="k">추가 기능</span> → 「개발자 추가 기능」의 <b>HCG 장표</b>를 누름.
+  </div>
+  <div class="co" style="left:652px;top:470px;width:572px;height:150px">
+    <b>PowerPoint에 Claude 단추가 없으면</b><br><span class="k">추가 기능</span>에서 「Claude」를 찾아 추가하고, 회사 Claude 계정으로 로그인함.
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 4 창고 흐름 -->
+<section class="frame"><div class="slide">
+  <div class="lab">창고 › 사용 순서</div><div class="tag">2. 창고</div>
+  <div class="msg">창고는 새 고객명을 적고, 찾아서 묶음과 모양을 고른 뒤, 고객명이 바뀐 채로 넣는 순서임</div>
+  <div class="rule"></div>
+  <div class="steps" style="left:56px;top:162px;width:1168px;grid-template-columns:repeat(5,1fr);gap:8px">
+    <div class="col"><div class="chev"><span class="nb">1</span>새 고객명</div>
+      <ul class="b"><li>이번 고객 이름을 한 번 적음</li><li class="s">파일마다 기억함</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">2</span>찾기 · 거르기</div>
+      <ul class="b"><li>낱말로 찾음</li><li>HR 모듈 · 목적 · 구조 · 업종으로 좁힘</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">3</span>묶음</div>
+      <ul class="b"><li>같은 이름 장표가 한 묶음으로 보임</li><li class="s">겹친 카드를 누름</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">4</span>모양</div>
+      <ul class="b"><li>많이 쓴 모양부터 나옴</li><li class="s">마음에 드는 모양을 누름</li></ul></div>
+    <div class="col"><div class="chev n"><span class="nb">5</span>넣기</div>
+      <ul class="b"><li>고객명이 바뀐 채 고른 장 뒤에 들어감</li><li class="s">출처가 기록됨</li></ul></div>
+  </div>
+
+  <div class="bx w" style="left:56px;top:410px;width:1168px;height:216px">
+    <h4>창고에 들어 있는 것</h4>
+    <div style="display:flex;align-items:center;justify-content:space-around;text-align:center">
+      <div><div class="num">7,185<small>장</small></div><div style="font-weight:700;margin-top:4px">지난 제안서 장표</div></div>
+      <div style="width:1px;height:90px;background:var(--lb2)"></div>
+      <div><div class="num">3,867<small>묶음</small></div><div style="font-weight:700;margin-top:4px">같은 이름 묶음</div></div>
+      <div style="width:1px;height:90px;background:var(--lb2)"></div>
+      <div><div class="num">209<small>묶음</small></div><div style="font-weight:700;margin-top:4px">자주 쓰는 표준 묶음</div></div>
+    </div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 5 카드 읽는 법 -->
+<section class="frame"><div class="slide">
+  <div class="lab">창고 › 첫 화면 읽는 법</div><div class="tag">2. 창고</div>
+  <div class="msg">첫 화면의 카드는 같은 이름 장표를 묶어 보여 주며, 겹친 카드와 장 수가 묶음의 크기를 알려 줌</div>
+  <div class="rule"></div>
+
+  <div class="shot" style="left:90px;top:152px;width:340px">
+    <img src="img/01_store.png" alt="창고 첫 화면 — 새 고객명, 찾기, HR 모듈 거름, 자주 쓰는 표준 장표 카드">
+    <div class="hl" style="left:1.5%;right:1.5%;top:11.6%;height:6.6%"><span class="cn">1</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:19%;height:5.2%"><span class="cn">2</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:25.2%;height:7.4%"><span class="cn">3</span></div>
+    <div class="hl" style="left:1.5%;right:51.5%;top:48.4%;height:16.2%"><span class="cn">4</span></div>
+    <div class="hl" style="left:1.5%;right:51.5%;top:65.4%;height:7.4%"><span class="cn">5</span></div>
+  </div>
+
+  <div class="stack" style="left:500px;top:152px;width:724px;height:340px">
+    <div class="ex"><span class="cn">1</span><div><b>새 고객명</b><p>이번 고객 이름을 적음. 파일마다 기억하고, 넣는 장의 이전 고객명이 이 이름으로 바뀜</p></div></div>
+    <div class="ex"><span class="cn">2</span><div><b>찾기</b><p>「추진 일정」 「PS vs TI」처럼 적음. 낱말은 띄어 여러 개 적을 수 있음</p></div></div>
+    <div class="ex"><span class="cn">3</span><div><b>HR 모듈 거름</b><p>평가 · 보상 · 직급 등을 누르면 그 모듈 장표만 보임. 옆의 숫자는 장 수</p></div></div>
+    <div class="ex"><span class="cn">4</span><div><b>겹친 카드와 장 수</b><p>같은 이름 장표가 여러 장인 묶음. 장 수가 크면 자주 쓴 장표이며, 누르면 모양 목록으로 감</p></div></div>
+    <div class="ex"><span class="cn">5</span><div><b>카드 아래 줄</b><p>★ 잘 만든 장표 · 모양 N가지(묶음 안 서로 다른 모양 수) · 제안서 N곳(쓴 고객 수)</p></div></div>
+  </div>
+  <div class="co" style="left:500px;top:506px;width:724px;height:62px;display:flex;align-items:center;padding-top:6px;padding-bottom:6px">
+    <div><b>장표 이름</b>은 장 맨 위 빨간 작은 제목(어깨끈)의 마지막 칸임. 고객명을 떼고 같은 이름끼리 묶음.</div>
+  </div>
+  <div class="co" style="left:500px;top:578px;width:724px;height:66px;display:flex;align-items:center;padding-top:6px;padding-bottom:6px">
+    <div><b>자주 쓰는 표준 장표</b>는 고객 4곳 이상에 나온 묶음임. 처음엔 6개만 보이고 <span class="k">표준 장표 더 보기</span>로 나머지를 엶.</div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 6 묶음 / 모양 -->
+<section class="frame"><div class="slide">
+  <div class="lab">창고 › 묶음과 모양</div><div class="tag">2. 창고</div>
+  <div class="msg">묶음을 누르면 많이 쓴 모양부터 나오고, 마음에 드는 모양을 누르면 넣기 화면으로 감</div>
+  <div class="rule"></div>
+
+  <div class="shot" style="left:90px;top:152px;width:340px">
+    <img src="img/02_family.png" alt="묶음을 누른 화면 — Overall Approach 모양 목록">
+    <div class="hl" style="left:1.5%;right:80%;top:10.8%;height:3.6%"><span class="cn">1</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:16%;height:8.8%"><span class="cn">2</span></div>
+    <div class="hl" style="left:1.5%;right:51.5%;top:26%;height:17%"><span class="cn">3</span></div>
+    <div class="hl" style="left:1.5%;right:51.5%;top:43.5%;height:5.6%"><span class="cn">4</span></div>
+  </div>
+
+  <div class="stack" style="left:500px;top:152px;width:724px;height:330px">
+    <div class="ex"><span class="cn">1</span><div><b>‹ 목록</b><p>첫 화면(묶음 목록)으로 돌아감</p></div></div>
+    <div class="ex"><span class="cn">2</span><div><b>묶음 이름과 요약</b><p>제안서 몇 곳 · 같은 이름 장표 몇 장 · 모양 몇 가지인지 보이며, 많이 쓴 모양부터 나옴</p></div></div>
+    <div class="ex"><span class="cn">3</span><div><b>같은 모양 N장</b><p>거의 같은 장표가 N장 있다는 뜻. 그중 가장 최근이고 잘 만든 장을 보여 줌</p></div></div>
+    <div class="ex"><span class="cn">4</span><div><b>카드 아래 줄</b><p>원래 어깨끈 전체와 원본 고객 · 연도가 나옴</p></div></div>
+  </div>
+
+  <div class="bx w" style="left:500px;top:500px;width:724px;height:146px">
+    <h4>고르는 흐름</h4>
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 16px">
+      <div style="flex:1;text-align:center;font-weight:700;color:var(--navy);background:var(--lb);border-radius:8px;padding:14px 4px;font-size:16px">묶음 카드<br><span style="font-weight:500;font-size:14px;color:#333">누름</span></div>
+      <div class="garrow" style="position:static;width:38px;height:34px;flex:none"></div>
+      <div style="flex:1;text-align:center;font-weight:700;color:var(--navy);background:var(--lb);border-radius:8px;padding:14px 4px;font-size:16px">모양 목록<br><span style="font-weight:500;font-size:14px;color:#333">마음에 드는 모양을 누름</span></div>
+      <div class="garrow" style="position:static;width:38px;height:34px;flex:none"></div>
+      <div style="flex:1;text-align:center;font-weight:700;color:#fff;background:var(--navy);border-radius:8px;padding:14px 4px;font-size:16px">넣기 화면<br><span style="font-weight:500;font-size:14px;color:#DDE6F5"><span style="font-size:14px">‹ 모양 목록</span>으로 되돌아옴</span></div>
+    </div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 7 넣기 -->
+<section class="frame"><div class="slide">
+  <div class="lab">창고 › 넣기</div><div class="tag">2. 창고</div>
+  <div class="msg">넣기 화면에서 넣는 방식과 바꿀 말을 확인하고 단추를 누르면 고객명이 바뀐 장이 들어감</div>
+  <div class="rule"></div>
+
+  <div class="shot" style="left:90px;top:152px;width:310px">
+    <img src="img/03_insert.png" alt="넣기 화면 위쪽 — 미리보기와 넣는 방식">
+    <div class="hl" style="left:1.5%;right:1.5%;top:21.5%;height:48.5%"><span class="cn">1</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:69.8%;height:19.6%"><span class="cn">2</span></div>
+  </div>
+  <div class="shot" style="left:440px;top:152px;width:310px">
+    <img src="img/05_replace.png" alt="넣기 화면 아래쪽 — 바꿀 말과 확인할 숫자">
+    <div class="hl" style="left:1.5%;right:1.5%;top:62%;height:15.6%"><span class="cn">3</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:78.4%;height:10.2%"><span class="cn">4</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:89.6%;height:7.2%"><span class="cn">5</span></div>
+  </div>
+
+  <div class="stack" style="left:776px;top:152px;width:448px;height:496px">
+    <div class="ex"><span class="cn">1</span><div><b>모양 미리보기</b><p>고른 장과 꼬리표를 다시 확인</p></div></div>
+    <div class="ex"><span class="cn">2</span><div><b>넣는 방식</b><p><b style="display:inline;font-size:14.5px">원본 서식 그대로</b>는 지난 장표 모양 그대로, <b style="display:inline;font-size:14.5px">지금 파일 테마에 맞춤</b>은 지금 파일의 색 · 글꼴로 바뀜</p></div></div>
+    <div class="ex"><span class="cn">3</span><div><b>바꿀 말</b><p>원본 고객명 → 새 고객명이 미리 채워지고 바뀌는 곳 수가 보임. <span class="k">+ 바꿀 말 더하기</span>로 연도 등을 더함</p></div></div>
+    <div class="ex"><span class="cn">4</span><div><b>확인할 숫자</b><p>지난 고객의 값임. 새 고객 값으로 바꾸거나 「(가정)」으로 표시</p></div></div>
+    <div class="ex"><span class="cn">5</span><div><b>넣기 단추</b><p>PowerPoint에서 장 하나를 고르고 <span class="k">N번 장 뒤에 넣기</span>. 안 고르면 맨 뒤에 들어감(그림은 브라우저 화면이라 「PPTX 받기」)</p></div></div>
+    <div class="ex" style="background:#fff"><span class="cn g">›</span><div><b>넣은 뒤</b><p><span class="k">Claude에게 ›</span>를 누르면 남은 이름 · 숫자를 고칠 안을 부탁하는 문장이 복사됨</p></div></div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 8 찾기 거르기 -->
+<section class="frame"><div class="slide">
+  <div class="lab">창고 › 찾기와 거르기</div><div class="tag">2. 창고</div>
+  <div class="msg">찾기 칸과 거름 칸을 함께 쓰면 필요한 장표 묶음만 남길 수 있음</div>
+  <div class="rule"></div>
+
+  <table class="tb" style="left:56px;top:160px;width:790px">
+    <tr><th style="width:170px">칸</th><th>쓰는 법</th></tr>
+    <tr><td>찾기</td><td>「추진 일정」 「가설적 이슈」 「PS vs TI」처럼 적음. 장표 이름에 그 말이 있는 묶음이 먼저 나옴. 낱말은 띄어 여러 개 적을 수 있음</td></tr>
+    <tr><td>HR 모듈</td><td>평가 · 보상 · 직급 · 직무 · 조직 · 육성 · 조직문화 · 인력 · 시스템 · 채용 · 노사 · 공통. 숫자는 장 수</td></tr>
+    <tr><td><span class="cn">1</span>목적 · 구조 · 업종</td><td>목적(예: 목적 · 범위 · 전체 접근), 구조(예: 가로 단계 · 간트), 고객 업종으로 좁힘</td></tr>
+    <tr><td><span class="cn">2</span>「상」·★만</td><td>켜 두면 잘 만든 장표만 보임(기본). 끄면 「재사용 중」 장표까지 보임</td></tr>
+    <tr><td><span class="cn">2</span>최근 3년</td><td>최근 3년 제안서 장표만 보임</td></tr>
+  </table>
+  <div class="co" style="left:56px;top:520px;width:790px;height:96px;display:flex;align-items:center">
+    <div><b>「재사용 중」</b>은 「상」보다 한 단계 아래 등급임. 찾는 장표가 안 나오면 <span class="k">「상」·★만</span>을 끄고, 낱말을 줄여 봄(예: 「보상 시뮬레이션」 → 「Simulation」).</div>
+  </div>
+
+  <div class="shot" style="left:900px;top:160px;width:310px">
+    <img src="img/04_search.png" alt="찾기 · 거르기 화면 — 목적 · 구조 · 업종, 「상」·★만, 최근 3년">
+    <div class="hl" style="left:1.5%;right:1.5%;top:8.4%;height:5%"><span class="cn">1</span></div>
+    <div class="hl" style="left:1.5%;right:36%;top:14%;height:4%"><span class="cn">2</span></div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 9 부품 -->
+<section class="frame"><div class="slide">
+  <div class="lab">부품 › 모양만 가져오기</div><div class="tag">3. 부품 · 아이콘</div>
+  <div class="msg">맞는 지난 장표가 없으면 부품에서 도형과 구조만 가져오며, 글이 들어갈 자리는 ///로 비어 있음</div>
+  <div class="rule"></div>
+
+  <div class="shot" style="left:90px;top:152px;width:310px">
+    <img src="img/06_parts.png" alt="부품 목록">
+    <div class="hl" style="left:1.5%;right:51.5%;top:16.4%;height:24.4%"><span class="cn">1</span></div>
+  </div>
+  <div class="shot" style="left:440px;top:152px;width:310px">
+    <img src="img/07_part.png" alt="부품 모양 — 글 자리가 /// 로 표시됨">
+    <div class="hl" style="left:11%;right:13%;top:30.8%;height:35.6%"><span class="cn">2</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:72.6%;height:3.4%"><span class="cn">3</span></div>
+  </div>
+
+  <div class="stack" style="left:776px;top:152px;width:448px;height:496px">
+    <div class="ex"><span class="cn">1</span><div><b>부품 카드</b><p>구조 25가지. 누르면 모양이 최대 10가지 나옴(「HCG 템플릿」 또는 「지난 제안서에서 뽑은 모양」)</p></div></div>
+    <div class="ex"><span class="cn">2</span><div><b><span class="blank">///</span>는 글 자리, 회색 상자는 그림 자리</b><p>그림 · 로고 자리는 회색 「그림」 상자로 바뀌어 있어 지난 고객의 내용이 따라오지 않음</p></div></div>
+    <div class="ex"><span class="cn">3</span><div><b>이 모양 넣기</b><p>넣는 방식을 고르고 누르면 새 장으로 들어감</p></div></div>
+    <div class="ex" style="background:#fff"><span class="cn g">›</span><div><b>넣은 뒤</b><p><span class="k">Claude에게 ›</span>를 눌러 붙여넣으면 Claude가 <span class="blank">///</span> 자리마다 이번 제안 내용을 채우고, 그림 상자에 맞는 아이콘 · 그림을 제안함. 칸 수는 「칸」 탭에서 바꿈</p></div></div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 10 부품 종류 -->
+<section class="frame"><div class="slide">
+  <div class="lab">부품 › 종류와 쓰는 순서</div><div class="tag">3. 부품 · 아이콘</div>
+  <div class="msg">부품은 배치 · 흐름 · 구조 · 비교와 숫자로 나뉘며, 모양을 넣은 뒤 Claude가 내용을 채움</div>
+  <div class="rule"></div>
+
+  <div class="bx" style="left:56px;top:160px;width:281px;height:200px"><h4>배치</h4><div>
+    <span class="chip">좌우 2단</span><span class="chip">3~4단 기둥</span><span class="chip">카드 격자</span><span class="chip">위 요약 + 아래 상세</span><span class="chip">좌우 비교(전→후)</span><span class="chip">줄 구조</span></div></div>
+  <div class="bx" style="left:349px;top:160px;width:281px;height:200px"><h4>흐름</h4><div>
+    <span class="chip">가로 단계</span><span class="chip">세로 단계</span><span class="chip">순환</span><span class="chip">로드맵 · 타임라인</span><span class="chip">간트</span></div></div>
+  <div class="bx" style="left:642px;top:160px;width:281px;height:200px"><h4>구조</h4><div>
+    <span class="chip">조직도</span><span class="chip">로직 트리</span><span class="chip">피라미드</span><span class="chip">하우스</span><span class="chip">프레임워크 블록</span><span class="chip">중심-방사</span><span class="chip">벤 · 동심원</span></div></div>
+  <div class="bx" style="left:935px;top:160px;width:289px;height:200px"><h4>비교 · 숫자 · 표</h4><div>
+    <span class="chip">2×2 매트릭스</span><span class="chip">옵션 비교표</span><span class="chip">평가표</span><span class="chip">차트 + 시사점</span><span class="chip">숫자 카드</span><span class="chip">표(일반)</span><span class="chip">역할표</span></div></div>
+
+  <div class="abs" style="left:56px;top:392px;font-size:18px;font-weight:800;color:var(--navy)">쓰는 순서</div>
+  <div class="steps" style="left:56px;top:426px;width:1168px;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="col"><div class="chev"><span class="nb">1</span>부품 고르기</div><ul class="b" style="margin-top:10px"><li class="p">부품 · 아이콘 탭의 부품 카드</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">2</span>모양 고르기</div><ul class="b" style="margin-top:10px"><li class="p">모양이 최대 10가지 나옴</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">3</span>이 모양 넣기</div><ul class="b" style="margin-top:10px"><li class="p">넣는 방식을 고르고 새 장으로 넣음</li></ul></div>
+    <div class="col"><div class="chev n"><span class="nb">4</span>Claude에게 ›</div><ul class="b" style="margin-top:10px"><li class="p">붙여넣으면 <span class="blank">///</span> 자리를 채움</li></ul></div>
+  </div>
+  <div class="co" style="left:56px;top:556px;width:1168px;height:60px;display:flex;align-items:center;padding-top:6px;padding-bottom:6px">
+    <div>부품은 지난 장표와 HCG 템플릿에서 <b>도형과 구조만</b> 가져온 것임. 지난 고객의 글 · 그림은 따라오지 않음.</div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 11 아이콘 -->
+<section class="frame"><div class="slide">
+  <div class="lab">아이콘 › 낱말로 찾아 넣기</div><div class="tag">3. 부품 · 아이콘</div>
+  <div class="msg">HCG 아이콘 413개를 낱말로 찾아 누르면 지금 장에 바로 들어감</div>
+  <div class="rule"></div>
+
+  <div class="shot" style="left:90px;top:152px;width:340px">
+    <img src="img/08_icons.png" alt="아이콘 찾기 — 보상으로 찾은 아이콘 목록">
+    <div class="hl" style="left:1.5%;right:1.5%;top:42.2%;height:5.4%"><span class="cn">1</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:48.4%;height:42.6%"><span class="cn">2</span></div>
+    <div class="hl" style="left:1.5%;right:1.5%;top:91.4%;height:3.2%"><span class="cn">3</span></div>
+  </div>
+
+  <div class="stack" style="left:500px;top:152px;width:724px;height:250px">
+    <div class="ex"><span class="cn">1</span><div><b>찾기 칸</b><p>「보상」 「평가」 「조직」처럼 적음. 부품 · 아이콘 탭 아래쪽에 있음</p></div></div>
+    <div class="ex"><span class="cn">2</span><div><b>아이콘 목록</b><p>아이콘을 누르면 지금 장에 들어감. 도형을 먼저 고르고 누르면 그 도형 가까이에 들어감</p></div></div>
+    <div class="ex"><span class="cn">3</span><div><b>안내 문구</b><p>색은 PowerPoint의 <span class="k">그래픽 서식</span>에서 바꿈</p></div></div>
+  </div>
+
+  <div class="abs" style="left:500px;top:430px;font-size:18px;font-weight:800;color:var(--navy)">쓰는 순서</div>
+  <div class="steps" style="left:500px;top:466px;width:724px;grid-template-columns:repeat(3,1fr);gap:8px">
+    <div class="chev"><span class="nb">1</span>낱말로 찾기</div>
+    <div class="chev"><span class="nb">2</span>아이콘 누르기</div>
+    <div class="chev n"><span class="nb">3</span>색 바꾸기</div>
+  </div>
+  <div class="co" style="left:500px;top:556px;width:724px;height:84px;display:flex;align-items:center">
+    <div>부품의 그림 상자에 넣을 아이콘이 필요하면 <span class="k">Claude에게 ›</span>가 맞는 아이콘 · 그림을 제안해 줌.</div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 12 칸 -->
+<section class="frame"><div class="slide">
+  <div class="lab">칸 › 고른 장의 칸 다루기</div><div class="tag">4. 칸</div>
+  <div class="msg">칸 탭은 고른 장의 칸 지도를 보여 주고, 글자 수 한도 확인과 열 수 바꾸기를 도와줌</div>
+  <div class="rule"></div>
+
+  <div class="bx w" style="left:56px;top:160px;width:520px;height:390px">
+    <h4>칸 지도 (모양 예시)</h4>
+    <div style="position:relative">
+      <div style="position:absolute;left:14px;right:14px;top:6px;height:34px;background:#F2F2F2;border-bottom:2px solid #444;text-align:center;font-weight:800;line-height:32px;font-size:15px">장 제목 줄</div>
+      <div style="position:absolute;left:14px;right:14px;top:54px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div><div class="chev" style="height:50px;font-size:16px"><span class="nb">1</span>칸 1</div><div style="margin-top:6px;background:var(--lb);border-radius:6px;height:122px;padding:8px 10px;font-size:13.5px;line-height:1.5"><span class="blank">///</span><br>글자 수 한도<br>넘침 · 겹침 어림</div></div>
+        <div><div class="chev" style="height:50px;font-size:16px"><span class="nb">2</span>칸 2</div><div style="margin-top:6px;background:var(--lb);border-radius:6px;height:122px;padding:8px 10px;font-size:13.5px;line-height:1.5"><span class="blank">///</span><br>글자 수 한도<br>넘침 · 겹침 어림</div></div>
+        <div><div class="chev" style="height:50px;font-size:16px"><span class="nb">3</span>칸 3</div><div style="margin-top:6px;background:#FFE9E9;border:1.5px solid var(--red);border-radius:6px;height:122px;padding:8px 10px;font-size:13.5px;line-height:1.5"><span class="blank">///</span><br>한도를 넘으면<br>표시됨</div></div>
+      </div>
+      <div style="position:absolute;left:14px;right:14px;top:250px;display:flex;align-items:center;gap:10px;border:1px solid var(--lb2);border-radius:8px;padding:10px 12px;font-size:15px;font-weight:700;color:var(--navy)">
+        열 수 <span class="k" style="font-size:17px">−</span><span style="font-size:18px;color:#111">3</span><span class="k" style="font-size:17px">+</span>
+        <span style="margin-left:auto;font-weight:500;color:#333;font-size:14px">원래 장 남기기</span>
+      </div>
+      <div style="position:absolute;left:14px;right:14px;top:310px;font-size:13.5px;color:var(--gray);text-align:center">그림은 설명을 위한 예시이며 실제 화면과 다를 수 있음</div>
+    </div>
+  </div>
+
+  <div class="stack" style="left:600px;top:160px;width:624px;height:478px">
+    <div class="ex"><div><b>칸 지도</b><p>칸마다 글자 수 한도와 넘침 · 겹침 어림이 보임(한글 1, 영문 소문자 0.55로 셈)</p></div></div>
+    <div class="ex"><div><b>열 수 − +</b><p>가로로 늘어선 칸(단계 · 기둥)을 줄이거나 늘린 새 장을 만듦. 「원래 장 남기기」를 켜면 원래 장은 그대로 둠. 열을 늘리면 글이 빽빽해질 수 있어 안내가 뜸</p></div></div>
+    <div class="ex"><div><b>표 행 지우기</b><p>표가 있으면 행을 골라 지움</p></div></div>
+    <div class="ex"><div><b>칸 번호 보기</b><p>장 위에 칸 번호를 잠깐 붙여 Claude에게 「3번 칸을 줄여 줘」처럼 말할 수 있게 함. 끄면 번호가 사라짐</p></div></div>
+    <div class="ex"><div><b>칸의 Claude에게</b><p>그 칸의 글자 수 한도에 맞춰 다시 써 달라는 문장이 복사됨</p></div></div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 13 점검 -->
+<section class="frame"><div class="slide">
+  <div class="lab">점검 › 내기 전에 한 번</div><div class="tag">5. 점검</div>
+  <div class="msg">점검은 내기 전에 이전 고객명 · 자리표시자 · 옛 회사 수치 등 28항목을 찾아 그 장으로 안내함</div>
+  <div class="rule"></div>
+  <div class="steps" style="left:56px;top:160px;width:1168px;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="col"><div class="chev"><span class="nb">1</span>점검하기</div>
+      <ul class="b"><li>지금 파일 전체에서 28항목 중 규칙으로 찾을 수 있는 것을 목록으로 보여 줌</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">2</span>항목 누르기</div>
+      <ul class="b"><li>누르면 그 장 · 그 칸으로 감</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">3</span>고치기</div>
+      <ul class="b"><li>이전 고객명과 옛 회사 수치는 <span class="k">모두 바꾸기</span>로 한 번에 고침</li></ul></div>
+    <div class="col"><div class="chev n"><span class="nb">4</span>남은 것 넘기기</div>
+      <ul class="b"><li>문장 판단이 필요한 나머지는 <span class="k">남은 것 Claude에게 ›</span></li></ul></div>
+  </div>
+
+  <div class="bx" style="left:56px;top:372px;width:572px;height:150px"><h4>찾는 것</h4><div>
+    <span class="chip">이전 고객명</span><span class="chip">자리표시자</span><span class="chip">작업 메모</span><span class="chip">옛 회사 수치</span><span class="chip">일정 주수 불일치</span><span class="chip">그 밖의 규칙 항목</span></div></div>
+  <div class="bx" style="left:652px;top:372px;width:572px;height:150px"><h4>공공기관 · 입찰 제안이면</h4><div>
+    <p style="margin:0"><span class="k">공공 · 입찰형(무기명) 규정도</span>를 켬. 무기명 위반(회사 이름 등)과 수행 실적 기간 같은 공공 규정도 찾음.</p></div></div>
+
+  <div class="co" style="left:56px;top:540px;width:572px;height:100px;font-size:15.5px">
+    그림으로 된 로고와 차트 안 글은 찾지 못하므로 <b>눈으로 한 번 더</b> 봄.
+  </div>
+  <div class="co" style="left:652px;top:540px;width:572px;height:100px;font-size:15.5px">
+    맨 위 「새 고객명」에 적은 이름은 이전 고객명에서 뺌. 창고에서 넣은 장은 원래 고객명을 기억해 두어 <b>바꾸지 못한 곳</b>을 찾아 줌.
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 14 Claude -->
+<section class="frame"><div class="slide">
+  <div class="lab">Claude › 함께 쓰기</div><div class="tag">6. Claude</div>
+  <div class="msg">글을 쓰고 고치는 일은 Claude 작업창의 HCG 스킬 3개가 맡고, 요청 문장은 단추가 복사해 줌</div>
+  <div class="rule"></div>
+
+  <table class="tb" style="left:56px;top:158px;width:1168px">
+    <tr><th style="width:190px">스킬</th><th style="width:380px">이럴 때</th><th>이렇게 부탁</th></tr>
+    <tr><td>hcg-draft<br><span style="font-weight:500;color:#333;font-size:14px">초안</span></td><td>요청서(RFP) · 회의 메모로 제안서 뼈대를 잡을 때</td><td>「/hcg-draft 이 요청서로 목차와 장별 주장 문장, 창고에서 쓸 장표 후보를 뽑아 줘」</td></tr>
+    <tr><td>hcg-restructure<br><span style="font-weight:500;color:#333;font-size:14px">구조 바꾸기</span></td><td>넣은 장표 · 부품의 글을 새 고객에 맞게, 칸은 그대로 둘 때</td><td>「/hcg-restructure 5번 장 글을 한빛소재에 맞게, 칸 · 서식은 그대로」</td></tr>
+    <tr><td>hcg-check<br><span style="font-weight:500;color:#333;font-size:14px">점검</span></td><td>내기 전 전체 점검 보고서가 필요할 때</td><td>「/hcg-check 이 파일 점검해 줘」</td></tr>
+  </table>
+
+  <div class="abs" style="left:56px;top:430px;font-size:18px;font-weight:800;color:var(--navy)"><span class="k" style="font-size:16px">Claude에게 ›</span> 단추를 쓰는 순서</div>
+  <div class="steps" style="left:56px;top:470px;width:1168px;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="col"><div class="chev"><span class="nb">1</span>단추 누르기</div><ul class="b" style="margin-top:10px"><li class="p">HCG 장표 작업창의 <span class="k">Claude에게 ›</span></li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">2</span>문장 복사됨</div><ul class="b" style="margin-top:10px"><li class="p">알맞은 요청 문장이 만들어져 복사됨</li></ul></div>
+    <div class="col"><div class="chev"><span class="nb">3</span>Claude 작업창 열기</div><ul class="b" style="margin-top:10px"><li class="p">홈 리본의 <b>Claude</b> 단추</li></ul></div>
+    <div class="col"><div class="chev n"><span class="nb">4</span>붙여넣고 보내기</div><ul class="b" style="margin-top:10px"><li class="p"><span class="k">Ctrl+V</span> 뒤 보내기</li></ul></div>
+  </div>
+  <div class="co" style="left:56px;top:590px;width:1168px;height:52px;display:flex;align-items:center;padding-top:6px;padding-bottom:6px">
+    <div>스킬이 안 보이면 Claude 앱의 <span class="k">설정</span> → <span class="k">기능</span> → <span class="k">스킬</span>에서 3개가 켜져 있는지 확인함.</div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<!-- 15 안 될 때 + 지우기 -->
+<section class="frame"><div class="slide">
+  <div class="lab">문제 해결 › 안 될 때와 지우기</div><div class="tag">7. 안 될 때</div>
+  <div class="msg">대부분의 문제는 추가 기능 다시 확인, 다시 로그인, 되돌리기로 풀리며, 지울 때는 제거.bat를 실행함</div>
+  <div class="rule"></div>
+
+  <table class="tb" style="left:56px;top:158px;width:1168px;font-size:15px">
+    <tr><th style="width:260px">이럴 때</th><th>이렇게</th></tr>
+    <tr><td>「HCG 장표」 단추가 안 보임</td><td><span class="k">홈</span> → <span class="k">추가 기능</span> → <span class="k">추가 기능 더 보기</span> → <span class="k">공유 폴더</span>에서 「HCG 장표」를 추가했는지 확인. 목록에 없으면 PowerPoint를 모두 닫고 설치.bat를 다시 실행</td></tr>
+    <tr><td>「로그인이 필요함」</td><td>작업창의 <span class="k">다시 로그인</span>을 누르고 회사 메일로 받은 숫자를 넣음</td></tr>
+    <tr><td>장표가 이상하게 들어감</td><td>Ctrl+Z로 되돌리고 넣는 방식(원본 서식 그대로 ↔ 지금 파일 테마에 맞춤)을 바꿔 봄</td></tr>
+    <tr><td>Claude 작업창에 HCG 스킬이 안 보임</td><td>Claude 앱 → 설정 → 기능 → 스킬에서 3개가 켜져 있는지 확인. 새 판을 받았으면 zip 3개를 다시 올림</td></tr>
+    <tr><td>찾는 장표가 안 나옴</td><td><span class="k">「상」·★만</span>을 끄고, 낱말을 줄여 봄(예: 「보상 시뮬레이션」 → 「Simulation」)</td></tr>
+  </table>
+
+  <div class="bx" style="left:56px;top:540px;width:1168px;height:104px;flex-direction:row;background:#fff">
+    <h4 style="display:flex;align-items:center;width:200px;font-size:21px">지우기</h4>
+    <div style="display:flex;align-items:center;gap:22px">
+      <div style="flex:1">압축을 푼 폴더의 <b>제거.bat</b>를 두 번 클릭함.</div>
+      <div style="flex:1;color:#333">그 밖의 문제는 화면을 찍어 관리자에게 보내 줌.</div>
+    </div>
+  </div>
+  <div class="ft"><b>HCG</b><i></i></div>
+</div></section>
+
+<div class="nav" role="navigation" aria-label="쪽 이동"><button id="prev" aria-label="이전 장">‹</button><span id="ind">1 / 15</span><button id="next" aria-label="다음 장">›</button></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var frames = Array.prototype.slice.call(document.querySelectorAll('.frame'));
+  var ind = document.getElementById('ind');
+  function fit() {
+    var s = Math.min((window.innerWidth - 32) / 1280, 1.6);
+    root.style.setProperty('--s', Math.max(s, 0.25).toFixed(4));
+    cur();
+  }
+  function cur() {
+    var mid = window.innerHeight / 2, best = 0, bd = 1e9;
+    frames.forEach(function (f, i) {
+      var r = f.getBoundingClientRect();
+      var d = Math.abs((r.top + r.bottom) / 2 - mid);
+      if (d < bd) { bd = d; best = i; }
+    });
+    ind.textContent = (best + 1) + ' / ' + frames.length;
+    return best;
+  }
+  function go(n) {
+    n = Math.max(0, Math.min(frames.length - 1, n));
+    frames[n].scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur() + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur() - 1); }
+  });
+  document.getElementById('next').onclick = function () { go(cur() + 1); };
+  document.getElementById('prev').onclick = function () { go(cur() - 1); };
+  window.addEventListener('resize', fit);
+  window.addEventListener('scroll', cur, { passive: true });
+  fit();
+})();
+</script>
+</body>
+</html>

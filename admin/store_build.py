@@ -423,34 +423,10 @@ def main():
         for x in fails:
             print("  실패", *x)
         return
-    json.dump(meta, open(OUT / "meta.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    with open(OUT / "d1_seed.sql", "w", encoding="utf-8") as f:
-        f.write("DELETE FROM slides;\n")
-        cols = ["id", "k", "title", "text", "olds", "mods", "mod", "p", "p_name", "s", "s_name", "grade", "star", "kind", "kind_name", "action", "client", "industry", "year", "doc", "page", "bytes", "tier"]
-        for m in meta:
-            vals = []
-            for c in cols:
-                v = m[c]
-                if isinstance(v, list):
-                    v = "|" + "|".join(v) + "|"
-                if isinstance(v, bool):
-                    v = int(v)
-                vals.append(str(v) if isinstance(v, int) else "'" + str(v).replace("'", "''") + "'")
-            f.write(f"INSERT INTO slides ({','.join(cols)}) VALUES ({','.join(vals)});\n")
-    fc = {"total": len(meta), "mods": collections.Counter(), "purposes": collections.Counter(), "structs": collections.Counter(), "industries": collections.Counter()}
-    for m in meta:
-        for x in m["mods"]:
-            fc["mods"][x] += 1
-        fc["purposes"][(m["p"], m["p_name"])] += 1
-        fc["structs"][(m["s"], m["s_name"])] += 1
-        fc["industries"][m["industry"]] += 1
-    facets = {"total": len(meta), "mods": dict(fc["mods"]),
-              "purposes": [{"p": k[0], "p_name": k[1], "n": n} for k, n in fc["purposes"].most_common()],
-              "structs": [{"s": k[0], "s_name": k[1], "n": n} for k, n in fc["structs"].most_common()],
-              "industries": [{"industry": k, "n": n} for k, n in fc["industries"].most_common()],
-              "tiers": dict(collections.Counter(m["tier"] for m in meta))}
-    json.dump(facets, open(OUT / "facets.json", "w", encoding="utf-8"), ensure_ascii=False)
-    print("끝", len(meta), "장 · 실패", len(fails), f"· {time.time() - t0:.0f}s", "· 단계", facets["tiers"])
+    # 이름(어깨끈) · 묶음 · 모양 · 자주 쓰는 표준 장표를 붙여 meta.json · d1_seed.sql · facets.json 을 씀
+    import regroup
+    regroup.finish(meta, NAMES)
+    print("끝", len(meta), "장 · 실패", len(fails), f"· {time.time() - t0:.0f}s", "· 단계", collections.Counter(m["tier"] for m in meta))
     for x in fails:
         print("  실패", *x)
 

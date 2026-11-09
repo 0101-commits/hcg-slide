@@ -22,7 +22,7 @@ description: HCG 장표 구조 바꾸기. 칸은 두고 글만 교체, 열·표 
 사용자가 PPTX 를 올림 → 코드 실행 공간에서 `scripts/` 를 돌림(python-pptx·lxml 필요, 없으면 `pip install python-pptx`). 고친 파일(새 이름)과 요약(바꾼 칸 수·경고·잔존 검사 결과)을 돌려준다. 경로는 올린 파일 위치를 그대로 인자로 준다.
 
 ### 2. Claude for PowerPoint
-파일 시스템·파이썬 없음 → 스크립트를 쓰지 않고 같은 규칙을 지침으로 따른다. `references/powerpoint_tools.md` 를 읽는다. 핵심: 칸 번호·글자 수 한도를 지키고, 글만 바꾸고 칸은 유지하며, 고친 뒤 `verify_slide_visual` 로 넘침을 확인한다. 「HCG 장표」 작업창이 「칸 번호 · 한도」를 붙여 요청을 넘기면(예: 「2번 칸 91자 안으로」) 그대로 따른다.
+파일 시스템·파이썬 없음 → 스크립트를 쓰지 않고 같은 규칙을 지침으로 따른다. `references/powerpoint_tools.md` 를 읽는다. 핵심: 칸 번호·글자 수 한도를 지키고, 글만 바꾸고 칸은 유지하며, 고친 뒤 `verify_slide_visual` 로 넘침을 확인한다. 「HCG 장표」 작업창이 「칸 번호 · 한도」를 붙여 요청을 넘기면(예: 「2번 칸 91자 안으로」) 그대로 따른다. 작업창이 파일에 남긴 표시(새 고객명 `HCG_CLIENT`, 넣은 장의 출처 · 원본 고객명, 칸 번호 상자 `HCG_NUM_n`)는 `references/hcg_marks.md` 의 코드로 먼저 읽는다.
 
 ### 3. Claude Code(CLI)
 PC 의 파이썬 + python-pptx 로 `scripts/` 를 직접 돌린다. 폴더째 일괄 작업 가능(장표 번호를 바꿔 가며 반복, 고객명 바꾸기는 `--slide` 없이 전 장표). 실행 파이썬은 환경에 맞게(한글 출력이 깨지면 `python -X utf8`).
@@ -89,6 +89,7 @@ PC 의 파이썬 + python-pptx 로 `scripts/` 를 직접 돌린다. 폴더째 �
 |---|---|
 | `references/rules.md` | 규칙 8개의 이유, 쉬운 것/어려운 것, 시험 결과가 궁금할 때. 열·행·막대 조작 전에 한 번 |
 | `references/powerpoint_tools.md` | Claude for PowerPoint 에서 작업할 때(스크립트 없이 하는 법) |
+| `references/hcg_marks.md` | 「HCG 장표」 작업창이 남긴 표시(새 고객명 · 출처 · 원본 고객명 · 칸 번호 상자)를 읽을 때. 작업창에서 복사해 온 요청을 받았을 때 |
 
 ## 한계 (사람에게 알릴 것)
 

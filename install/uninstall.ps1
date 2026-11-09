@@ -8,11 +8,14 @@ try {
     $src = Join-Path $root 'addin\manifest.xml'
     $id = $null
     if (Test-Path $src) { [xml]$mx = Get-Content -LiteralPath $src -Encoding UTF8; $id = $mx.OfficeApp.Id }
+    $found = $false
     $key = 'HKCU:\Software\Microsoft\Office\16.0\Wef\Developer'
     if ($id -and (Test-Path $key) -and (Get-ItemProperty -Path $key -Name $id -ErrorAction SilentlyContinue)) {
-        Remove-ItemProperty -Path $key -Name $id
-        $log += '✓ 「HCG 장표」 등록을 지움'
-    } else { $log += '· 등록이 없음' }
+        Remove-ItemProperty -Path $key -Name $id; $found = $true
+    }
+    $catKey = 'HKCU:\Software\Microsoft\Office\16.0\Wef\TrustedCatalogs\{6B2D1C4E-8F3A-4E57-9C21-5A7E2B9D0C14}'  # install.ps1 과 같음
+    if (Test-Path $catKey) { Remove-Item -Path $catKey -Recurse -Force; $found = $true }
+    $log += $(if ($found) { '✓ 「HCG 장표」 등록을 지움' } else { '· 등록이 없음' })
     if (Test-Path $dest) { Remove-Item -LiteralPath $dest -Recurse -Force; $log += "✓ $dest 지움" }
     $skDst = Join-Path $env:USERPROFILE '.claude\skills'
     $skSrc = Join-Path $root 'skills'

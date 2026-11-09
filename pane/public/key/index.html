@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCG 장표 열쇠</title>
+<style>
+  :root { color-scheme: light; --ink: #1b2230; --muted: #5a6474; --line: #dde2ea; --navy: #1f3a68; --paper: #f4f6f9; --ok: #2e7d4f; --red: #c00000; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: var(--ink); font-family: "Malgun Gothic", "맑은 고딕", sans-serif; font-size: 15px; line-height: 1.7; word-break: keep-all; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { font-size: 24px; color: var(--navy); margin: 0 0 6px; }
+  .muted { color: var(--muted); font-size: 13.5px; }
+  ol { padding-left: 20px; }
+  button { font: inherit; font-weight: 700; background: var(--navy); color: #fff; border: 0; border-radius: 6px; padding: 9px 18px; cursor: pointer; }
+  button.sub { background: #fff; color: var(--navy); border: 1px solid var(--navy); padding: 4px 10px; font-size: 13px; }
+  button:focus-visible { outline: 2px solid #2f5597; outline-offset: 2px; }
+  .box { background: var(--paper); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .done { color: var(--ok); font-weight: 700; }
+  .err { color: var(--red); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  td, th { border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>HCG 장표 열쇠</h1>
+  <p class="muted"><span id="me">로그인 확인 중…</span></p>
+  <div class="box">
+    <b>Claude 앱 「Code」 탭의 /hcg-draft 가 창고 장표를 받을 때 쓰는 개인 열쇠입니다.</b>
+    <ol>
+      <li>아래 「열쇠 받기」를 누르면 <b>HCG_열쇠.hcgkey</b> 파일이 다운로드 폴더에 저장됩니다.</li>
+      <li>Claude 앱 「Code」 탭에서 <b>/hcg-draft</b> 를 처음 실행하면 이 파일을 찾아 이 PC에만 잠가 두고, 다운로드 폴더의 파일은 지웁니다.</li>
+    </ol>
+    <button id="new">열쇠 받기</button> <span id="msg"></span>
+  </div>
+  <h3 style="font-size:16px;color:var(--navy)">내 열쇠</h3>
+  <p class="muted">PC를 바꾸거나 열쇠 파일을 잃어버리면 여기서 지우고 새로 받으세요.</p>
+  <table><thead><tr><th>끝 네 자리</th><th>만든 날</th><th>마지막 사용</th><th></th></tr></thead><tbody id="list"><tr><td colspan="4" class="muted">불러오는 중…</td></tr></tbody></table>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const day = (t) => (t ? new Date(t).toLocaleString("ko-KR", { dateStyle: "short", timeStyle: "short" }) : "-");
+async function load() {
+  try {
+    const r = await fetch("/api/key/list", { credentials: "include" });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || r.status);
+    $("me").textContent = j.email + " 로 로그인됨";
+    $("list").innerHTML = j.keys.length ? j.keys.map((k) => `<tr><td>…${k.tail}</td><td>${day(k.created)}</td><td>${day(k.last_used)}</td><td>${k.revoked ? '<span class="muted">지움</span>' : `<button class="sub" data-tail="${k.tail}">지우기</button>`}</td></tr>`).join("") : '<tr><td colspan="4" class="muted">아직 없음</td></tr>';
+  } catch (e) {
+    $("me").innerHTML = '<span class="err">로그인이 필요합니다 — 새로 고침 후 회사 메일로 로그인</span>';
+  }
+}
+$("new").onclick = async () => {
+  $("msg").textContent = "만드는 중…";
+  try {
+    const r = await fetch("/api/key/new", { method: "POST", credentials: "include" });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || r.status);
+    const blob = new Blob([JSON.stringify({ key: j.key, email: j.email, server: location.origin, made: new Date().toISOString() })], { type: "application/octet-stream" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "HCG_열쇠.hcgkey"; a.click();
+    $("msg").innerHTML = '<span class="done">다운로드 폴더에 저장됨</span>';
+    load();
+  } catch (e) {
+    $("msg").innerHTML = '<span class="err">실패: ' + e.message + "</span>";
+  }
+};
+$("list").onclick = async (ev) => {
+  const t = ev.target.dataset.tail;
+  if (!t) return;
+  await fetch("/api/key/revoke?tail=" + encodeURIComponent(t), { method: "POST", credentials: "include" });
+  load();
+};
+load();
+</script>
+</body>
+</html>
