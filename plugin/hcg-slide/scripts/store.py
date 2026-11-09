@@ -2,7 +2,7 @@
 # 열쇠: /key 화면에서 받은 HCG_열쇠.hcgkey 를 Windows 사용자 잠금(DPAPI)으로 이 PC · 이 사용자만 풀 수 있게 저장하고 원본은 지움.
 #        열쇠 글자는 화면 · 대화에 찍지 않음.
 # 받은 파일은 <데이터 폴더>/cache 에 두고, 서버 판(version)이 바뀔 때만 다시 받음.
-import ctypes, ctypes.wintypes as wt, glob, json, os, sys, time, urllib.request, urllib.error
+import ctypes, ctypes.wintypes as wt, glob, json, os, re, sys, time, urllib.request, urllib.error
 
 SERVER = "https://hcg-slides.pages.dev"
 
@@ -52,7 +52,10 @@ def import_key(data):
     src = files[-1]
     info = json.load(open(src, encoding="utf-8"))
     os.makedirs(data, exist_ok=True)
-    blob = _dpapi(json.dumps({"key": info["key"], "email": info.get("email"), "server": info.get("server") or SERVER}).encode("utf-8"), True)
+    srv = info.get("server") or ""
+    if not re.fullmatch(r"https://([a-z0-9-]+\.)?hcg-slides\.pages\.dev", srv):  # 다른 서버로 돌리는 열쇠 파일은 무시
+        srv = SERVER
+    blob = _dpapi(json.dumps({"key": info["key"], "email": info.get("email"), "server": srv}).encode("utf-8"), True)
     open(key_path(data), "wb").write(blob)
     for f in files:  # 남은 열쇠 파일은 모두 지움
         try:

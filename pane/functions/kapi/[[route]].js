@@ -38,7 +38,8 @@ export async function onRequest({ request, env, params }) {
   try {
     me = await who(request, env);
   } catch (e) {
-    return json({ error: "열쇠 확인 실패", detail: String(e) }, 500);
+    console.error(e);
+    return json({ error: "열쇠 확인 실패" }, 500);
   }
   if (!me) return json({ error: "열쇠가 없거나 잘못됨 — /key 에서 새 열쇠를 받으세요" }, 401);
   try {
@@ -55,6 +56,7 @@ export async function onRequest({ request, env, params }) {
     if (m) return fromR2(env, `pptx/${m[1]}.pptx`, PPTX);
     return json({ error: "없는 주소" }, 404);
   } catch (e) {
-    return json({ error: "창고 오류", detail: String(e) }, 500);
+    console.error(e);
+    return json({ error: "창고 오류" }, 500);
   }
 }

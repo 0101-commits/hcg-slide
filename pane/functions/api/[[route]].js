@@ -143,7 +143,8 @@ export async function onRequest({ request, env, params }) {
   try {
     me = await whoami(request, env);
   } catch (e) {
-    return json({ error: "로그인 확인 실패", detail: String(e) }, 500);
+    console.error(e);
+    return json({ error: "로그인 확인 실패" }, 500);
   }
   if (!me) return json({ error: "로그인이 필요함" }, 401);
   // 관리자 PC 로컬 시험(wrangler pages dev)에서만 — 장표 파일을 로컬 R2 에 빠르게 넣음
@@ -152,6 +153,11 @@ export async function onRequest({ request, env, params }) {
     return json({ ok: true });
   }
   // Claude Code 플러그인용 개인 열쇠 — 회사 메일로 로그인한 사람만 만들고 지움. 열쇠 원문은 만들 때 한 번만 돌려주고 해시만 둠
+  if (request.method === "POST") {  // 다른 사이트에서 보낸 요청(CSRF) 막기
+    const site = request.headers.get("sec-fetch-site");
+    const origin = request.headers.get("origin");
+    if ((site && site !== "same-origin") || (origin && origin !== url.origin)) return json({ error: "다른 사이트에서 온 요청" }, 403);
+  }
   if (request.method === "POST" && route === "key/new") {
     const raw = new Uint8Array(32);
     crypto.getRandomValues(raw);
@@ -164,7 +170,8 @@ export async function onRequest({ request, env, params }) {
   }
   if (request.method === "POST" && route === "key/revoke") {
     const tail = (url.searchParams.get("tail") || "").slice(0, 8);
-    const r = await env.DB.prepare("UPDATE keys SET revoked = 1 WHERE email = ? AND (? = '' OR tail = ?)").bind(me.email, tail, tail).run();
+    if (!tail) return json({ error: "지울 열쇠(tail)를 고르세요" }, 400);
+    const r = await env.DB.prepare("UPDATE keys SET revoked = 1 WHERE email = ? AND tail = ?").bind(me.email, tail).run();
     return json({ ok: true, changed: r.meta?.changes ?? null });
   }
   if (request.method !== "GET") return json({ error: "GET 만 받음" }, 405);
@@ -191,6 +198,7 @@ export async function onRequest({ request, env, params }) {
     if (m) return fromR2(env, `${m[1]}/${m[2]}.jpg`, "image/jpeg");
     return json({ error: "없는 주소" }, 404);
   } catch (e) {
-    return json({ error: "창고 오류", detail: String(e) }, 500);
+    console.error(e);
+    return json({ error: "창고 오류" }, 500);
   }
 }

@@ -4,6 +4,7 @@ $ErrorActionPreference = 'Stop'
 $w = New-Object -ComObject Word.Application
 $w.Visible = $false
 $w.DisplayAlerts = 0
+$w.AutomationSecurity = 3  # 문서 매크로 끔(msoAutomationSecurityForceDisable)
 try {
   $d = $w.Documents.Open($File, $false, $true, $false)
   $t = $d.Content.Text

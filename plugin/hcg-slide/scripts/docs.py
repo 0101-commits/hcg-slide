@@ -11,7 +11,22 @@ def stype(sh):
 
 PER_FILE = 9000      # 파일 하나에서 가져올 글자 수
 TOTAL = 60000        # 모두 합쳐 가져올 글자 수
+UNZIP_CAP = 60 * 1024 * 1024    # 압축 안 글 하나가 풀렸을 때 상한(압축 폭탄 막기)
+UNZIP_TOTAL = 400 * 1024 * 1024  # 파일 하나 전체가 풀렸을 때 상한
 EXTS = (".docx", ".doc", ".pptx", ".xlsx", ".pdf", ".hwp", ".hwpx", ".txt", ".md", ".csv")
+
+
+def _zip(path):
+    z = zipfile.ZipFile(path)
+    if sum(i.file_size for i in z.infolist()) > UNZIP_TOTAL:
+        raise RuntimeError("풀면 너무 큰 파일 — 건너뜀")
+    return z
+
+
+def _zread(z, name):
+    if z.getinfo(name).file_size > UNZIP_CAP:
+        raise RuntimeError(f"풀면 너무 큰 부분({name}) — 건너뜀")
+    return z.read(name)
 
 
 def _xml_text(x, para_tag, text_tag):
@@ -29,8 +44,8 @@ def _unesc(s):
 
 
 def read_docx(path):
-    z = zipfile.ZipFile(path)
-    x = z.read("word/document.xml").decode("utf-8", "replace")
+    z = _zip(path)
+    x = _zread(z, "word/document.xml").decode("utf-8", "replace")
     lines = []
     # 표는 줄마다 칸을 | 로 이음
     pos = 0
@@ -47,6 +62,7 @@ def read_docx(path):
 
 def read_pptx(path):
     from pptx import Presentation
+    _zip(path).close()
     prs = Presentation(path)
     out = []
 
@@ -68,18 +84,18 @@ def read_pptx(path):
 
 
 def read_xlsx(path):
-    z = zipfile.ZipFile(path)
+    z = _zip(path)
     shared = []
     if "xl/sharedStrings.xml" in z.namelist():
-        x = z.read("xl/sharedStrings.xml").decode("utf-8", "replace")
+        x = _zread(z, "xl/sharedStrings.xml").decode("utf-8", "replace")
         for si in re.findall(r"<si>.*?</si>", x, re.S):
             shared.append(_unesc("".join(re.findall(r"<t[^>]*>(.*?)</t>", si, re.S))))
-    names = re.findall(r'<sheet [^>]*name="([^"]+)"', z.read("xl/workbook.xml").decode("utf-8", "replace"))
+    names = re.findall(r'<sheet [^>]*name="([^"]+)"', _zread(z, "xl/workbook.xml").decode("utf-8", "replace"))
     out = []
     sheets = sorted((n for n in z.namelist() if re.match(r"xl/worksheets/sheet\d+\.xml", n)), key=lambda n: int(re.findall(r"\d+", n)[-1]))
     for k, n in enumerate(sheets):
         out.append(f"[시트 {names[k] if k < len(names) else k + 1}]")
-        x = z.read(n).decode("utf-8", "replace")
+        x = _zread(z, n).decode("utf-8", "replace")
         for r_i, row in enumerate(re.findall(r"<row[ >].*?</row>", x, re.S)):
             if r_i >= 300:
                 break
@@ -158,7 +174,7 @@ def read_hwp(path):
         for e in secs:
             data = ole.openstream(e).read()
             if compressed:
-                data = zlib.decompress(data, -15)
+                data = zlib.decompressobj(-15).decompress(data, UNZIP_CAP)
             i = 0
             while i + 4 <= len(data):
                 h = struct.unpack_from("<I", data, i)[0]
@@ -191,11 +207,11 @@ def read_hwp(path):
 
 
 def read_hwpx(path):
-    z = zipfile.ZipFile(path)
+    z = _zip(path)
     out = []
     for n in sorted(z.namelist()):
         if re.match(r"Contents/section\d+\.xml", n):
-            out += _xml_text(z.read(n).decode("utf-8", "replace"), "hp:p", "hp:t")
+            out += _xml_text(_zread(z, n).decode("utf-8", "replace"), "hp:p", "hp:t")
     return "\n".join(_unesc(l) for l in out)
 
 
