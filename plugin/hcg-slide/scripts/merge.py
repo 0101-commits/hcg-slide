@@ -327,7 +327,19 @@ def main(order_path, out_path, base_path):
     final = []
     for item in order:
         if "base" in item:
-            final.append(base_slides[item["base"] - 1]); continue
+            sp = base_slides[item["base"] - 1]
+            if sp in final:  # 같은 틀 장을 또 쓰면(모듈 간지) 장 부품을 복제 — 메모 장 연결은 뺌
+                np_ = fresh(sp)
+                B.parts[np_] = B.parts[sp]
+                B.overrides[np_] = B.overrides.get(sp)
+                if rels_name(sp) in B.parts:
+                    rx = etree.fromstring(B.parts[rels_name(sp)])
+                    for e in list(rx.findall("pr:Relationship", NS)):
+                        if e.get("Type") == RT_NOTES:
+                            rx.remove(e)
+                    B.parts[rels_name(np_)] = xml(rx)
+                sp = np_
+            final.append(sp); continue
         L = Pkg(os.path.join(LIB, item["lib"] + ".pptx"))
         lp = etree.fromstring(L.parts["ppt/presentation.xml"])
         lrel = {e.get("Id"): resolve("ppt/presentation.xml", e.get("Target")) for e in etree.fromstring(L.parts["ppt/_rels/presentation.xml.rels"]).findall("pr:Relationship", NS)}

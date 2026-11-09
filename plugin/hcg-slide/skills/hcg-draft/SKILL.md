@@ -44,6 +44,7 @@ allowed-tools: Bash(hcgd *) PowerShell(hcgd *) Read Write Edit Agent AskUserQues
 ## 3. 계획 → 확인 「이대로 만들까요?」(한 번 멈춤)
 1. `hcgd plan "${CLAUDE_PLUGIN_DATA}" "<작업 폴더>"` → `prompt` · `plan` 경로, 찾은 공시 숫자(`disc`).
 2. **hcg-planner** 에이전트를 부른다: 「요청문 <prompt> 를 읽고 계획을 <plan> 에 써라」. (model 을 넘기지 않는다.)
+   그다음 `hcgd plan-check "${CLAUDE_PLUGIN_DATA}" "<작업 폴더>"` → `prompt` 가 있으면(핵심 메시지가 70자 미만 · 115자 넘는 장 4장 이상) **hcg-planner** 를 한 번 더: 「요청문 <prompt> 를 읽고 <plan> 을 고쳐 써라」. 한 번만 한다.
 3. `hcgd plan-table "${CLAUDE_PLUGIN_DATA}" "<작업 폴더>"` 의 표를 그대로 보여 주고 AskUserQuestion 하나: 「이 계획으로 만들까요?」 — 이대로 만들기 / 몇 장 바꾸기(번호와 바꿀 내용 적기) / 분량 다시 정하기.
 4. 바꾸기면 plan.json 의 그 줄만 고친다(다른 장이 필요하면 요청문의 후보 목록에서 id 를 고름). plan-table 로 고친 표를 다시 보여 주고 다시 묻는다. 분량 다시면 2절 분량만 다시 묻고 3-1 부터.
 - Ⅲ장(추진 일정 · 수행 조직 · 투입 인력) 핵심 메시지는 통상 문구로, Ⅳ장 HCG 소개는 표준 장 그대로 들어간다(plan-table 이 맞춰 보여 줌). 바꾸지 않는다.

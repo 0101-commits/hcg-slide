@@ -6,7 +6,7 @@
       "name": "hcg-slide",
       "source": "./hcg-slide",
       "description": "HCG 장표 Draft 만들기(/hcg-draft)",
-      "version": "0.4.1"
+      "version": "0.5.0"
     }
   ]
 }

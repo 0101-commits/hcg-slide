@@ -52,7 +52,10 @@ async function data() {
   mkdirSync(TMP, { recursive: true });
   const meta = JSON.parse(readFileSync(join(OUT, "meta.json"), "utf8"));
   const keep = ["id", "type", "client", "olds", "doc", "year", "industry", "name", "title", "std", "star", "grade", "tconf", "fam", "var", "mods", "page", "src"];
-  const slim = meta.map((r) => ({ ...Object.fromEntries(keep.map((k) => [k, r[k]])), text: String(r.text || "").replace(/\s+/g, " ").slice(0, 600) }));
+  // opic = 장 안 다른 고객 그림 수(admin/opic.py 가 셈) — 플러그인이 그림 적은 장을 먼저 고름
+  const opicPath = join(OUT, "opic.json");
+  const opic = existsSync(opicPath) ? JSON.parse(readFileSync(opicPath, "utf8")) : {};
+  const slim = meta.map((r) => ({ ...Object.fromEntries(keep.map((k) => [k, r[k]])), opic: opic[r.id] || 0, text: String(r.text || "").replace(/\s+/g, " ").slice(0, 600) }));
   const mp = join(TMP, "kapi_meta.json");
   writeFileSync(mp, JSON.stringify(slim));
   console.log("줄인 목록", slim.length, "장", (readFileSync(mp).length / 1e6).toFixed(1), "MB");

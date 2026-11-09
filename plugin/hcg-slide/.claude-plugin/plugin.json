@@ -1,6 +1,6 @@
 {
   "name": "hcg-slide",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "HCG 장표 — 고객사 회의록으로 제안서 Draft(.pptx)를 만듦: 고객 자료 폴더 읽기 · 질문 카드 → 계획 확인(Why HCG · [참고] 장 · 표준 장) → 창고 장표 합치기(표준 마스터 · 업종 표지) · 본문 고쳐 쓰기 · 넘침 검사 · 노란 딱지 · 확인 목록",
   "author": {
     "name": "HCG"

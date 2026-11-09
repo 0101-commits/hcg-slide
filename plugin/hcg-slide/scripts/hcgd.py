@@ -210,6 +210,13 @@ def start(data, work):
         if hit:
             why.append("같은 과제(" + " · ".join(hit[:2]) + ")")
             s += 2 * len(hit)
+        main_t = [m for m in top[:2] if m in want_t]  # 과제 이름의 주제가 그 덱의 주요 주제
+        if main_t:
+            s += 4
+            if not hit:
+                why.append("같은 과제(" + main_t[0] + ")")
+        elif want_t:
+            s -= 3  # 과제 이름의 주제(예: 조직진단)가 그 덱의 주요 주제가 아님
         ranks.append((s, {"doc": doc, "client": rs[0]["client"], "year": rs[0].get("year"), "slides": len(rs), "industry": ind, "mods": top, "why": " · ".join(why) or "내용이 가까움"}))
     ranks.sort(key=lambda x: -x[0])
     inds = sorted({r.get("industry") for r in meta if r.get("industry")})
@@ -298,6 +305,7 @@ def cands(c, meta=None, skip=()):
         s += 2 if r.get("star") else 0
         s += {"상": 2, "중": 0.5}.get(r.get("grade"), 0)
         s += 2 if r.get("industry") == cfg.get("ind") else 0
+        s -= min(int(r.get("opic") or 0), 5) * 0.8  # 다른 고객 그림이 많으면 사람이 바꿔 넣을 일이 많음
         s += 4 if cfg.get("base_doc") and r.get("doc") == cfg["base_doc"] else 0
         try:
             s += max(0, int(r.get("year") or 0) - 2019) * 0.4
@@ -306,9 +314,10 @@ def cands(c, meta=None, skip=()):
         s += 1.5 if r.get("tconf") == "H" else 0
         by[r["type"]].append((s, r))
     lines = []
+    diag = bool(re.search(r"진단", (cfg.get("title") or "") + " " + (cfg.get("project") or "")))
     for t in keep:
         rows = sorted(by.get(t["code"], []), key=lambda x: -x[0])
-        k = 10 if t["code"] in ("T211", "T216", "T105", "T201", "T301", "T407") else (8 if t["code"] in ("T101", "T102", "T104", "T204", "T205", "T206", "T207", "T405", "T406", "T219", "T220") else 6)
+        k = 12 if diag and t["code"] in ("T202", "T204", "T205", "T206", "T207", "T208") else 10 if t["code"] in ("T211", "T216", "T105", "T201", "T301", "T407") else (8 if t["code"] in ("T101", "T102", "T104", "T204", "T205", "T206", "T207", "T405", "T406", "T219", "T220") else 6)
         seen, picked = set(), []
         for s, r in rows:
             if r.get("fam") and (r["fam"], r.get("var")) in seen:
@@ -320,7 +329,8 @@ def cands(c, meta=None, skip=()):
             lines.append(f"## {t['code']} {t['name']} — {t['desc']}")
             for r in picked:
                 tx = re.sub(r"\s+", " ", r.get("text") or "")[:110]
-                lines.append(f"{r['id']}|{r.get('name') or r.get('title')}|{r.get('client')} {r.get('year')} {r.get('industry')}|{tx}")
+                op = int(r.get("opic") or 0)
+                lines.append(f"{r['id']}|{r.get('name') or r.get('title')}|{r.get('client')} {r.get('year')} {r.get('industry')}{f' 그림{op}' if op else ''}|{tx}")
     return "\n".join(lines)
 
 
@@ -337,9 +347,10 @@ PLAN_RULES = """# 규칙
 - Ⅱ장 흐름(모듈마다 번호):
   ① (장이 넉넉하면) Overall Approach 1장(T201) — 단계 = 아래 모듈 순서.
   ② 「1. 현황 진단 및 방향성 수립」 모듈 — 기본으로 넣는다: Approach(Document Review · 인터뷰/서베이 · 벤치마킹, T204) · Interview & Survey(T205) · Benchmarking(T206) · 이슈 및 개선 방향성 도출(T207 · T208) 중 2~4장. 고객이 진단을 최소로 해 달라고 했을 때만 「現 제도 분석」 1장으로 줄인다.
+     과제 이름이 진단(조직진단 · 조직문화 진단 · 인사 진단 등)이면 진단 모듈이 Ⅱ장의 중심이다: Ⅱ장의 40~50%를 진단 방향 · 진단 Framework(1~2장) · 진단 항목별 Survey/Interview 설계(2~4장) · 조직운영 · 데이터 분석 · Benchmarking · 진단 결과 이미지 · 개선 방향성으로 쓰고, 뒤 개선안 설계 모듈은 모듈마다 3~4장.
   ③ 「2. …」 「3. …」 = 요청 범위 항목을 고객 RFP · 회의 순서대로 모듈로. 모듈마다 2~6장 — 변화 Trend → 설계 방향 · Framework → 상세 설계(유형 · 대안 · 기준) → Simulation · 연계 방안 순. 주요 모듈 설계 장 뒤에 [참고] 장(T407 HCG 자산 · T405 · T206 수행 사례 · T220 산출물 예시). [참고]는 Ⅱ장의 15~25%.
   ④ 마지막 모듈 「N. 변화관리 및 실행지원」 1~2장(T219 — 단계별 Roll-out · 커뮤니케이션, 시스템 범위면 시스템 셋업).
-- 장마다 「후보」에서 장 하나(id)를 고른다. 같은 id 두 번 금지. 유형이 맞고 내용이 가까운 장(업종 · 스콥 · 회의 내용). 도식(그림 속 라벨)이 이번 메시지와 다른 논리인 장(예: 이슈는 평가 목적 혼재인데 도식은 등급 분포)은 고르지 않는다. 다른 고객 이야기가 깊게 박힌 장보다 고치기 쉬운 장.
+- 장마다 「후보」에서 장 하나(id)를 고른다. 같은 id 두 번 금지. 유형이 맞고 내용이 가까운 장(업종 · 스콥 · 회의 내용). 도식(그림 속 라벨)이 이번 메시지와 다른 논리인 장(예: 이슈는 평가 목적 혼재인데 도식은 등급 분포)은 고르지 않는다. 다른 고객 이야기가 깊게 박힌 장보다 고치기 쉬운 장. 후보 끝의 「그림N」은 사람이 바꿔 넣어야 할 다른 고객 그림 수 — 내용이 비슷하면 그림이 적은(없는) 장.
 - 어깨끈(head) — 장 성격에 따라, 나누는 곳은 공백 4칸. 고객사명은 넣지 않는다:
   · Ⅰ장 · Overall Approach · 추진 일정 = 「제안 배경    장 이름」 또는 장 이름 하나(예: 「제안 배경    사업현황」 「제안 배경    HR Trend」 「프로젝트 목적 및 범위」 「Overall Approach」 「추진 일정」)
   · Why HCG 장 = 「제안 특징 및 장점    Why HCG」 · 「Why HCG    1. 주제에 대한 전문성 보유」 · 「Why HCG    2. Cutting-Edge 방법론」처럼 번호
@@ -369,7 +380,7 @@ def plan(data, work):
     rules = PLAN_RULES.format(i=i, ii=ii, std=std_txt, fixed=fixed, base=base, sched=schedule_msg(c.info))
     prompt = (f"너는 HCG(인사 컨설팅사) 제안서 Draft 를 짜는 시니어 컨설턴트다. 아래 고객 정보로 Ⅰ~Ⅲ장 본문 {i + ii + 1}장 계획을 만든다"
               f"(표준 장 {len(std)}장은 저절로 붙어 모두 {i + ii + 1 + len(std)}장).\n\n# 고객 정보\n{c.info}{docs_txt}\n\n{rules}\n"
-              f"# 후보(형식: id|장 이름|고객 연도 업종|본문 앞부분)\n{cands(c, meta, {r['pick'] for r in std})}\n\n# 출력\n"
+              f"# 후보(형식: id|장 이름|고객 연도 업종 [그림N = 바꿔 넣어야 할 다른 고객 그림 N개]|본문 앞부분)\n{cands(c, meta, {r['pick'] for r in std})}\n\n# 출력\n"
               'plan.json 에 JSON 객체 하나만 쓴다: {"facts": ["현행 평가 = 업적 · 직무수행능력 · 다면 종합(통화회의록)", ...], '
               '"slides": [{"no":1,"chap":"Ⅰ","type":"T101","pick":"s01888","head":"프로젝트 추진배경","msg":"...","why":"..."}, ...]}')
     open(c.p("plan_prompt.md"), "w", encoding="utf-8").write(prompt)
@@ -419,6 +430,29 @@ def normalize_plan(c):
     return pl
 
 
+MSG_MIN, MSG_MAX = 70, 115
+
+
+def plan_check(data, work):
+    """계획의 핵심 메시지 길이 확인. Ⅰ · Ⅱ장(표준 장 빼고) 메시지가 70자 미만 · 115자 넘는 장이 4장 이상이면
+    그 장만 고쳐 쓰게 하는 요청문(plan_fix.md)을 만듦 — hcg-planner 가 plan.json 을 고쳐 씀."""
+    c = Ctx(data, work)
+    pl = normalize_plan(c)
+    bad = [p for p in pl if not p.get("std") and p.get("chap") in ("Ⅰ", "Ⅱ") and not (MSG_MIN <= len(str(p.get("msg") or "")) <= MSG_MAX)]
+    if len(bad) < 4:
+        out(bad=len(bad), prompt=None); return
+    rows = "\n".join(f"- no {p['no']} · {p['head']} · 지금 {len(str(p.get('msg') or ''))}자: {p.get('msg')}" for p in bad)
+    facts = "\n".join(f"- {x}" for x in jload(c.p("facts.json"), [])[:20])
+    prompt = (f"# 할 일\n{c.p('plan.json')} 은 제안서 Draft 계획(JSON 배열)이다. 아래 장들의 핵심 메시지(msg)만 고쳐 쓰고, 같은 파일에 배열 그대로 다시 쓴다. "
+              "다른 장 · 다른 칸(no · chap · type · pick · head · why · std)은 한 글자도 바꾸지 않는다.\n\n"
+              "# msg 규칙\n- 두 줄, 띄어쓰기 포함 75~105자. 이유(고객 상황 · 이슈 · 요청)에서 결론(할 일 · 효과)으로 잇는다. 끝은 「~함 · ~임 · ~시점」.\n"
+              "- 그 장의 어깨끈(head) 내용에 맞게. 고객 정보 · 찾은 사실에 있는 것만 쓰고 지어내지 않는다.\n"
+              "- 예: 「반도체 업황 회복으로 성장세가 이어지고 있어, 중장기 성장 목표의 실행력을 높이기 위한 성과관리 체계 고도화가 필요한 시점」(75자)\n\n"
+              f"# 고칠 장\n{rows}\n\n# 찾은 사실\n{facts}\n\n# 고객 정보\n{c.info[:6000]}\n")
+    open(c.p("plan_fix.md"), "w", encoding="utf-8").write(prompt)
+    out(bad=len(bad), prompt=c.p("plan_fix.md"), plan=c.p("plan.json"))
+
+
 def plan_table(data, work):
     c = Ctx(data, work)
     meta = {r["id"]: r for r in jload(os.path.join(c.cache, "meta.json"), [])}
@@ -462,6 +496,62 @@ RW_RULES = """# 할 일
 """
 
 
+def mod_no(head):
+    """「3. 보상제도 개선    기본급」 → (3, "보상제도 개선"). 번호 없는 어깨끈([참고] · Overall Approach)은 None."""
+    m = re.match(r"\s*(\d+)\.\s*(\S.*?)(?:\s{2,}|$)", str(head or ""))
+    return (int(m.group(1)), m.group(2).strip()) if m else None
+
+
+def modules(picks):
+    """Ⅱ장 계획의 모듈 (번호, 이름) — 처음 나온 순서."""
+    res, seen = [], set()
+    for p in picks:
+        k = mod_no(p.get("head"))
+        if k and k[0] not in seen:
+            seen.add(k[0]); res.append(k)
+    return res
+
+
+def add_modlists(deck, order, frame):
+    """모듈 간지(mods 가 있는 간지 Ⅱ)에 모듈 목록 상자를 넣음 — 틀의 간지 Ⅲ 작은 목록 상자를 본떠, 지금 모듈만 굵게.
+    상자 이름 HCG_MODS(고쳐 쓰기 · 서식 맞추기에서 뺌)."""
+    if not any(o.get("mods") for o in order):
+        return
+    import copy
+    from pptx import Presentation
+    fr = Presentation(frame)
+    src = next((sh for sh in fr.slides[FRAME["Ⅲ"] - 1].shapes if sh.has_text_frame and len(sh.text_frame.paragraphs) >= 3), None)
+    if src is None:
+        return
+    prs = Presentation(deck)
+    for s, o in zip(prs.slides, order):
+        if not o.get("mods"):
+            continue
+        el = copy.deepcopy(src._element)
+        ids = [int(x) for x in s.shapes._spTree.xpath(".//p:cNvPr/@id")] or [1]
+        el.xpath("./p:nvSpPr/p:cNvPr")[0].set("id", str(max(ids) + 1))
+        el.xpath("./p:nvSpPr/p:cNvPr")[0].set("name", "HCG_MODS")
+        s.shapes._spTree.append(el)
+        body = el.xpath("./p:txBody")[0]
+        paras = el.xpath("./p:txBody/a:p")
+        on, off = paras[0], paras[1]
+        for p in paras:
+            body.remove(p)
+        for k, name in enumerate(o["mods"]):
+            p = copy.deepcopy(on if k == o["cur"] else off)
+            runs = p.xpath("./a:r")
+            for r in runs[1:]:
+                p.remove(r)
+            for x in p.xpath("./a:fld | ./a:br"):
+                p.remove(x)
+            runs[0].xpath("./a:t")[0].text = name
+            rpr = runs[0].xpath("./a:rPr")
+            if rpr:
+                rpr[0].set("b", "1" if k == o["cur"] else "0")
+            body.append(p)
+    prs.save(deck)
+
+
 def build(data, work):
     c = Ctx(data, work)
     draft, post, merge = c.mods()
@@ -473,12 +563,22 @@ def build(data, work):
         picks = [p for p in pl if p.get("chap") == ch and re.fullmatch(r"s\d+", str(p.get("pick", ""))) and p["pick"] not in used]
         if not picks:
             continue
-        order.append({"base": FRAME[ch], "role": f"간지 {ch}"})
+        mods = modules(picks) if ch == "Ⅱ" else []
+        names = [m for _, m in mods]
+        first = {"base": FRAME[ch], "role": f"간지 {ch}"}
+        if len(mods) >= 2:  # Ⅱ장 간지 = 모듈 목록(1번 강조), 2번 모듈부터는 모듈마다 간지 한 장 더
+            first.update(mods=names, cur=0)
+        order.append(first)
+        seen = {mods[0][0]} if mods else set()
         for p in picks:
             try:
                 store.slide(c.data, p["pick"])
             except Exception:
                 continue
+            k = mod_no(p.get("head"))
+            if len(mods) >= 2 and k and k[0] not in seen:
+                seen.add(k[0])
+                order.append({"base": FRAME["Ⅱ"], "role": "간지 Ⅱ", "mods": names, "cur": [n for n, _ in mods].index(k[0])})
             used.add(p["pick"]); order.append({"lib": p["pick"], "role": "본문", "no": p["no"]})
     intro = []
     for sid in intro_ids(c.cfg):  # HCG 소개 — 표준 장 그대로
@@ -492,6 +592,7 @@ def build(data, work):
     order.append({"base": FRAME["끝장"], "role": "끝장"})
     jsave(c.p("order.json"), order)
     merge.main(c.p("order.json"), c.p("merged.pptx"), os.path.join(c.cache, "frame_std.pptx"))
+    add_modlists(c.p("merged.pptx"), order, os.path.join(c.cache, "frame_std.pptx"))
     draft.extract(c.p("merged.pptx"), c.p("order.json"), c.p("plan.json"))
     slides = jload(c.p("items.json"), [])
     if ppt_busy():
@@ -739,7 +840,7 @@ def finish(data, work, dest=""):
 
 if __name__ == "__main__":
     cmd, a = sys.argv[1], sys.argv[2:]
-    fn = {"setup": setup, "start": start, "docs": docs_cmd, "plan": plan, "plan-table": plan_table, "build": build, "apply": apply, "fix": fix, "names": names, "finish": finish}.get(cmd)
+    fn = {"setup": setup, "start": start, "docs": docs_cmd, "plan": plan, "plan-check": plan_check, "plan-table": plan_table, "build": build, "apply": apply, "fix": fix, "names": names, "finish": finish}.get(cmd)
     if not fn:
-        out(error="단계: setup · start · docs · plan · plan-table · build · apply · fix · names · finish"); sys.exit(1)
+        out(error="단계: setup · start · docs · plan · plan-check · plan-table · build · apply · fix · names · finish"); sys.exit(1)
     fn(*a)

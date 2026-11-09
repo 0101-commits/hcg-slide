@@ -243,6 +243,8 @@ def extract(deck, order_path, plan_path):
         for sh in walk(s.shapes):
             if o.get("no") and ph_kind(sh):
                 continue  # 어깨끈 · 핵심 메시지는 계획대로 따로 넣음
+            if sh.name == "HCG_MODS":
+                continue  # 모듈 간지의 모듈 목록(계획에서 만든 것)
             top = round((sh.top or 0) / H, 2) if sh.top is not None else 0
             if sh.has_text_frame:
                 for k, para in enumerate(sh.text_frame.paragraphs):
