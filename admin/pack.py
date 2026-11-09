@@ -7,7 +7,7 @@ from pathlib import Path
 
 APP = Path(__file__).resolve().parent.parent
 DIST = APP / "dist"
-SKIP = {"__pycache__", "_test", ".pytest_cache"}
+SKIP = {"__pycache__", "_test", ".pytest_cache", ".omc"}
 
 README = """HCG 장표 설치 안내 (판 {ver})
 
@@ -33,7 +33,14 @@ README = """HCG 장표 설치 안내 (판 {ver})
    앱에 올린 스킬은 PowerPoint 의 Claude 작업창에서도 그대로 보입니다.
    Claude Code(CLI)를 쓰는 사람은 설치.bat 가 스킬을 %USERPROFILE%\\.claude\\skills 에 복사해 둡니다.
 
-5. 공식 「Claude」 단추가 PowerPoint 에 없으면
+5. 제안서 Draft 플러그인(/hcg-draft — 회의록 · 고객 자료로 고쳐 쓴 Draft 40장까지)
+   설치.bat 가 %LOCALAPPDATA%\\HCG\\plugin 에 넣고, claude 명령이 있으면 등록까지 합니다.
+   「설치 끝」 창이 두 줄을 넣으라고 하면 Claude 앱 Code 탭에 한 줄씩 넣습니다(클립보드에 있음).
+   처음 쓰기 전에 https://hcg-slides.pages.dev/key 에서 「열쇠 받기」를 누릅니다(회사 메일 로그인).
+   PowerPoint 가 깔린 Windows PC · Opus 를 쓸 수 있는 Claude 요금제가 필요합니다.
+   Dummy 장만 만들 때는 이 플러그인 없이 4번 스킬(hcg-draft.zip)과 작업창으로 됩니다.
+
+6. 공식 「Claude」 단추가 PowerPoint 에 없으면
    PowerPoint → 홈 → 추가 기능 → 「Claude」 검색 → 추가 → 회사 Claude 계정으로 로그인.
 
 지우기: 「제거.bat」를 두 번 클릭합니다.
@@ -94,6 +101,13 @@ def main():
     for s in skills:
         copy_skill(s, stage / "skills" / s.name)
         zip_dir(stage / "skills" / s.name, stage / "Claude앱_스킬" / f"{s.name}.zip", s.name)
+
+    # 제안서 Draft 플러그인(마켓 폴더 통째 — Python 실행기 포함). install.ps1 이 %LOCALAPPDATA%\HCG\plugin 에 두고 등록
+    plug = APP / "plugin"
+    if (plug / "hcg-slide" / "python" / "python.exe").exists():
+        shutil.copytree(plug, stage / "plugin", ignore=lambda d, names: [n for n in names if n in SKIP or n in (".omc",) or n.endswith(".pyc")])
+    else:
+        print("주의: 플러그인 Python 실행기 없음 — 플러그인을 빼고 묶음:", plug / "hcg-slide" / "python")
 
     DIST.mkdir(exist_ok=True)
     zout = DIST / a.out

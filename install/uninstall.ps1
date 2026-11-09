@@ -16,6 +16,18 @@ try {
     $catKey = 'HKCU:\Software\Microsoft\Office\16.0\Wef\TrustedCatalogs\{6B2D1C4E-8F3A-4E57-9C21-5A7E2B9D0C14}'  # install.ps1 과 같음
     if (Test-Path $catKey) { Remove-Item -Path $catKey -Recurse -Force; $found = $true }
     $log += $(if ($found) { '✓ 「HCG 장표」 등록을 지움' } else { '· 등록이 없음' })
+    # 제안서 Draft 플러그인 등록 풀기(claude 명령이 있을 때만 — 없으면 폴더만 지움)
+    if (Test-Path (Join-Path $dest 'plugin')) {
+        $cl = Get-Command claude -ErrorAction SilentlyContinue
+        $clPath = if ($cl) { $cl.Source } elseif (Test-Path "$env:USERPROFILE\.local\bin\claude.exe") { "$env:USERPROFILE\.local\bin\claude.exe" } else { $null }
+        if ($clPath) {
+            $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+            & $clPath plugin uninstall hcg-slide@hcg 2>&1 | Out-Null
+            & $clPath plugin marketplace remove hcg 2>&1 | Out-Null
+            $ErrorActionPreference = $prev
+            $log += '✓ 제안서 Draft 플러그인 등록 풂'
+        } else { $log += '· 제안서 Draft 플러그인: Claude 앱 Code 탭에서 /plugin uninstall hcg-slide@hcg 로 지우세요' }
+    }
     if (Test-Path $dest) { Remove-Item -LiteralPath $dest -Recurse -Force; $log += "✓ $dest 지움" }
     $skDst = Join-Path $env:USERPROFILE '.claude\skills'
     $skSrc = Join-Path $root 'skills'
