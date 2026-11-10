@@ -3,11 +3,12 @@
 PowerPoint 안에서 지난 제안서의 표준 장표를 찾아 그대로 넣고, Claude로 초안 · 구조 바꾸기 · 점검을 하는 도구입니다.
 
 - **「HCG 장표」 추가 기능** — PowerPoint 홈 리본의 단추 하나. 오른쪽 작업창에서 표준 장표 979장을 HR 모듈 · 목적 · 구조 · 업종 · 글로 찾아, 고객명을 바꿔 지금 파일에 넣습니다.
-- **HCG 스킬 3개** — Claude 앱(데스크톱 · 웹), PowerPoint의 Claude 작업창, Claude Code에서 같이 씁니다.
+- **HCG 스킬 4개** — Claude 앱(데스크톱 · 웹), PowerPoint의 Claude 작업창, Claude Code에서 같이 씁니다(제안서 Draft 는 Claude 앱 「Code」 탭 · Claude Code 에서만).
 
 | 스킬 | 하는 일 |
 |---|---|
-| hcg-draft (초안) | 요청서 · 회의 메모로 요청 대응표, 목차 추천, 장별 주장 문장, 창고 틀 후보 |
+| hcg-draft (제안서 Draft) | 회의록 · 고객 자료 → 창고 장표를 합쳐 고객 내용으로 고쳐 쓴 Draft .pptx + 확인 목록. 처음 실행 때 준비물(약 20MB)을 이 저장소 릴리스에서 저절로 받음 |
+| hcg-dummy (초안 · Dummy) | 요청서 · 회의 메모로 요청 대응표, 목차 추천, 장별 주장 문장, 창고 틀 후보, Dummy 장 |
 | hcg-restructure (구조 바꾸기) | 칸은 두고 글만 바꾸기, 열 · 표 행 · 간트 막대 · 박스 조작, 이전 고객명 검사 |
 | hcg-check (점검) | 28항목 점검 — 이전 고객명 · 자리표시자 · 회사 수치(2026.04 기준) · 일정 주수 · 무기명 등 |
 
@@ -20,7 +21,8 @@ PowerPoint 안에서 지난 제안서의 표준 장표를 찾아 그대로 넣�
 3. PowerPoint를 모두 닫고 다시 켭니다. 처음 한 번만 홈 → 추가 기능 → 맨 아래 「추가 기능 더 보기」 → 위쪽 「공유 폴더」 → **「HCG 장표」** → 「추가」. 그다음부터는 켤 때마다 홈 리본에 단추가 그대로 있습니다.
    - 2026-09-25 Office 업데이트부터 「개발자 추가 기능」으로 넣은 것은 PowerPoint를 끄면 잊힙니다([office-js#6973](https://github.com/OfficeDev/office-js/issues/6973)). 그래서 설치.bat는 내 폴더를 드라이브 관리 공유(`\\localhost\C$\…`)로 「신뢰 카탈로그」에 올립니다. 관리 공유를 못 읽는 PC(표준 계정 등)는 예전 방식으로 돌아가며, 그때는 켤 때마다 「개발자 추가 기능」에서 눌러야 합니다.
 4. 단추를 누르면 회사 메일 로그인 화면이 나옵니다. 회사 메일을 넣고, 메일로 온 숫자를 넣습니다.
-5. Claude 스킬: Claude 앱 → 설정 → 기능(Customize) → 스킬 → 「스킬 올리기」에서 zip 안 `Claude앱_스킬` 폴더의 zip 3개를 하나씩 올립니다. 앱에 올린 스킬은 PowerPoint의 Claude 작업창에도 보입니다.
+5. Claude 스킬: Claude 앱 → 설정 → 기능(Customize) → 스킬 → 「스킬 올리기」에서 zip 안 `Claude앱_스킬` 폴더의 zip 4개를 하나씩 올립니다. 앱에 올린 스킬은 PowerPoint의 Claude 작업창과 Claude Code(같은 계정으로 로그인)에도 저절로 보입니다. 예전에 올린 `hcg-draft`(초안)는 지우고 새 zip 으로 올립니다.
+6. 제안서 Draft: Claude 앱 「Code」 탭에서 회의록을 붙이고 「제안서 Draft 만들어 줘」. 처음 한 번 https://hcg-slides.pages.dev/key 에서 「열쇠 받기」를 누르면 나머지 준비(파이썬 등 약 20MB)는 스킬이 알아서 받습니다.
 
 필요한 것: Windows · Microsoft 365 PowerPoint(구독형) · 회사 Claude 계정. PowerPoint 2016 · 2019 같은 영구 판에서는 추가 기능이 동작하지 않습니다.
 
@@ -54,7 +56,8 @@ PowerPoint 안에서 지난 제안서의 표준 장표를 찾아 그대로 넣�
 | `addin/` | 추가 기능 설명 파일(manifest) 틀 |
 | `install/` | 설치 · 제거 스크립트(설치.bat가 부름) |
 | `pane/` | 작업창 화면과 창고 API(Cloudflare Pages · D1 · R2 · Access) |
-| `skills/` | HCG 스킬 3개 원본 |
+| `skills/` | HCG 스킬 4개 원본(hcg-draft · hcg-dummy · hcg-restructure · hcg-check) |
+| `plugin/hcg-slide/` | 제안서 Draft 실행 묶음 원본(파이썬 · 단계 스크립트) — `admin/pack_draft.py` 가 릴리스 `draft-<판>` 으로 올림. 예전 플러그인 배포는 그만둠 |
 | `admin/` | 창고 만들기 · 다듬기 · 올리기 · 설치본 묶기 · 시험 도구 |
 
 ## 단계

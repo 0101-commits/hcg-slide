@@ -29,12 +29,11 @@ try {
         } else { $log += '· 제안서 Draft 플러그인: Claude 앱 Code 탭에서 /plugin uninstall hcg-slide@hcg 로 지우세요' }
     }
     if (Test-Path $dest) { Remove-Item -LiteralPath $dest -Recurse -Force; $log += "✓ $dest 지움" }
-    $skDst = Join-Path $env:USERPROFILE '.claude\skills'
-    $skSrc = Join-Path $root 'skills'
-    if (Test-Path $skSrc) {
-        foreach ($d in Get-ChildItem -LiteralPath $skSrc -Directory) {
-            $to = Join-Path $skDst $d.Name
-            if (Test-Path $to) { Remove-Item -LiteralPath $to -Recurse -Force; $log += "✓ 스킬 $($d.Name) 지움" }
+    $skDst = Join-Path $env:USERPROFILE '.claude\skills'   # 예전 판이 복사해 둔 것(이름이 맞는 것만)
+    foreach ($n in @('hcg-check', 'hcg-draft', 'hcg-dummy', 'hcg-restructure')) {
+        $sk = Join-Path (Join-Path $skDst $n) 'SKILL.md'
+        if ((Test-Path -LiteralPath $sk) -and ((Get-Content -LiteralPath $sk -TotalCount 4 -Encoding UTF8) -match "^name:\s*$n\s*$")) {
+            Remove-Item -LiteralPath (Join-Path $skDst $n) -Recurse -Force; $log += "✓ 스킬 $n 지움"
         }
     }
     $log += "`nPowerPoint 를 다시 켜면 단추가 사라짐. Claude 앱에 올린 스킬은 Claude 설정 → 기능 → 스킬에서 지우세요."

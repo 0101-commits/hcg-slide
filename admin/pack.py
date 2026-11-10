@@ -1,7 +1,8 @@
 # 설치본 묶기 — app/dist/HCG장표_설치.zip
 # 실행: ..\..\.venv\Scripts\python -X utf8 pack.py [--url https://로컬·시험 주소]
 # 안: 설치.bat · 제거.bat · 읽어주세요.txt · HCG장표_사용설명서.html · addin\(manifest.xml · install.ps1 · uninstall.ps1)
-#     skills\(Claude Code 용 폴더 3개) · Claude앱_스킬\(Claude 앱 · PowerPoint 에 올릴 zip 3개)
+#     Claude앱_스킬\(Claude 앱에 올릴 zip 4개 — Claude Code · PowerPoint 의 Claude 에도 저절로 내려옴)
+# 제안서 Draft 준비물(파이썬 · 단계 스크립트)은 이 zip 에 넣지 않음 — admin/pack_draft.py 가 GitHub 릴리스로 올리고 스킬이 받아 감
 import argparse, json, shutil, zipfile
 from pathlib import Path
 
@@ -26,19 +27,19 @@ README = """HCG 장표 설치 안내 (판 {ver})
 
 4. Claude 스킬 올리기(한 번, 판이 바뀌면 다시)
    Claude 앱(데스크톱 · 웹) → 설정 → 기능(또는 Customize) → 스킬 → 「스킬 올리기」에서
-   「Claude앱_스킬」 폴더의 zip 3개를 하나씩 올리고 켭니다.
-     hcg-draft.zip        초안 — 요청서 · 회의 메모 → 목차 · 장별 주장 문장
+   「Claude앱_스킬」 폴더의 zip 4개를 하나씩 올리고 켭니다.
+     hcg-draft.zip        제안서 Draft — 회의록 · 고객 자료 → 고쳐 쓴 Draft PPT 파일(「Code」 탭에서)
+     hcg-dummy.zip        초안 · Dummy — 요청서 · 회의 메모 → 목차 · 장별 주장 문장 · Dummy 장
      hcg-restructure.zip  구조 바꾸기 — 칸은 두고 글만, 열 · 행 · 간트 막대
      hcg-check.zip        점검 — 이전 고객명 · 자리표시자 · 회사 수치 등 28항목
-   앱에 올린 스킬은 PowerPoint 의 Claude 작업창에서도 그대로 보입니다.
-   Claude Code(CLI)를 쓰는 사람은 설치.bat 가 스킬을 %USERPROFILE%\\.claude\\skills 에 복사해 둡니다.
+   예전에 올린 hcg-draft(초안)가 있으면 먼저 지우고 올립니다.
+   앱에 올린 스킬은 PowerPoint 의 Claude 작업창과 Claude 앱 「Code」 탭(같은 계정)에도 저절로 보입니다.
 
-5. 제안서 Draft 플러그인(/hcg-draft — 회의록 · 고객 자료로 고쳐 쓴 Draft 40장까지)
-   설치.bat 가 %LOCALAPPDATA%\\HCG\\plugin 에 넣고, claude 명령이 있으면 등록까지 합니다.
-   「설치 끝」 창이 두 줄을 넣으라고 하면 Claude 앱 Code 탭에 한 줄씩 넣습니다(클립보드에 있음).
-   처음 쓰기 전에 https://hcg-slides.pages.dev/key 에서 「열쇠 받기」를 누릅니다(회사 메일 로그인).
+5. 제안서 Draft 만들기(hcg-draft)
+   Claude 앱 → 「Code」 탭 → 회의록을 붙이고 「제안서 Draft 만들어 줘」.
+   처음 한 번만 https://hcg-slides.pages.dev/key 에서 회사 메일로 로그인 → 「열쇠 받기」.
+   준비물(파이썬 등 약 20MB)은 처음 실행 때 스킬이 알아서 받습니다(1분쯤).
    PowerPoint 가 깔린 Windows PC · Opus 를 쓸 수 있는 Claude 요금제가 필요합니다.
-   Dummy 장만 만들 때는 이 플러그인 없이 4번 스킬(hcg-draft.zip)과 작업창으로 됩니다.
 
 6. 공식 「Claude」 단추가 PowerPoint 에 없으면
    PowerPoint → 홈 → 추가 기능 → 「Claude」 검색 → 추가 → 회사 Claude 계정으로 로그인.
@@ -96,18 +97,12 @@ def main():
     (stage / "읽어주세요.txt").write_text(README.format(ver=cfg["version"]).replace("\n", "\r\n"), encoding="utf-8-sig")
 
     skills = sorted(p for p in (APP / "skills").iterdir() if p.is_dir() and p.name not in SKIP and (p / "SKILL.md").exists())
-    (stage / "skills").mkdir()
     (stage / "Claude앱_스킬").mkdir()
+    tmp = stage / "_skills"
     for s in skills:
-        copy_skill(s, stage / "skills" / s.name)
-        zip_dir(stage / "skills" / s.name, stage / "Claude앱_스킬" / f"{s.name}.zip", s.name)
-
-    # 제안서 Draft 플러그인(마켓 폴더 통째 — Python 실행기 포함). install.ps1 이 %LOCALAPPDATA%\HCG\plugin 에 두고 등록
-    plug = APP / "plugin"
-    if (plug / "hcg-slide" / "python" / "python.exe").exists():
-        shutil.copytree(plug, stage / "plugin", ignore=lambda d, names: [n for n in names if n in SKIP or n in (".omc",) or n.endswith(".pyc")])
-    else:
-        print("주의: 플러그인 Python 실행기 없음 — 플러그인을 빼고 묶음:", plug / "hcg-slide" / "python")
+        copy_skill(s, tmp / s.name)
+        zip_dir(tmp / s.name, stage / "Claude앱_스킬" / f"{s.name}.zip", s.name)
+    shutil.rmtree(tmp)
 
     DIST.mkdir(exist_ok=True)
     zout = DIST / a.out

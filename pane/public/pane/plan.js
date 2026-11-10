@@ -197,7 +197,7 @@
     $("#plan-back").onclick = () => { $("#plan-view").hidden = true; $("#list-view").hidden = false; };
     $("#plan-fill").onclick = fillAll;
     $("#plan-make").onclick = makeDummies;
-    $("#plan-copy").onclick = () => H().askClaude("/hcg-draft Dummy 제안서를 만들어 줘. 고객사: (이름 · 업종 · 규모)\n회의 내용: (메모 붙여넣기)\n주요 스콥: (예: 성과급 재설계, 직급체계 개편)\n기간: (예: 16주) · 분량: 일반 25장");
+    $("#plan-copy").onclick = () => H().askClaude("/hcg-dummy Dummy 제안서를 만들어 줘. 고객사: (이름 · 업종 · 규모)\n회의 내용: (메모 붙여넣기)\n주요 스콥: (예: 성과급 재설계, 직급체계 개편)\n기간: (예: 16주) · 분량: 일반 25장");
     loadTypes();
     const tryBanner = () => { if (H() && H().inOffice()) banner(); };
     setTimeout(tryBanner, 3000);

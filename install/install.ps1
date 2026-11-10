@@ -49,52 +49,19 @@ try {
         Say "! 이 PC 는 관리 공유($share)를 못 읽어 공유 폴더 방식을 못 씀(표준 계정이거나 관리 공유가 꺼짐)."
     }
 
-    # 3) Claude Code 용 스킬 복사
-    $skSrc = Join-Path $root 'skills'
-    if (Test-Path $skSrc) {
-        $skDst = Join-Path $env:USERPROFILE '.claude\skills'
-        New-Item -ItemType Directory -Force -Path $skDst | Out-Null
-        $names = @()
-        foreach ($d in Get-ChildItem -LiteralPath $skSrc -Directory) {
-            $to = Join-Path $skDst $d.Name
-            if (Test-Path $to) { Remove-Item -LiteralPath $to -Recurse -Force }
-            Copy-Item -LiteralPath $d.FullName -Destination $to -Recurse -Force
-            $names += $d.Name
+    # 3) Claude 스킬은 Claude 앱에 zip 으로 올림(같은 계정이면 Claude Code · Code 탭에도 저절로 내려옴).
+    #    예전 판이 %USERPROFILE%\.claude\skills 에 복사해 둔 HCG 스킬은 겹치지 않게 지움(이름이 맞는 것만).
+    $skDst = Join-Path $env:USERPROFILE '.claude\skills'
+    $gone = @()
+    foreach ($n in @('hcg-check', 'hcg-draft', 'hcg-dummy', 'hcg-restructure')) {
+        $sk = Join-Path (Join-Path $skDst $n) 'SKILL.md'
+        if ((Test-Path -LiteralPath $sk) -and ((Get-Content -LiteralPath $sk -TotalCount 4 -Encoding UTF8) -match "^name:\s*$n\s*$")) {
+            Remove-Item -LiteralPath (Join-Path $skDst $n) -Recurse -Force; $gone += $n
         }
-        Say "✓ Claude Code 스킬 복사: $($names -join ', ')"
     }
-
-    # 3-2) 제안서 Draft 플러그인(/hcg-draft) — 폴더를 %LOCALAPPDATA%\HCG\plugin 에 두고 Claude Code 에 등록
-    $plugTail = ''
-    $plSrc = Join-Path $root 'plugin'
-    if (Test-Path (Join-Path $plSrc '.claude-plugin\marketplace.json')) {
-        $plDst = Join-Path $dest 'plugin'
-        if (Test-Path $plDst) { Remove-Item -LiteralPath $plDst -Recurse -Force }
-        Copy-Item -LiteralPath $plSrc -Destination $plDst -Recurse -Force
-        $cl = Get-Command claude -ErrorAction SilentlyContinue
-        $clPath = if ($cl) { $cl.Source } elseif (Test-Path "$env:USERPROFILE\.local\bin\claude.exe") { "$env:USERPROFILE\.local\bin\claude.exe" } else { $null }
-        $ok = $false
-        if ($clPath) {
-            try {
-                $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
-                $mk = (& $clPath plugin marketplace list 2>&1 | Out-String)
-                if ($mk -match '(?m)^\s*.?\s*hcg\s*$') { & $clPath plugin marketplace update hcg 2>&1 | Out-Null }
-                else { & $clPath plugin marketplace add $plDst 2>&1 | Out-Null }
-                $r = (& $clPath plugin install hcg-slide@hcg 2>&1 | Out-String)
-                if ($r -match 'already installed|이미') { & $clPath plugin update hcg-slide@hcg 2>&1 | Out-Null }
-                $ErrorActionPreference = $prev
-                $ok = ((& $clPath plugin list 2>&1 | Out-String) -match 'hcg-slide')
-            } catch { $ok = $false }
-        }
-        if ($ok) { Say '✓ 제안서 Draft 플러그인(/hcg-draft) 설치 — Claude 앱을 다시 켜면 Code 탭에서 보임' }
-        else {
-            $lines = "/plugin marketplace add $plDst`r`n/plugin install hcg-slide@hcg"
-            try { Set-Clipboard -Value $lines } catch {}
-            Say '· 제안서 Draft 플러그인: 폴더만 복사함(claude 명령이 없는 PC)'
-            $plugTail = "`n`n제안서 Draft(/hcg-draft)를 쓰려면 Claude 앱 Code 탭에 아래 두 줄을 한 줄씩 넣으세요(클립보드에 복사해 둠):`n  /plugin marketplace add $plDst`n  /plugin install hcg-slide@hcg"
-        }
-        $plugTail += "`n처음 /hcg-draft 를 쓰기 전에 https://hcg-slides.pages.dev/key 에서 「열쇠 받기」를 누르세요(다운로드 폴더에 저장되면 저절로 가져감)."
-    }
+    if ($gone) { Say "✓ 예전에 복사해 둔 스킬 지움(이제 Claude 앱에서 올림): $($gone -join ', ')" }
+    $old = Join-Path $dest 'plugin'   # 2.1 판의 제안서 Draft 플러그인 폴더 — 이제 스킬이 준비물을 받음
+    if (Test-Path $old) { Remove-Item -LiteralPath $old -Recurse -Force }
 
     # 4) 확인만 — 파이썬 · python-pptx(Claude Code 에서 스킬 스크립트를 돌릴 때만 필요)
     $py = $null
@@ -121,7 +88,9 @@ try {
         $tail += "`n  홈 → 추가 기능 → 「개발자 추가 기능」의 「HCG 장표」를 누르면 단추가 뜸."
         $tail += "`n  지금 Office 문제로 PowerPoint 를 켤 때마다 다시 눌러야 함."
     }
-    $tail += "`n`nClaude 앱 · PowerPoint 의 Claude 에서 스킬을 쓰려면 「Claude앱_스킬」 폴더의 zip 3개를`nClaude 설정 → 기능 → 스킬에서 한 번씩 올리세요(읽어주세요.txt)." + $plugTail
+    $tail += "`n`nClaude 스킬: 「Claude앱_스킬」 폴더의 zip 4개를 Claude 앱 → 설정 → 기능 → 스킬에서 한 번씩 올리세요(읽어주세요.txt)."
+    $tail += "`n올린 스킬은 PowerPoint 의 Claude 와 Claude 앱 「Code」 탭에도 저절로 보입니다."
+    $tail += "`n제안서 Draft(hcg-draft)는 「Code」 탭에서 — 처음 한 번 https://hcg-slides.pages.dev/key 에서 「열쇠 받기」."
     $msg = ($log -join "`n") + "`n" + $tail
     Set-Content -LiteralPath (Join-Path $dest 'install.log') -Value ("$(Get-Date -Format s)`n" + $msg) -Encoding UTF8
     [System.Windows.Forms.MessageBox]::Show($msg, 'HCG 장표 — 설치 끝', 'OK', 'Information') | Out-Null
